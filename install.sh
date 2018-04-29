@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
-echo "Stowing dotfiles..."
+echo "Starting to stow dotfiles..."
 
 for dir in `ls .`;
 do
-    if [[ -d $dir ]]; then # If dir really is a directory
-        ( stow $dir ) 
+    if [[ -d $dir ]]; then # Check if $dir is a directory
+        echo "Stowing $dir"
+        stow $dir
     fi
 done
 
