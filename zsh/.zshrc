@@ -96,9 +96,15 @@ source $ZSH/oh-my-zsh.sh
 export VISUAL="vim"
 export EDITOR="vim"
 
+alias vi="vim"
+alias ls="ls --color=auto"
 alias la="ls -lah"
 alias ll="ls -lh"
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
 alias cl="clear"
 alias q="exit"
+alias rm="rm --preserve-root"
 alias lsupg="sudo apt update && apt list --upgradable"
 alias here="xdg-open ."
