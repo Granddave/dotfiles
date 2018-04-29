@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+# == Middle click-drag to scroll ==
+# 
+# Run 'xinput --list' to get the right ID of your mouse.
+# run middle-click-scroll <Mouse ID>
+# from https://askubuntu.com/a/868173
+
+xinput set-prop $1 "libinput Scroll Method Enabled" 0, 0, 1  # This is button
+xinput set-prop $1 "libinput Button Scrolling Button" 2  # This is middle mouse. Already 2 by default
+
