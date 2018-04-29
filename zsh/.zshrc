@@ -93,6 +93,9 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+export VISUAL="vim"
+export EDITOR="vim"
+
 alias la="ls -lah"
 alias ll="ls -lh"
 alias cl="clear"
