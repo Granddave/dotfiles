@@ -1,4 +1,4 @@
-PATH="~/.local/bin/:$PATH:/usr/sbin"
+PATH="$HOME/.local/bin/:$PATH:/usr/sbin"
 
 if xinput list | grep 'Mionix' > /dev/null;  
     mouseid=$(xinput list --id-only 'pointer:Laview Technology Mionix Naos 7000')
