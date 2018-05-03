@@ -9,3 +9,6 @@ UseFontLineChararacters=false
 Name=David
 Parent=FALLBACK/
 TerminalColumns=80
+
+[Scrolling]
+ScrollBarPosition=2
