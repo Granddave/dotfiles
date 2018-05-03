@@ -36,13 +36,18 @@ syntax on
 filetype on
 
 
-set ts=4        " Tab set to 4 wide
+set tabstop=4   " Tab set to 4 wide
 set expandtab   " Tab expands to spaces
-set wrap        " Wrap visually
-set linebreak   " Don't split words in a break
+set wrap        " Wrap words visually
+set linebreak   " Don't split words in a word wrap
+set textwidth=0 " Prevent Vim from automatically inserting line breaks
+set wrapmargin=0 " The number of spaces from right margin to wrap from. 0 disables newline
+set nolist      " list shows hidden characters such as newline. 
 set number      " Show line numbers
 set mouse=a     " Enable mouse click to move cursor
 " colorscheme slate
+set backspace=indent,eol,start " Allow backspace in insert mode
+set history=50  " Default 8
 
 
 noremap <F12> :NERDTreeToggle<CR>
