@@ -97,6 +97,8 @@ export VISUAL="vim"
 export EDITOR="vim"
 
 alias vi="vim"
+alias bim="vim"
+alias cim="vim"
 alias ls="ls --color=auto"
 alias la="ls -lah"
 alias ll="ls -lh"
