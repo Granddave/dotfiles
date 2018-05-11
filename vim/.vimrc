@@ -51,4 +51,5 @@ set history=50  " Default 8
 
 
 noremap <F12> :NERDTreeToggle<CR>
-autocmd FileType python nnoremap <buffer> <F5> :exec '!python3' shellescape(@%, 1)<cr>
+autocmd FileType python nnoremap <buffer> <F5> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
+autocmd FileType r nnoremap <buffer> <F5> :w<cr>:exec '!Rscript' shellescape(@%, 1)<cr>
