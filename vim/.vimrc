@@ -15,6 +15,7 @@ Plugin 'VundleVim/Vundle.vim'
 " We'll come on that later
 "Plugin 'lyuts/vim-rtags'
 Plugin 'scrooloose/nerdtree'
+Plugin 'ctrlpvim/ctrlp.vim'
 " <============================================>
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
