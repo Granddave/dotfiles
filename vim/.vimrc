@@ -36,18 +36,18 @@ filetype plugin indent on    " required
 syntax on
 filetype on
 
+"colorscheme slate
 
-set tabstop=4   " Tab set to 4 wide
-set expandtab   " Tab expands to spaces
-set wrap        " Wrap words visually
-set linebreak   " Don't split words in a word wrap
-set textwidth=0 " Prevent Vim from automatically inserting line breaks
-set wrapmargin=0 " The number of spaces from right margin to wrap from. 0 disables newline
-set nolist      " list shows hidden characters such as newline. 
-set number      " Show line numbers
-set mouse=a     " Enable mouse click to move cursor
-" colorscheme slate
+set tabstop=4       " Tab set to 4 wide
+set expandtab       " Tab expands to spaces
+set wrap            " Wrap words visually
+set linebreak       " Don't split words in a word wrap
+set textwidth=0     " Prevent Vim from automatically inserting line breaks
+set wrapmargin=0    " The number of spaces from right margin to wrap from. 0 disables newline
+set nolist          " list shows hidden characters such as newline. 
+set number          " Show line numbers
 set relativenumber  " Show line numbers relative to the cursor position
+set mouse=a         " Enable mouse click to move cursor
 set showmatch       " Show matching perenthesis
 set backspace=indent,eol,start " Allow backspace in insert mode
 set history=50  " Default 8
