@@ -52,6 +52,9 @@ set showmatch       " Show matching perenthesis
 set backspace=indent,eol,start " Allow backspace in insert mode
 set history=50  " Default 8
 
+" Search
+set ignorecase
+set smartcase
 " Highligting search
 set hlsearch
 set incsearch
