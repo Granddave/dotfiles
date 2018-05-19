@@ -47,10 +47,59 @@ set nolist      " list shows hidden characters such as newline.
 set number      " Show line numbers
 set mouse=a     " Enable mouse click to move cursor
 " colorscheme slate
+set relativenumber  " Show line numbers relative to the cursor position
+set showmatch       " Show matching perenthesis
 set backspace=indent,eol,start " Allow backspace in insert mode
 set history=50  " Default 8
 
+" Highligting search
+set hlsearch
+set incsearch
+
+" Esc to remove search findings
+nnoremap <esc> :noh<return><esc>
+nnoremap <esc>^[ <esc>^[
+
+" Scrolling
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+"map <ScrollWheelUp> <C-Y>
+"map <ScrollWheelDown> <C-E>
+
+" I need to break my habit...
+" Disable Arrow keys in Normal mode
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+" Disable Arrow keys in Insert mode
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
 
 noremap <F12> :NERDTreeToggle<CR>
+
 autocmd FileType python nnoremap <buffer> <F5> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
 autocmd FileType r nnoremap <buffer> <F5> :w<cr>:exec '!Rscript' shellescape(@%, 1)<cr>
+
+function! ToggleBetweenHeaderAndSourceFile()
+  let bufname = bufname("%")
+  let ext = fnamemodify(bufname, ":e")
+  if ext == "h"
+    let ext = "cpp"
+  elseif ext == "cpp"
+    let ext = "h"
+  else
+    return
+  endif
+  let bufname_new = fnamemodify(bufname, ":r") . "." . ext
+  let bufname_alt = bufname("#")
+  if bufname_new == bufname_alt
+    execute ":e#"
+  else
+    execute ":e " . bufname_new
+  endif
+endfunction
+map <silent> <F4> :call ToggleBetweenHeaderAndSourceFile()<CR>
+
