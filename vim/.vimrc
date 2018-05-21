@@ -81,6 +81,10 @@ imap <down> <nop>
 imap <left> <nop>
 imap <right> <nop>
 
+" Map ctrl+c to copy to system clipboard when in visual mode
+" Requires gvim(arch?) or vim-gui-common (Debian)
+vnoremap <C-c> "*y :let @+=@*<CR>  
+
 noremap <F12> :NERDTreeToggle<CR>
 
 autocmd FileType python nnoremap <buffer> <F5> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
