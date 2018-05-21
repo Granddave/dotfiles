@@ -52,7 +52,7 @@ set relativenumber  " Show line numbers relative to the cursor position
 set mouse=a         " Enable mouse click to move cursor
 set showmatch       " Show matching perenthesis
 set backspace=indent,eol,start " Allow backspace in insert mode
-set history=50  " Default 8
+set history=50      " Default 8
 
 " Search
 set ignorecase
