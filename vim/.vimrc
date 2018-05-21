@@ -88,7 +88,7 @@ imap <right> <nop>
 vnoremap <C-c> "*y :let @+=@*<CR>  
 
 noremap <F12> :NERDTreeToggle<CR>
-map <F9> :setlocal spell! spelllang=en_us<CR>
+map <F9> :setlocal spell! spelllang=en,sv<CR>
 
 autocmd FileType python nnoremap <buffer> <F5> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
 autocmd FileType r nnoremap <buffer> <F5> :w<cr>:exec '!Rscript' shellescape(@%, 1)<cr>
