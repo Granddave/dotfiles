@@ -102,6 +102,8 @@ alias cim="vim"
 alias ls="ls --color=auto"
 alias la="ls -lah"
 alias ll="ls -lh"
+alias lsdir="ls -d */"
+alias ladir="ls -d */ .*/"
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
