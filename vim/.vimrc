@@ -14,8 +14,10 @@ Plugin 'VundleVim/Vundle.vim'
 " Specify the plugins you want to install here.
 " We'll come on that later
 "Plugin 'lyuts/vim-rtags'
-Plugin 'scrooloose/nerdtree'
-Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'scrooloose/nerdtree'        " File explorer
+Plugin 'ctrlpvim/ctrlp.vim'         " Fuzzy file finder
+Plugin 'tpope/vim-commentary.git'   " Comment/Uncomment
+Plugin 'junegunn/goyo.vim'          " Distraction free writing
 " <============================================>
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
