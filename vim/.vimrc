@@ -40,8 +40,14 @@ filetype on
 
 "colorscheme slate
 
+set wildmenu
+set wildmode=longest:list,full
+set showcmd
+" http://vim.wikia.com/wiki/Indenting_source_code
 set tabstop=4       " Tab set to 4 wide
+set shiftwidth=4
 set expandtab       " Tab expands to spaces
+set smarttab
 set wrap            " Wrap words visually
 set linebreak       " Don't split words in a word wrap
 set textwidth=0     " Prevent Vim from automatically inserting line breaks
