@@ -54,6 +54,12 @@ set showmatch       " Show matching perenthesis
 set backspace=indent,eol,start " Allow backspace in insert mode
 set history=50      " Default 8
 
+" Set darker background after 80 chars (https://stackoverflow.com/a/13731714)
+let &colorcolumn=join(range(81,999),",")
+highlight ColorColumn ctermbg=235 guibg=#2c2d27
+
+
+
 " Search
 set ignorecase
 set smartcase
@@ -115,3 +121,8 @@ function! ToggleBetweenHeaderAndSourceFile()
 endfunction
 map <silent> <F4> :call ToggleBetweenHeaderAndSourceFile()<CR>
 
+function! s:goyo_leave()
+    highlight ColorColumn ctermbg=235 guibg=#2c2d27
+endfunction
+
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
