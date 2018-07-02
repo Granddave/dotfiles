@@ -38,10 +38,16 @@ filetype plugin indent on    " required
 syntax on
 filetype on
 
-"colorscheme slate
+colorscheme slate
 
+set wildmenu
+set wildmode=longest:list,full
+set showcmd
+" http://vim.wikia.com/wiki/Indenting_source_code
 set tabstop=4       " Tab set to 4 wide
+set shiftwidth=4
 set expandtab       " Tab expands to spaces
+set smarttab
 set wrap            " Wrap words visually
 set linebreak       " Don't split words in a word wrap
 set textwidth=0     " Prevent Vim from automatically inserting line breaks
@@ -89,9 +95,12 @@ imap <down> <nop>
 imap <left> <nop>
 imap <right> <nop>
 
+" Toggle between relative and absolute numbering
+map <C-l> :set rnu!<CR> 
+
 " Map ctrl+c to copy to system clipboard when in visual mode
 " Requires gvim(arch?) or vim-gui-common (Debian)
-vnoremap <C-c> "*y :let @+=@*<CR>  
+vnoremap <C-c> "*y :let @+=@*<CR> 
 
 noremap <F12> :NERDTreeToggle<CR>
 map <F9> :setlocal spell! spelllang=en,sv<CR>
