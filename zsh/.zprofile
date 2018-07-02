@@ -13,3 +13,5 @@ if type albert > /dev/null && ! pgrep albert >/dev/null 2>&1; then
     albert & 
 fi
 
+# Set caps lock to <CTRL>
+/usr/bin/setxkbmap -option "ctrl:nocaps"
