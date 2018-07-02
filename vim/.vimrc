@@ -45,7 +45,7 @@ set wildmode=longest:list,full
 set showcmd
 " http://vim.wikia.com/wiki/Indenting_source_code
 set tabstop=4       " Tab set to 4 wide
-set shiftwidth=4
+set shiftwidth=4    " Size of an 'indent'
 set expandtab       " Tab expands to spaces
 set smarttab
 set wrap            " Wrap words visually
@@ -61,12 +61,10 @@ set backspace=indent,eol,start " Allow backspace in insert mode
 set history=50      " Default 8
 
 " Set darker background after 80 chars (https://stackoverflow.com/a/13731714)
-let &colorcolumn=join(range(81,999),",")
-highlight ColorColumn ctermbg=235 guibg=#2c2d27
+"let &colorcolumn=join(range(81,999),",")
+"highlight ColorColumn ctermbg=235 guibg=#2c2d27
 
-
-
-" Search
+"" Search
 set ignorecase
 set smartcase
 " Highligting search
@@ -102,13 +100,16 @@ map <C-l> :set rnu!<CR>
 " Requires gvim(arch?) or vim-gui-common (Debian)
 vnoremap <C-c> "*y :let @+=@*<CR> 
 
-noremap <F12> :NERDTreeToggle<CR>
+" Function keys
+map <silent> <F4> :call ToggleBetweenHeaderAndSourceFile()<CR>
 map <F9> :setlocal spell! spelllang=en,sv<CR>
 map <F10> :Goyo<CR>
 inoremap <F10> <esc>:Goyo<CR>a
+" <F11> for fullscreen
+noremap <F12> :NERDTreeToggle<CR>
 
-autocmd FileType python nnoremap <buffer> <F5> :w<cr>:exec '!python3' shellescape(@%, 1)<cr>
-autocmd FileType r nnoremap <buffer> <F5> :w<cr>:exec '!Rscript' shellescape(@%, 1)<cr>
+autocmd FileType python nnoremap <buffer> <F5> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+autocmd FileType r nnoremap <buffer> <F5> :w<CR>:exec '!Rscript' shellescape(@%, 1)<CR>
 
 function! ToggleBetweenHeaderAndSourceFile()
   let bufname = bufname("%")
@@ -128,10 +129,9 @@ function! ToggleBetweenHeaderAndSourceFile()
     execute ":e " . bufname_new
   endif
 endfunction
-map <silent> <F4> :call ToggleBetweenHeaderAndSourceFile()<CR>
 
 function! s:goyo_leave()
-    highlight ColorColumn ctermbg=235 guibg=#2c2d27
+    "highlight ColorColumn ctermbg=235 guibg=#2c2d27
 endfunction
 
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
