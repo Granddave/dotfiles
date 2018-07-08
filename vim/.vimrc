@@ -11,13 +11,12 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 " <============================================>
-" Specify the plugins you want to install here.
-" We'll come on that later
 "Plugin 'lyuts/vim-rtags'
 Plugin 'scrooloose/nerdtree'        " File explorer
 Plugin 'ctrlpvim/ctrlp.vim'         " Fuzzy file finder
 Plugin 'tpope/vim-commentary.git'   " Comment/Uncomment
 Plugin 'junegunn/goyo.vim'          " Distraction free writing
+"Plugin 'Valloric/YouCompleteMe.git' " Auto completion   
 " <============================================>
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -38,7 +37,7 @@ filetype plugin indent on    " required
 syntax on
 filetype on
 
-colorscheme slate
+"colorscheme slate
 
 set wildmenu
 set wildmode=longest:list,full
