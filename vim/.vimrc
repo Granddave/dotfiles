@@ -46,6 +46,7 @@ set showcmd
 set tabstop=4       " Tab set to 4 wide
 set shiftwidth=4    " Size of an 'indent'
 set expandtab       " Tab expands to spaces
+set autoindent
 set smarttab
 set wrap            " Wrap words visually
 set linebreak       " Don't split words in a word wrap
