@@ -34,6 +34,15 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 " Put the rest of your .vimrc file here
 
+" Set up PowerLine when installed via deb package
+python3 from powerline.vim import setup as powerline_setup
+python3 powerline_setup()
+python3 del powerline_setup
+set laststatus=2    " Always display the statusline in all windows
+set showtabline=2   " Always display the tabline, even if there is only one tab
+set noshowmode      " Hide the default mode text (e.g. -- INSERT -- below the statusline)
+set t_Co=256        " Use 256 colors (Use this setting only if your terminal supports 256 colors)
+
 syntax on
 filetype on
 
