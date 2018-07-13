@@ -1,0 +1,9 @@
+#! /bin/bash
+if [ ! -f CMakeLists.txt ] ; then 
+    echo "No CMakeLists.txt file was found in this directory"
+    exit 1
+fi
+
+rm -rf build
+mkdir build && cd build
+cmake .. && make -j8
