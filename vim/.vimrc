@@ -55,6 +55,7 @@ set showcmd
 set tabstop=4       " Tab set to 4 wide
 set shiftwidth=4    " Size of an 'indent'
 set expandtab       " Tab expands to spaces
+set autoindent
 set smarttab
 set wrap            " Wrap words visually
 set linebreak       " Don't split words in a word wrap
@@ -116,8 +117,12 @@ inoremap <F10> <esc>:Goyo<CR>a
 " <F11> for fullscreen
 noremap <F12> :NERDTreeToggle<CR>
 
+" Build/run
 autocmd FileType python nnoremap <buffer> <F5> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
 autocmd FileType r nnoremap <buffer> <F5> :w<CR>:exec '!Rscript' shellescape(@%, 1)<CR>
+
+" Snippets
+autocmd FileType cpp inoremap ;co std::cout<Space><<<Space>f<Space><<<Space> std::endl;<Esc>Ffcw
 
 function! ToggleBetweenHeaderAndSourceFile()
   let bufname = bufname("%")
