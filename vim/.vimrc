@@ -1,3 +1,4 @@
+" ---- Vundle {{{
 set nocompatible              " be iMproved, required
 filetype off                  " required <<========== We can turn it on later
 
@@ -33,7 +34,9 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 " Put the rest of your .vimrc file here
+" }}}
 
+" ---- Powerline {{{ 
 " Set up PowerLine when installed via deb package
 python3 from powerline.vim import setup as powerline_setup
 python3 powerline_setup()
@@ -42,6 +45,7 @@ set laststatus=2    " Always display the statusline in all windows
 set showtabline=2   " Always display the tabline, even if there is only one tab
 set noshowmode      " Hide the default mode text (e.g. -- INSERT -- below the statusline)
 set t_Co=256        " Use 256 colors (Use this setting only if your terminal supports 256 colors)
+" }}}
 
 syntax on
 filetype on
@@ -69,11 +73,17 @@ set showmatch       " Show matching perenthesis
 set backspace=indent,eol,start " Allow backspace in insert mode
 set history=50      " Default 8
 
+" ---- Folding {{{
+" enable folding; http://vim.wikia.com/wiki/Folding
+set foldmethod=marker
+
+"}}}
+
 " Set darker background after 80 chars (https://stackoverflow.com/a/13731714)
 "let &colorcolumn=join(range(81,999),",")
 "highlight ColorColumn ctermbg=235 guibg=#2c2d27
 
-"" Search
+" ---- Search {{{ 
 set ignorecase
 set smartcase
 " Highligting search
@@ -81,8 +91,9 @@ set hlsearch
 set incsearch
 
 " Esc to remove search findings
-nnoremap <esc> :noh<return><esc>
+nnoremap <silent><esc> :noh<return><esc>
 nnoremap <esc>^[ <esc>^[
+" }}}
 
 " Scrolling
 nnoremap <C-e> 3<C-e>
@@ -103,11 +114,11 @@ imap <left> <nop>
 imap <right> <nop>
 
 " Toggle between relative and absolute numbering
-map <C-l> :set rnu!<CR> 
+nnoremap <silent><C-l> :set rnu!<CR>
 
 " Map ctrl+c to copy to system clipboard when in visual mode
 " Requires gvim(arch?) or vim-gui-common (Debian)
-vnoremap <C-c> "*y :let @+=@*<CR> 
+vnoremap <C-c> "*y :let @+=@*<CR>:echo "Copied to system clipboard"<cr>
 
 " Function keys
 map <silent> <F4> :call ToggleBetweenHeaderAndSourceFile()<CR>
