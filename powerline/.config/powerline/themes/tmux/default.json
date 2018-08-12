@@ -1,19 +1,14 @@
 {
 	"segments": {
 		"right": [			
-            {
-				"function": "powerline.segments.common.net.network_load"
-			},
 			{
-				"function": "powerline.segments.common.sys.cpu_load_percent"
-			},
+				"function": "powerline.segments.common.sys.uptime"
+            },
 			{
-				"function": "powerline.segments.common.time.date"
-			},
-			{
-				"function": "powerline.segments.common.net.hostname",
+				"function": "powerline.segments.common.time.date",
                 "args": {
-                  "exclude_domain": false
+                  "istime": false,
+                  "format": "%Y-%m-%d %H:%M"
                 }
 			}
 		]
