@@ -1,4 +1,25 @@
 #!/bin/bash
-# Sets the user name and email locally
-git config user.email "davidisaksson93@gmail.com"
-git config user.name "David Isaksson"
+# Sets the user name and email to the local git repository.
+
+read -p 'Personal or work account? [P/w]: ' account
+account=${account:-p}
+
+email="david.isaksson@cind.se"
+name="David Isaksson"
+
+if [[ $account =~ ^[pP]$ ]] ; then 
+    echo "Personal selected"
+    email="davidisaksson93@gmail.com"
+elif [[ $account =~ ^[wW]$ ]] ; then 
+    echo "Work selected"
+    email="david.isaksson@cind.se"
+else
+    echo "Not an option"
+    exit 1
+fi
+
+echo 
+echo "email: $email"
+echo "name: $name"
+git config user.email "$email"
+git config user.name "$name"
