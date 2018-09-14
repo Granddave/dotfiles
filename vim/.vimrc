@@ -89,6 +89,7 @@ set smartcase
 " Highligting search
 set hlsearch
 set incsearch
+vnoremap // y/<C-R>"<CR>
 
 " Esc to remove search findings
 nnoremap <silent><esc> :noh<return><esc>
