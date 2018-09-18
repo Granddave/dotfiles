@@ -17,7 +17,7 @@ Plugin 'scrooloose/nerdtree'        " File explorer
 Plugin 'ctrlpvim/ctrlp.vim'         " Fuzzy file finder
 Plugin 'tpope/vim-commentary.git'   " Comment/Uncomment
 Plugin 'junegunn/goyo.vim'          " Distraction free writing
-"Plugin 'Valloric/YouCompleteMe.git' " Auto completion   
+Plugin 'Valloric/YouCompleteMe.git' " Auto completion   
 " <============================================>
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -72,6 +72,9 @@ set mouse=a         " Enable mouse click to move cursor
 set showmatch       " Show matching perenthesis
 set backspace=indent,eol,start " Allow backspace in insert mode
 set history=50      " Default 8
+
+let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+nnoremap <F2> :YcmCompleter GoTo<CR>
 
 " ---- Folding {{{
 " enable folding; http://vim.wikia.com/wiki/Folding
