@@ -50,7 +50,7 @@ set t_Co=256        " Use 256 colors (Use this setting only if your terminal sup
 syntax on
 filetype on
 
-"colorscheme slate
+colorscheme slate
 
 set wildmenu
 set wildmode=longest:list,full
@@ -116,6 +116,13 @@ imap <up> <nop>
 imap <down> <nop>
 imap <left> <nop>
 imap <right> <nop>
+
+nnoremap <C-S-j> :m .+1<CR>==
+nnoremap <C-S-k> :m .-2<CR>==
+inoremap <C-S-j> <Esc>:m .+1<CR>==gi
+inoremap <C-S-k> <Esc>:m .-2<CR>==gi
+vnoremap <C-S-j> :m '>+1<CR>gv=gv
+vnoremap <C-S-k> :m '<-2<CR>gv=gv
 
 " Toggle between relative and absolute numbering
 nnoremap <silent><C-l> :set rnu!<CR>
