@@ -7,7 +7,8 @@
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="agnoster"
+#ZSH_THEME="agnoster"
+ZSH_THEME="simple"
 
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
@@ -109,9 +110,6 @@ alias ladir="ls -d */ .*/"
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias cl="clear"
-alias q="exit"
-alias rm="rm --preserve-root"
 alias lsupg="sudo apt update && apt list --upgradable"
 alias here="xdg-open . 2&>1 > /dev/null"
 alias pubip="curl ipinfo.io/ip"

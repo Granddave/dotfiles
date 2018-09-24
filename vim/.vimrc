@@ -52,6 +52,8 @@ filetype on
 
 colorscheme slate
 
+let mapleader=" "
+
 set wildmenu
 set wildmode=longest:list,full
 set showcmd
@@ -75,6 +77,16 @@ set history=50      " Default 8
 
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 nnoremap <F2> :YcmCompleter GoTo<CR>
+nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+set hidden
+nmap <leader>T :enew<cr>
+nmap <leader>l :bnext<cr>
+nmap <leader>h :bprevious<cr>
+nmap <leader>bq :bp <BAR> bd #<cr>
+nmap <leader>bl :<cr>
 
 " ---- Folding {{{
 " enable folding; http://vim.wikia.com/wiki/Folding
@@ -100,8 +112,8 @@ nnoremap <esc>^[ <esc>^[
 " }}}
 
 " Scrolling
-nnoremap <C-e> 3<C-e>
-nnoremap <C-y> 3<C-y>
+nnoremap <C-e> 2<C-e>
+nnoremap <C-y> 2<C-y>
 "map <ScrollWheelUp> <C-Y>
 "map <ScrollWheelDown> <C-E>
 
@@ -117,12 +129,12 @@ imap <down> <nop>
 imap <left> <nop>
 imap <right> <nop>
 
-nnoremap <C-S-j> :m .+1<CR>==
-nnoremap <C-S-k> :m .-2<CR>==
-inoremap <C-S-j> <Esc>:m .+1<CR>==gi
-inoremap <C-S-k> <Esc>:m .-2<CR>==gi
-vnoremap <C-S-j> :m '>+1<CR>gv=gv
-vnoremap <C-S-k> :m '<-2<CR>gv=gv
+nnoremap <C-j> :m .+1<CR>==
+nnoremap <C-k> :m .-2<CR>==
+inoremap <C-j> <Esc>:m .+1<CR>==gi
+inoremap <C-k> <Esc>:m .-2<CR>==gi
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
 
 " Toggle between relative and absolute numbering
 nnoremap <silent><C-l> :set rnu!<CR>
