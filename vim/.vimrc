@@ -51,6 +51,8 @@ syntax on
 filetype on
 
 colorscheme slate
+hi Search ctermbg=Yellow ctermfg=Black
+hi MatchParen ctermfg=Black ctermbg=Yellow 
 
 let mapleader=" "
 
