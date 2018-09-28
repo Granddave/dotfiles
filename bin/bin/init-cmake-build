@@ -6,4 +6,9 @@ fi
 
 rm -rf build
 mkdir build && cd build
-cmake .. && make -j8
+cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON && make -j8
+if [ -f compile_commands.json ]; then
+    mv compile_commands.json .. && echo "Copied compile_commands.json to base directory"
+else
+    echo "Could not generate compile_commands.json file."
+fi
