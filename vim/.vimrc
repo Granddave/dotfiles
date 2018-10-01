@@ -88,12 +88,11 @@ nmap <leader>T :enew<cr>
 nmap <leader>l :bnext<cr>
 nmap <leader>h :bprevious<cr>
 nmap <leader>bq :bp <BAR> bd #<cr>
-nmap <leader>bl :<cr>
+nmap <leader>bl :ls<cr>
 
 " ---- Folding {{{
 " enable folding; http://vim.wikia.com/wiki/Folding
 set foldmethod=marker
-
 "}}}
 
 " Set darker background after 80 chars (https://stackoverflow.com/a/13731714)
