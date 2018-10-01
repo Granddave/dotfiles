@@ -77,18 +77,22 @@ set showmatch       " Show matching perenthesis
 set backspace=indent,eol,start " Allow backspace in insert mode
 set history=50      " Default 8
 
+" ---- YouCompleteMe {{{
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 nnoremap <F2> :YcmCompleter GoTo<CR>
 nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" }}}
 
+" ---- Buffer handling {{{
 set hidden
 nmap <leader>T :enew<cr>
 nmap <leader>l :bnext<cr>
 nmap <leader>h :bprevious<cr>
 nmap <leader>bq :bp <BAR> bd #<cr>
 nmap <leader>bl :ls<cr>
+" }}}
 
 " ---- Folding {{{
 " enable folding; http://vim.wikia.com/wiki/Folding
