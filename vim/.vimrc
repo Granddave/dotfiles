@@ -1,4 +1,5 @@
 " ---- Vundle {{{
+
 set nocompatible              " be iMproved, required
 filetype off                  " required <<========== We can turn it on later
 
@@ -34,9 +35,10 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 " Put the rest of your .vimrc file here
-" }}}
 
+" }}}
 " ---- Powerline {{{ 
+
 " Set up PowerLine when installed via deb package
 python3 from powerline.vim import setup as powerline_setup
 python3 powerline_setup()
@@ -45,14 +47,31 @@ set laststatus=2    " Always display the statusline in all windows
 set showtabline=2   " Always display the tabline, even if there is only one tab
 set noshowmode      " Hide the default mode text (e.g. -- INSERT -- below the statusline)
 set t_Co=256        " Use 256 colors (Use this setting only if your terminal supports 256 colors)
+
+" }}}
+" ---- YouCompleteMe {{{
+
+let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+nnoremap <F2> :YcmCompleter GoTo<CR>
+nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
 " }}}
 
 syntax on
 filetype on
 
+" ---- Colors {{{
 colorscheme slate
 hi Search ctermbg=Yellow ctermfg=Black
 hi MatchParen ctermfg=Black ctermbg=Yellow 
+
+" Set darker background after 80 chars (https://stackoverflow.com/a/13731714)
+"let &colorcolumn=join(range(81,999),",")
+"highlight ColorColumn ctermbg=235 guibg=#2c2d27
+
+" }}}
 
 let mapleader=" "
 
@@ -69,7 +88,6 @@ set wrap            " Wrap words visually
 set linebreak       " Don't split words in a word wrap
 set textwidth=0     " Prevent Vim from automatically inserting line breaks
 set wrapmargin=0    " The number of spaces from right margin to wrap from. 0 disables newline
-set nolist          " list shows hidden characters such as newline. 
 set number          " Show line numbers
 set relativenumber  " Show line numbers relative to the cursor position
 set mouse=a         " Enable mouse click to move cursor
@@ -77,33 +95,29 @@ set showmatch       " Show matching perenthesis
 set backspace=indent,eol,start " Allow backspace in insert mode
 set history=50      " Default 8
 
-" ---- YouCompleteMe {{{
-let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
-nnoremap <F2> :YcmCompleter GoTo<CR>
-nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
-nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
-nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
-" }}}
+" Todo: Add toggle shortcut
+set nolist          " hides characters such as newline. 
+"set list
+"set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»
 
 " ---- Buffer handling {{{
+
 set hidden
 nmap <leader>T :enew<cr>
 nmap <leader>l :bnext<cr>
 nmap <leader>h :bprevious<cr>
 nmap <leader>bq :bp <BAR> bd #<cr>
 nmap <leader>bl :ls<cr>
-" }}}
 
+" }}}
 " ---- Folding {{{
+
 " enable folding; http://vim.wikia.com/wiki/Folding
 set foldmethod=marker
+
 "}}}
-
-" Set darker background after 80 chars (https://stackoverflow.com/a/13731714)
-"let &colorcolumn=join(range(81,999),",")
-"highlight ColorColumn ctermbg=235 guibg=#2c2d27
-
 " ---- Search {{{ 
+
 set ignorecase
 set smartcase
 " Highligting search
@@ -114,7 +128,9 @@ vnoremap // y/<C-R>"<CR>
 " Esc to remove search findings
 nnoremap <silent><esc> :noh<return><esc>
 nnoremap <esc>^[ <esc>^[
+
 " }}}
+" ---- Navigation and editing {{{ 
 
 " Scrolling
 nnoremap <C-e> 2<C-e>
@@ -148,7 +164,8 @@ nnoremap <silent><C-l> :set rnu!<CR>
 " Requires gvim(arch?) or vim-gui-common (Debian)
 vnoremap <C-c> "*y :let @+=@*<CR>:echo "Copied to system clipboard"<cr>
 
-" Function keys
+" }}}
+" ---- Function keys {{{
 map <silent> <F4> :call ToggleBetweenHeaderAndSourceFile()<CR>
 map <F9> :setlocal spell! spelllang=en,sv<CR>
 map <F10> :Goyo<CR>
@@ -159,6 +176,8 @@ noremap <F12> :NERDTreeToggle<CR>
 " Build/run
 autocmd FileType python nnoremap <buffer> <F5> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
 autocmd FileType r nnoremap <buffer> <F5> :w<CR>:exec '!Rscript' shellescape(@%, 1)<CR>
+
+" }}}
 
 " Snippets
 autocmd FileType cpp inoremap ;co std::cout<Space><<<Space>f<Space><<<Space> std::endl;<Esc>Ffcw
