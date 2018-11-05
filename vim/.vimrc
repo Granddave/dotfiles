@@ -18,7 +18,7 @@ Plugin 'scrooloose/nerdtree'        " File explorer
 Plugin 'ctrlpvim/ctrlp.vim'         " Fuzzy file finder
 Plugin 'tpope/vim-commentary.git'   " Comment/Uncomment
 Plugin 'junegunn/goyo.vim'          " Distraction free writing
-Plugin 'Valloric/YouCompleteMe.git' " Auto completion   
+Plugin 'Valloric/YouCompleteMe.git' " Auto completion
 " <============================================>
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -37,7 +37,7 @@ filetype plugin indent on    " required
 " Put the rest of your .vimrc file here
 
 " }}}
-" ---- Powerline {{{ 
+" ---- Powerline {{{
 
 " Set up PowerLine when installed via deb package
 python3 from powerline.vim import setup as powerline_setup
@@ -65,7 +65,7 @@ filetype on
 " ---- Colors {{{
 colorscheme slate
 hi Search ctermbg=Yellow ctermfg=Black
-hi MatchParen ctermfg=Black ctermbg=Yellow 
+hi MatchParen ctermfg=Black ctermbg=Yellow
 
 " Set darker background after 80 chars (https://stackoverflow.com/a/13731714)
 "let &colorcolumn=join(range(81,999),",")
@@ -79,10 +79,10 @@ set wildmenu
 set wildmode=longest:list,full
 set showcmd
 " http://vim.wikia.com/wiki/Indenting_source_code
-set tabstop=4       " Tab set to 4 wide
-set shiftwidth=4    " Size of an 'indent'
-set expandtab       " Tab expands to spaces
-set autoindent
+set tabstop=4       " The width of a tab character
+set shiftwidth=4    " Size of an 'indent', e.g. when pressing tab key
+set expandtab       " Make tabs expand to spaces
+set smartindent
 set smarttab
 set wrap            " Wrap words visually
 set linebreak       " Don't split words in a word wrap
@@ -116,21 +116,21 @@ nmap <leader>bl :ls<cr>
 set foldmethod=marker
 
 "}}}
-" ---- Search {{{ 
+" ---- Search {{{
 
 set ignorecase
 set smartcase
-" Highligting search
+" Highlighting search
 set hlsearch
 set incsearch
 vnoremap // y/<C-R>"<CR>
 
 " Esc to remove search findings
-nnoremap <silent><esc> :noh<return><esc>
+nnoremap <silent><esc> :noh<CR><esc>
 nnoremap <esc>^[ <esc>^[
 
 " }}}
-" ---- Navigation and editing {{{ 
+" ---- Navigation and editing {{{
 
 " Scrolling
 nnoremap <C-e> 2<C-e>
@@ -150,6 +150,7 @@ imap <down> <nop>
 imap <left> <nop>
 imap <right> <nop>
 
+" Move lines up or down
 nnoremap <C-j> :m .+1<CR>==
 nnoremap <C-k> :m .-2<CR>==
 inoremap <C-j> <Esc>:m .+1<CR>==gi
@@ -162,7 +163,7 @@ nnoremap <silent><C-l> :set rnu!<CR>
 
 " Map ctrl+c to copy to system clipboard when in visual mode
 " Requires gvim(arch?) or vim-gui-common (Debian)
-vnoremap <C-c> "*y :let @+=@*<CR>:echo "Copied to system clipboard"<cr>
+vnoremap <C-c> "*y :let @+=@*<CR>:echo "Copied to system clipboard"<CR>
 
 " }}}
 " ---- Function keys {{{
