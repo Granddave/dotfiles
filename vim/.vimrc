@@ -71,6 +71,11 @@ hi MatchParen ctermfg=Black ctermbg=Yellow
 "let &colorcolumn=join(range(81,999),",")
 "highlight ColorColumn ctermbg=235 guibg=#2c2d27
 
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 " }}}
 
 let mapleader=" "
@@ -94,11 +99,10 @@ set mouse=a         " Enable mouse click to move cursor
 set showmatch       " Show matching perenthesis
 set backspace=indent,eol,start " Allow backspace in insert mode
 set history=50      " Default 8
+set nolist          " Hides characters such as newline.
+set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»
 
-" Todo: Add toggle shortcut
-set nolist          " hides characters such as newline. 
-"set list
-"set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»
+noremap <leader>sl :set list!<CR>
 
 " ---- Buffer handling {{{
 
@@ -114,6 +118,9 @@ nmap <leader>bl :ls<cr>
 
 " enable folding; http://vim.wikia.com/wiki/Folding
 set foldmethod=marker
+
+" Toggle fold
+nnoremap <leader><leader> za
 
 "}}}
 " ---- Search {{{
@@ -158,12 +165,18 @@ inoremap <C-k> <Esc>:m .-2<CR>==gi
 vnoremap <C-j> :m '>+1<CR>gv=gv
 vnoremap <C-k> :m '<-2<CR>gv=gv
 
+" Don't deselect lines when indenting
+vnoremap < <gv
+vnoremap > >gv
+
 " Toggle between relative and absolute numbering
 nnoremap <silent><C-l> :set rnu!<CR>
 
 " Map ctrl+c to copy to system clipboard when in visual mode
 " Requires gvim(arch?) or vim-gui-common (Debian)
 vnoremap <C-c> "*y :let @+=@*<CR>:echo "Copied to system clipboard"<CR>
+
+nnoremap <leader>rc :so ~/.vimrc<CR>:echo "Config reloaded"<CR>
 
 " }}}
 " ---- Function keys {{{
