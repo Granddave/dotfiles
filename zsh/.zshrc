@@ -58,9 +58,9 @@ export EDITOR="vim"
 export TERM=xterm-256color
 
 alias ls="ls --color=auto"
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
 alias lsupg="sudo apt update && apt list --upgradable"
 alias here="xdg-open . 2&>1 > /dev/null"
 alias pubip="curl ipinfo.io/ip"
