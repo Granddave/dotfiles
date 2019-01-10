@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-  export ZSH=/home/david/.oh-my-zsh
+export ZSH=/home/david/.oh-my-zsh
 
 #ZSH_THEME="agnoster"
 ZSH_THEME="simple"
@@ -19,6 +19,10 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+
+DEBEMAIL="davidisaksson93@gmail.com"
+DEBFULLNAME="David Isaksson"
+export DEBEMAIL DEBFULLNAME
 
 # User configuration
 
@@ -51,6 +55,7 @@ source $ZSH/oh-my-zsh.sh
 
 export VISUAL="vim"
 export EDITOR="vim"
+export TERM=xterm-256color
 
 alias ls="ls --color=auto"
 alias ..='cd ..'
@@ -60,3 +65,7 @@ alias lsupg="sudo apt update && apt list --upgradable"
 alias here="xdg-open . 2&>1 > /dev/null"
 alias pubip="curl ipinfo.io/ip"
 alias scan-network="nmap -sn 192.168.0.0/24"
+
+remove-host() {
+    sed -i $1d ~/.ssh/known_hosts
+}

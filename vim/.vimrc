@@ -99,9 +99,9 @@ set mouse=a         " Enable mouse click to move cursor
 set showmatch       " Show matching perenthesis
 set backspace=indent,eol,start " Allow backspace in insert mode
 set history=50      " Default 8
-set nolist          " Hides characters such as newline.
-set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»
 
+"set nolist          " Hides characters such as newline.
+set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»
 noremap <leader>sl :set list!<CR>
 
 " ---- Buffer handling {{{
@@ -190,6 +190,7 @@ noremap <F12> :NERDTreeToggle<CR>
 " Build/run
 autocmd FileType python nnoremap <buffer> <F5> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
 autocmd FileType r nnoremap <buffer> <F5> :w<CR>:exec '!Rscript' shellescape(@%, 1)<CR>
+nnoremap <F5> :w<CR>:!%:p<CR>
 
 " }}}
 
