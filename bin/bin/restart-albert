@@ -2,4 +2,4 @@
 
 killall albert
 sleep 1
-albert & 
+albert &

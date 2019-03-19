@@ -7,10 +7,10 @@ account=${account:-p}
 email="david.isaksson@cind.se"
 name="David Isaksson"
 
-if [[ $account =~ ^[pP]$ ]] ; then 
+if [[ $account =~ ^[pP]$ ]] ; then
     echo "Personal selected"
     email="davidisaksson93@gmail.com"
-elif [[ $account =~ ^[wW]$ ]] ; then 
+elif [[ $account =~ ^[wW]$ ]] ; then
     echo "Work selected"
     email="david.isaksson@cind.se"
 else
@@ -18,7 +18,7 @@ else
     exit 1
 fi
 
-echo 
+echo ""
 echo "email: $email"
 echo "name: $name"
 git config user.email "$email"
