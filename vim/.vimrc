@@ -48,6 +48,23 @@ colorscheme slate
 hi Search ctermbg=Yellow ctermfg=Black
 hi MatchParen ctermfg=Black ctermbg=Yellow
 
+hi Pmenu ctermbg=Blue
+hi PmenuSel ctermbg=Green
+
+if &diff
+    syntax off
+endif
+
+set cursorline
+noremap <leader>cl :set cursorline!<CR>
+hi CursorLine term=none cterm=none ctermbg=236
+" Only show CursorLine in current window
+augroup CursorLine
+  au!
+  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  au WinLeave * setlocal nocursorline
+augroup END
+
 " Set darker background after 80 chars (https://stackoverflow.com/a/13731714)
 "let &colorcolumn=join(range(81,999),",")
 "highlight ColorColumn ctermbg=235 guibg=#2c2d27
@@ -74,8 +91,9 @@ set wrap            " Wrap words visually
 set linebreak       " Don't split words in a word wrap
 set textwidth=0     " Prevent Vim from automatically inserting line breaks
 set wrapmargin=0    " The number of spaces from right margin to wrap from. 0 disables newline
+set numberwidth=5   " Width of numberline
 set number          " Show line numbers
-set relativenumber  " Show line numbers relative to the cursor position
+"set relativenumber  " Show line numbers relative to the cursor position
 set mouse=a         " Enable mouse click to move cursor
 set showmatch       " Show matching perenthesis
 set backspace=indent,eol,start " Allow backspace in insert mode
@@ -112,7 +130,8 @@ set smartcase
 set hlsearch
 set incsearch
 vnoremap // y/<C-R>"<CR>
-
+xnoremap <leader>sr y:<C-U>let replacement = input('Enter replacement string: ') <bar> %s!<C-R>"!\=replacement!g<CR>
+xnoremap <leader>sc y:<C-U>let replacement = input('Enter replacement string: ') <bar> %s!<C-R>"!\=replacement!gc<CR>
 " Esc to remove search findings
 nnoremap <silent><esc> :noh<CR><esc>
 nnoremap <esc>^[ <esc>^[
@@ -125,18 +144,19 @@ nnoremap <C-e> 2<C-e>
 nnoremap <C-y> 2<C-y>
 "map <ScrollWheelUp> <C-Y>
 "map <ScrollWheelDown> <C-E>
-
+map <C-up> <C-y>
+map <C-down> <C-e>
 " I need to break my habit...
 " Disable Arrow keys in Normal mode
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
+"map <up> <nop>
+"map <down> <nop>
+"map <left> <nop>
+"map <right> <nop>
 " Disable Arrow keys in Insert mode
-imap <up> <nop>
-imap <down> <nop>
-imap <left> <nop>
-imap <right> <nop>
+"imap <up> <nop>
+"imap <down> <nop>
+"imap <left> <nop>
+"imap <right> <nop>
 
 " Move lines up or down
 nnoremap <C-j> :m .+1<CR>==
@@ -150,12 +170,22 @@ vnoremap <C-k> :m '<-2<CR>gv=gv
 vnoremap < <gv
 vnoremap > >gv
 
+set scrolloff=5
+"nnoremap n nzz
+"nnoremap N Nzz
+"nnoremap * *zz
+"nnoremap # #zz
+"nnoremap g* g*zz
+"nnoremap g# g#zz
+
 " Toggle between relative and absolute numbering
 nnoremap <silent><C-l> :set rnu!<CR>
 
 " Map ctrl+c to copy to system clipboard when in visual mode
 " Requires gvim(arch?) or vim-gui-common (Debian)
 vnoremap <C-c> "*y :let @+=@*<CR>:echo "Copied to system clipboard"<CR>
+
+vnoremap p "_dP
 
 nnoremap <leader>rc :so ~/.vimrc<CR>:echo "Config reloaded"<CR>
 
