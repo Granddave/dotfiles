@@ -19,6 +19,7 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+bindkey '^ ' autosuggest-accept
 
 DEBEMAIL="davidisaksson93@gmail.com"
 DEBFULLNAME="David Isaksson"
@@ -62,9 +63,11 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias lsupg="sudo apt update && apt list --upgradable"
-alias here="xdg-open . 2&>1 > /dev/null"
+alias here="xdg-open . 2>&1 > /dev/null"
 alias pubip="curl ipinfo.io/ip"
 alias scan-network="nmap -sn 192.168.0.0/24"
+alias ip="ip -c"
+alias mkdate="mkdir $(date "+%Y-%m-%d")"
 
 remove-host() {
     sed -i $1d ~/.ssh/known_hosts
