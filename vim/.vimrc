@@ -95,6 +95,7 @@ set numberwidth=5   " Width of numberline
 set number          " Show line numbers
 "set relativenumber  " Show line numbers relative to the cursor position
 set mouse=a         " Enable mouse click to move cursor
+set ttymouse=sgr    " Enable mouse drag in tmux
 set showmatch       " Show matching perenthesis
 set backspace=indent,eol,start " Allow backspace in insert mode
 set history=50      " Default 8
@@ -102,6 +103,8 @@ set history=50      " Default 8
 "set nolist          " Hides characters such as newline.
 set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»
 noremap <leader>sl :set list!<CR>
+" Delete unwanted whitespace
+noremap <silent> <leader>dw :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
 " ---- Buffer handling {{{
 
