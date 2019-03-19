@@ -2,35 +2,22 @@
 #
 # == Set mouse speed ==
 #
-# Sets the mouse speed with xinput for a specified mouse.
-# Only give the name of the mouse and the acceleration that you want.
-#
-# Author: David Isaksson (davidisaksson93@gmail.com)
+# Sets the mouse speed with xinput for a specified device ID.
 
-if [ $# -ne 2 ]; then
-    echo "Usage:    $0 <Mouse name> <Acceleration>"
-    echo "Example:  $0 \"Logitech G203\" -0.5"
+if [ "$#" -ne 2 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    echo "Usage:    $0 <Acceleration> <Device IDs"
+    echo "Example:  $0 -0.5 13 14"
     echo ""
-    echo "Run 'xinput --list' to figure out the name of the mouse that you want to configure."
-    echo "Only a unique substring that identifies the mouse is required."
+    echo "Run 'xinput --list' to figure out the IDs of the mouse that you want to configure."
+    echo "Or run my other utility command get-mouse-id, which gets the IDs by device name."
     exit 0
 fi
 
-MOUSE_NAME=$1
-ACCEL=$2
-ACCEL_PROP='libinput Accel Speed'
-IDS=$(xinput --list | grep "pointer" | grep "$MOUSE_NAME" | grep -E -o 'id=[0-9]+' | grep -E -o '[0-9]+')
-NUM=$(echo $IDS | wc -w)
-echo "Found $NUM $MOUSE_NAME IDs"
-
-for ID in ${IDS[@]}; do
-    echo "Checking id $ID"
-    if xinput --list-props $ID | grep "$ACCEL_PROP (" > /dev/null; then
-        echo "Found prop for ID $ID"
-        echo "Setting $ACCEL_PROP to $ACCEL"
-        # Accel prop needs to be in single ticks. Any other way?
-        /bin/bash -c "xinput set-prop $ID '$ACCEL_PROP' $ACCEL"
+ACCEL=$1
+shift
+for ID in "$@"; do
+    if xinput --list-props $ID | grep "libinput Accel Speed (" > /dev/null; then
+        echo "Found accel prop for ID $ID"
+        xinput set-prop $ID 'libinput Accel Speed' $ACCEL
     fi
 done
-exit 0
-
