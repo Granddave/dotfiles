@@ -208,6 +208,8 @@ nnoremap <F5> :w<CR>:!%:p<CR>
 
 " }}}
 
+autocmd BufRead ~/.ssh/config.d/* setlocal ft=sshconfig
+
 " Snippets
 autocmd FileType cpp inoremap ;co std::cout<Space><<<Space>f<Space><<<Space> std::endl;<Esc>Ffcw
 
