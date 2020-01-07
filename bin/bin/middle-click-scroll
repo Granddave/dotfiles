@@ -6,17 +6,20 @@
 # run middle-click-scroll <Mouse ID>
 # from https://askubuntu.com/a/868173
 
-if [ "$#" -ne 1 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-    echo "Usage: $0 <Mouse IDs>"
+if [ "$#" -lt 2 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    echo "Usage: $0 <Enabled [0,1]> <Mouse IDs>"
     echo "Run 'xinput --list' to get the right ID of your mouse."
     echo "Or run my other utility command get-mouse-id, which gets the IDs by device name."
     exit 0
 fi
 
+ENABLED=$1
+shift
+
 for ID in "$@"; do
     if xinput --list-props $ID | grep "libinput Scroll Method Enabled (" > /dev/null; then
         echo "Found scroll method prop for ID $ID"
-        xinput set-prop $ID "libinput Scroll Method Enabled" 0, 0, 1  # This is button (default: 0, 0, 0)
+        xinput set-prop $ID "libinput Scroll Method Enabled" 0, 0, $ENABLED  # This is button (default: 0, 0, 0)
         xinput set-prop $ID "libinput Button Scrolling Button" 2      # This is middle mouse. Already 2 by default
     fi
 done
