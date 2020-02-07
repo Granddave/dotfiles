@@ -4,9 +4,8 @@ if [ ! -f CMakeLists.txt ] ; then
     exit 1
 fi
 
-rm -rf build
-mkdir build && cd build
-cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON && make -j8
+mkdir -p build && cd build
+cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON && cmake --build . -- -j 8
 if [ -f compile_commands.json ]; then
     mv compile_commands.json .. && echo "Copied compile_commands.json to base directory"
 else
