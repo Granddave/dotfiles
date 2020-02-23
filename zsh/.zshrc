@@ -58,17 +58,14 @@ export VISUAL="vim"
 export EDITOR="vim"
 export TERM=xterm-256color
 
+alias vi="vim"
 alias ls="ls --color=auto"
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
+alias ip="ip -c"
 alias lsupg="sudo apt update && apt list --upgradable"
 alias here="xdg-open . 2>&1 > /dev/null"
 alias pubip="curl ipinfo.io/ip"
-alias scan-network="nmap -sn 192.168.0.0/24"
-alias ip="ip -c"
-alias mkdate="mkdir $(date "+%Y-%m-%d")"
 
-remove-host() {
-    sed -i $1d ~/.ssh/known_hosts
+mkdate()
+{
+    mkdir $(date "+%Y-%m-%d")
 }
