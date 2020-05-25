@@ -186,10 +186,10 @@ font:
 colors:
   # Default colors
   primary:
-    # hard contrast: background = '0x1d2021'
+    # hard contrast: background = '0x1d2021' alt. '0x1c1c1c'
     # default contrast: background = '0x282828'
     # soft contrast: background = '0x32302f'
-    background: '0x1d2021'
+    background: '0x1c1c1c'
 
     foreground: '0xebdbb2'
 

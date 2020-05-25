@@ -12,28 +12,26 @@ Plugin 'scrooloose/nerdtree'        " File explorer
 Plugin 'ctrlpvim/ctrlp.vim'         " Fuzzy file finder
 Plugin 'tpope/vim-commentary.git'   " Comment/Uncomment
 Plugin 'junegunn/goyo.vim'          " Distraction free writing
-Plugin 'Valloric/YouCompleteMe.git' " Auto completion
-
+Plugin 'morhetz/gruvbox'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 call vundle#end()
 filetype plugin indent on
 
 " }}}
-" ---- Powerline {{{
+" ---- Airline {{{
 
-" Set up PowerLine when installed via deb package
-python3 from powerline.vim import setup as powerline_setup
-python3 powerline_setup()
-python3 del powerline_setup
 set laststatus=2    " Always display the statusline in all windows
 set showtabline=2   " Always display the tabline, even if there is only one tab
 set noshowmode      " Hide the default mode text (e.g. -- INSERT -- below the statusline)
-set t_Co=256        " Use 256 colors (Use this setting only if your terminal supports 256 colors)
+
 
 " }}}
 " ---- YouCompleteMe {{{
 
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 nnoremap <F2> :YcmCompleter GoTo<CR>
+
 nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
@@ -44,9 +42,22 @@ syntax on
 filetype on
 
 " ---- Colors {{{
-colorscheme slate
+colorscheme gruvbox
+let g:gruvbox_contrast_dark = 'hard'
+let g:airline#extensions#tabline#enabled = 1
+set background=dark
+set termguicolors
+
 hi Search ctermbg=Yellow ctermfg=Black
 hi MatchParen ctermfg=Black ctermbg=Yellow
+nnoremap <silent> [oh :call gruvbox#hls_show()<CR>
+nnoremap <silent> ]oh :call gruvbox#hls_hide()<CR>
+nnoremap <silent> coh :call gruvbox#hls_toggle()<CR>
+
+nnoremap * :let @/ = ""<CR>:call gruvbox#hls_show()<CR>*
+nnoremap / :let @/ = ""<CR>:call gruvbox#hls_show()<CR>/
+nnoremap ? :let @/ = ""<CR>:call gruvbox#hls_show()<CR>?
+
 
 hi Pmenu ctermbg=Blue
 hi PmenuSel ctermbg=Green
@@ -57,7 +68,7 @@ endif
 
 set cursorline
 noremap <leader>cl :set cursorline!<CR>
-hi CursorLine term=none cterm=none ctermbg=236
+"hi CursorLine term=none cterm=none ctermbg=236
 " Only show CursorLine in current window
 augroup CursorLine
   au!
