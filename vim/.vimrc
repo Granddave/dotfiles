@@ -14,7 +14,6 @@ Plugin 'tpope/vim-commentary.git'   " Comment/Uncomment
 Plugin 'junegunn/goyo.vim'          " Distraction free writing
 Plugin 'morhetz/gruvbox'
 Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
 call vundle#end()
 filetype plugin indent on
 
@@ -44,9 +43,11 @@ filetype on
 " ---- Colors {{{
 colorscheme gruvbox
 let g:gruvbox_contrast_dark = 'hard'
-let g:airline#extensions#tabline#enabled = 1
+let g:gruvbox_italic=1
 set background=dark
 set termguicolors
+
+let g:airline#extensions#tabline#enabled = 1
 
 hi Search ctermbg=Yellow ctermfg=Black
 hi MatchParen ctermfg=Black ctermbg=Yellow
