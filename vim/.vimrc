@@ -18,14 +18,6 @@ call vundle#end()
 filetype plugin indent on
 
 " }}}
-" ---- Airline {{{
-
-set laststatus=2    " Always display the statusline in all windows
-set showtabline=2   " Always display the tabline, even if there is only one tab
-set noshowmode      " Hide the default mode text (e.g. -- INSERT -- below the statusline)
-
-
-" }}}
 " ---- YouCompleteMe {{{
 
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
@@ -51,9 +43,6 @@ let g:airline#extensions#tabline#enabled = 1
 
 hi Search ctermbg=Yellow ctermfg=Black
 hi MatchParen ctermfg=Black ctermbg=Yellow
-nnoremap <silent> [oh :call gruvbox#hls_show()<CR>
-nnoremap <silent> ]oh :call gruvbox#hls_hide()<CR>
-nnoremap <silent> coh :call gruvbox#hls_toggle()<CR>
 
 nnoremap * :let @/ = ""<CR>:call gruvbox#hls_show()<CR>*
 nnoremap / :let @/ = ""<CR>:call gruvbox#hls_show()<CR>/
@@ -210,7 +199,7 @@ nnoremap <leader>rc :so ~/.vimrc<CR>:echo "Config reloaded"<CR>
 " ---- Function keys {{{
 map <silent> <F4> :call ToggleBetweenHeaderAndSourceFile()<CR>
 map <F9> :setlocal spell! spelllang=en,sv<CR>
-map <F10> :Goyo<CR>
+map <silent><F10> :Goyo<CR>
 inoremap <F10> <esc>:Goyo<CR>a
 " <F11> for fullscreen
 noremap <F12> :NERDTreeToggle<CR>
@@ -249,3 +238,4 @@ function! s:goyo_leave()
 endfunction
 
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
