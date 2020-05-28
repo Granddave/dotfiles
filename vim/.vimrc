@@ -194,6 +194,7 @@ vnoremap <C-c> "*y :let @+=@*<CR>:echo "Copied to system clipboard"<CR>
 vnoremap p "_dP
 
 nnoremap <leader>rc :so ~/.vimrc<CR>:echo "Config reloaded"<CR>
+nmap <leader>w :w<CR>
 
 " }}}
 " ---- Function keys {{{
