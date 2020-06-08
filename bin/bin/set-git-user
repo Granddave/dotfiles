@@ -1,25 +1,32 @@
 #!/bin/bash
 # Sets the user name and email to the local git repository.
 
-read -p 'Personal or work account? [P/w]: ' account
-account=${account:-p}
+if ! git rev-parse --git-dir > /dev/null 2>&1; then
+    echo "not inside a git repo"
+    exit 1
+fi
 
-email="david.isaksson@cind.se"
-name="David Isaksson"
+echo "Current user: $(git config user.name) ($(git config user.email))"
+read -p 'Personal or work account? [P/w]: ' ACCOUNT
+ACCOUNT=${ACCOUNT:-p}
 
-if [[ $account =~ ^[pP]$ ]] ; then
-    echo "Personal selected"
-    email="davidisaksson93@gmail.com"
-elif [[ $account =~ ^[wW]$ ]] ; then
-    echo "Work selected"
-    email="david.isaksson@cind.se"
+EMAIL="david.isaksson@cind.se"
+NAME="David Isaksson"
+
+if [[ $ACCOUNT =~ ^[pP]$ ]] ; then
+    EMAIL="davidisaksson93@gmail.com"
+elif [[ $ACCOUNT =~ ^[wW]$ ]] ; then
+    EMAIL="david.isaksson@cind.se"
 else
     echo "Not an option"
     exit 1
 fi
 
 echo ""
-echo "email: $email"
-echo "name: $name"
-git config user.email "$email"
-git config user.name "$name"
+echo "name:  $NAME"
+echo "email: $EMAIL"
+read -p 'Do this look good? [Y/n]: ' OK
+[[ ${OK:-y} =~ ^[yY]$ ]] || exit 0
+git config user.email "$EMAIL"
+git config user.name "$NAME"
+echo "Done."

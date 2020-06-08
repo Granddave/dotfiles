@@ -36,8 +36,9 @@ if [[ ! -d ~/.vim/bundle/Vundle.vim ]]; then
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
 
+
 echo "* Starting to stow dotfiles..."
-dirs="bin powerline redshift tmux vim xmodmap zsh"
+dirs="alacritty bin redshift tmux vim xmodmap zsh"
 for dir in $dirs;
 do
     if [[ -d $dir ]]; then

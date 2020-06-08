@@ -12,7 +12,7 @@ Plugin 'scrooloose/nerdtree'        " File explorer
 Plugin 'ctrlpvim/ctrlp.vim'         " Fuzzy file finder
 Plugin 'tpope/vim-commentary.git'   " Comment/Uncomment
 Plugin 'junegunn/goyo.vim'          " Distraction free writing
-Plugin 'morhetz/gruvbox'
+Plugin 'gruvbox-community/gruvbox'
 Plugin 'vim-airline/vim-airline'
 call vundle#end()
 filetype plugin indent on

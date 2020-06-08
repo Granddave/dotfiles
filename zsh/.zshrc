@@ -1,15 +1,7 @@
-# Path to your oh-my-zsh installation.
 export ZSH=/home/david/.oh-my-zsh
 
-#ZSH_THEME="agnoster"
 ZSH_THEME="simple"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 HIST_STAMPS="yyyy-mm-dd"
 
 plugins=(

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 #
 # Thanks to maximbaz
 # https://github.com/tmux/tmux/issues/937

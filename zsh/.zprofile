@@ -1,4 +1,4 @@
-PATH="$HOME/bin/:$HOME/.local/bin/:$PATH:/usr/sbin"
+PATH="$HOME/bin/:$HOME/.local/bin/:$PATH"
 
 for id in $(get-mouse-id.sh 'Logitech G203'); do
     set-mouse-speed.sh -0.7 $id >/dev/null
