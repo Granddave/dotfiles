@@ -98,7 +98,9 @@ set numberwidth=5   " Width of numberline
 set number          " Show line numbers
 "set relativenumber  " Show line numbers relative to the cursor position
 set mouse=a         " Enable mouse click to move cursor
-set ttymouse=sgr    " Enable mouse drag in tmux
+if !has('nvim')
+    set ttymouse=sgr
+endif
 set showmatch       " Show matching perenthesis
 set backspace=indent,eol,start " Allow backspace in insert mode
 set history=50      " Default 8

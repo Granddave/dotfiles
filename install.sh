@@ -1,23 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-if [ -f /etc/os-release ]; then
-    # freedesktop.org and systemd
-    . /etc/os-release
-    OS=$NAME
-    VER=$VERSION_ID
-elif type lsb_release >/dev/null 2>&1; then
-    # linuxbase.org
-    OS=$(lsb_release -si)
-    VER=$(lsb_release -sr)
-fi
-
-
-read -p "* Install powerline? [Y/n] " powerline
-powerline=${powerline:-Y}
-if [[ $powerline =~ ^[yY]$ ]]; then
-    if [ "$OS" = "Manjaro Linux" ]; then
-        sudo pacman -S powerline
-    fi
+read -p "* Install fzf? [Y/n] " fzf
+fzf=${fzf:-Y}
+if [[ $fzf =~ ^[yY]$ ]]; then
+    bin/bin/install-package fzf
 fi
 
 read -p "* Install oh-my-zsh? [Y/n] " zsh
