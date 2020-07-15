@@ -17,11 +17,11 @@ if [[ $zsh =~ ^[yY]$ ]]; then
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.oh-my-zsh/plugins/zsh-syntax-highlighting
 fi
 
-if [[ ! -d ~/.vim/bundle/Vundle.vim ]]; then
-    echo "* Installing vundle"
-    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+if [[ ! -d $HOME/.vim/autoload/plug.vim ]]; then
+    echo "* Installing vim-plug"
+    curl -fLo $HOME/.vim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
-
 
 echo "* Starting to stow dotfiles..."
 dirs="alacritty bin redshift tmux vim xmodmap zsh"
