@@ -16,10 +16,9 @@ if [[ -e /usr/share/fzf/key-bindings.zsh ]] && [[ -e /usr/share/fzf/completion.z
     # For Arch based distros
     source /usr/share/fzf/key-bindings.zsh
     source /usr/share/fzf/completion.zsh
-elif [[ -e /usr/share/doc/fzf/examples/key-bindings.zsh ]] && [[ -e /usr/share/doc/fzf/examples/completion.zsh ]] then
+elif [[ -e /usr/share/doc/fzf/examples/key-bindings.zsh ]] then
     # For Debian based distros
     source /usr/share/doc/fzf/examples/key-bindings.zsh
-    source /usr/share/doc/fzf/examples/completion.zsh
 fi
 
 bindkey '^ ' autosuggest-accept
