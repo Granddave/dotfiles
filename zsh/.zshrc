@@ -31,6 +31,7 @@ if [[ -z "$SSH_CONNECTION" ]]; then
     export VISUAL="nvim"
 else
     export VISUAL="vim"
+    export PROMPT="$(hostname) $PROMPT"
 fi
 export EDITOR="$VISUAL"
 export PAGER="less"
