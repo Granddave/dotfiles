@@ -1,0 +1,20 @@
+[core]
+    excludesfile = ~/.global_gitignore
+[include]
+    path = ~/.gitconfig_local
+[push]
+	default = current
+[alias]
+    a = add
+    d = diff
+    f = fetch -p # Fetch and prune previosly tracked branches
+    co = checkout
+    ci = commit
+    st = status
+    br = branch
+    bd = branch -d # Delete merged branch
+    bD = branch -D # Force delete a branch
+    pu = push --force-with-lease
+    hist = log --decorate --oneline --graph --date=short --all
+    h = hist
+    dump = cat-file -p
