@@ -39,11 +39,6 @@ export TERM=xterm-256color
 alias vi="$EDITOR"
 alias vim="$EDITOR"
 
-mkdate()
-{
-    mkdir $(date "+%Y-%m-%d")
-}
-
 open()
 {
     if [ "$#" -ne 1 ]; then
@@ -53,9 +48,19 @@ open()
     xdg-open $1 2>&1 > /dev/null
 }
 
+toggle()
+{
+    if pgrep $1 2>&1 > /dev/null; then
+        pkill $1 2>&1 > /dev/null
+    else
+        "$@" 2>&1 > /dev/null
+    fi
+}
+
 alias here="open ."
 alias ls="ls --color=auto"
 alias ip="ip -c"
 alias lsupg="sudo apt update && apt list --upgradable"
 alias pubip="curl ipinfo.io/ip"
+alias mkdate="mkdir $(date '+%Y-%m-%d')"
 
