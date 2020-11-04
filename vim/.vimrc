@@ -78,8 +78,15 @@ set history=50      " Default 8
 noremap <leader>sl :set list!<CR>
 set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»
 
-" Delete unwanted whitespace
-noremap <silent><leader>dw :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
+function! CleanTrailingSpaces()
+    let save_cursor = getpos(".")
+    let old_query = getreg('/')
+    silent! %s/\s\+$//e
+    call setpos('.', save_cursor)
+    call setreg('/', old_query)
+endfun
+
+noremap <silent><leader>dw :call CleanExtraSpaces()<cr>
 
 " }}}
 " ---- Buffer handling {{{
