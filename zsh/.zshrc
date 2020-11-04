@@ -60,6 +60,7 @@ toggle()
 alias here="open ."
 alias ls="ls --color=auto"
 alias ip="ip -c"
+alias r="ranger"
 alias lsupg="sudo apt update && apt list --upgradable"
 alias pubip="curl ipinfo.io/ip"
 alias mkdate="mkdir $(date '+%Y-%m-%d')"
