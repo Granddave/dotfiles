@@ -1,6 +1,5 @@
 export ZSH=/home/david/.oh-my-zsh
 
-ZSH_THEME="simple"
 COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="yyyy-mm-dd"
 
@@ -11,6 +10,17 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+
+# Theme inspired from 'simple'
+SSH_HOSTNAME=$([[ -n "$SSH_CONNECTION" ]] && echo "$(hostname) ")
+PROMPT='$SSH_HOSTNAME%(!.%{$fg[red]%}.%{$fg[green]%})%~%{$fg_bold[blue]%}$(git_prompt_info)%{$reset_color%} '
+ZSH_THEME_GIT_PROMPT_PREFIX="("
+ZSH_THEME_GIT_PROMPT_SUFFIX=")"
+ZSH_THEME_GIT_PROMPT_DIRTY=" ✗"
+ZSH_THEME_GIT_PROMPT_CLEAN=" ✔"
+
+local return_code="%(?..%{$fg[red]%}%?  %{$reset_color%})"
+RPS1="${return_code}"
 
 if [[ -e /usr/share/fzf/key-bindings.zsh ]] && [[ -e /usr/share/fzf/completion.zsh ]]; then
     # For Arch based distros
@@ -30,7 +40,6 @@ if [[ -z "$SSH_CONNECTION" ]]; then
     export VISUAL="nvim"
 else
     export VISUAL="vim"
-    export PROMPT="$(hostname) $PROMPT"
 fi
 export EDITOR="$VISUAL"
 export PAGER="less"
