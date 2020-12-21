@@ -4,16 +4,17 @@ set nocompatible
 filetype off
 
 call plug#begin()
-Plug 'jremmen/vim-ripgrep'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'airblade/vim-gitgutter'
 Plug 'scrooloose/nerdtree'        " File explorer
-Plug 'ctrlpvim/ctrlp.vim'         " Fuzzy file finder
 Plug 'junegunn/goyo.vim'          " Distraction free writing
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':['c', 'cpp']}
 Plug 'gruvbox-community/gruvbox'
 Plug 'vim-airline/vim-airline'
 call plug#end()
-
+let g:coc_disable_startup_warning = 1
 filetype on
 " }}}
 " ---- Colors {{{
@@ -27,7 +28,9 @@ set termguicolors
 let g:airline#extensions#tabline#enabled = 1
 
 hi Search ctermbg=Yellow ctermfg=Black
-hi MatchParen ctermfg=Black ctermbg=Yellow
+nnoremap <silent> [oh :call gruvbox#hls_show()<CR>
+nnoremap <silent> ]oh :call gruvbox#hls_hide()<CR>
+nnoremap <silent> coh :call gruvbox#hls_toggle()<CR>
 
 " CursorLine {{{
 set cursorline
@@ -86,7 +89,7 @@ function! CleanTrailingSpaces()
     call setreg('/', old_query)
 endfun
 
-noremap <silent><leader>dw :call CleanExtraSpaces()<cr>
+noremap <silent><leader>dw :call CleanTrailingSpaces()<cr>
 
 " }}}
 " ---- Buffer handling {{{
@@ -128,6 +131,10 @@ xnoremap <leader>sc y:%s%<C-R>"%%gc<left><left><left>
 " Esc to remove search findings
 nnoremap <silent><esc> :noh<CR><esc>
 nnoremap <esc>^[ <esc>^[
+
+nnoremap <leader>sf :Files<CR>
+nnoremap <leader>gf :GFiles<CR>
+nnoremap <leader>gr :Rg<CR>
 
 " }}}
 " ---- Navigation and editing {{{
@@ -266,7 +273,8 @@ nmap <leader>rn <Plug>(coc-rename)
 
 " Remap for format selected region
 xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  :CocCommand prettier.formatFile<CR>
+
 
 augroup mygroup
   autocmd!
