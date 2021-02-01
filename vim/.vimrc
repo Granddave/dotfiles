@@ -91,6 +91,9 @@ endfun
 
 noremap <silent><leader>dw :call CleanTrailingSpaces()<cr>
 
+autocmd FileType yaml setlocal shiftwidth=2 tabstop=2
+autocmd FileType markdown setlocal shiftwidth=2 tabstop=2
+
 " }}}
 " ---- Buffer handling {{{
 
@@ -99,6 +102,7 @@ nmap <leader>T :enew<cr>
 nmap <leader>n :bnext<cr>
 nmap <leader>p :bprevious<cr>
 nmap <leader>bq :bp <BAR> bd #<cr>
+nmap <leader>bd :<c-u>up <bar> %bd <bar> e#<cr>
 nmap <leader>bl :ls<cr>
 
 nnoremap <leader>h :wincmd h<CR>

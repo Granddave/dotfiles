@@ -7,7 +7,7 @@
 [alias]
     a = add
     d = diff
-    f = fetch -p # Fetch and prune previosly tracked branches
+    f = fetch -p # Fetch and prune previously tracked branches
     co = checkout
     ci = commit
     st = status

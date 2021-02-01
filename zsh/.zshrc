@@ -3,6 +3,8 @@ export ZSH=/home/david/.oh-my-zsh
 COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="yyyy-mm-dd"
 
+setopt HIST_IGNORE_SPACE
+
 plugins=(
   git
   zsh-autosuggestions
@@ -68,6 +70,8 @@ alias here="open ."
 alias ls="ls --color=auto"
 alias ip="ip -c"
 alias r="ranger"
+alias t="tig --date-order --all"
+alias fd=fdfind
 alias lsupg="sudo apt update && apt list --upgradable"
 alias pubip="curl ipinfo.io/ip"
 alias mkdate="mkdir $(date '+%Y-%m-%d')"
