@@ -202,7 +202,7 @@ map <F9> :setlocal spell! spelllang=en,sv<CR>
 map <silent><F10> :Goyo<CR>
 inoremap <F10> <esc>:Goyo<CR>a
 " <F11> for fullscreen
-noremap <F12> :NERDTreeToggle<CR>
+noremap § :NERDTreeToggle<CR>
 
 " Build/run
 autocmd FileType python nnoremap <buffer> <F5> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>

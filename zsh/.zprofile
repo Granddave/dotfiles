@@ -2,7 +2,7 @@ PATH="$HOME/bin/:$HOME/.local/bin/:$PATH"
 
 if [[ -z "$SSH_CONNECTION" ]]; then
     for id in $(get-mouse-id.sh 'Logitech G203'); do
-        set-mouse-speed.sh -0.7 $id >/dev/null
+        set-mouse-speed.sh 0 $id >/dev/null
         middle-click-scroll 1 $id >/dev/null
     done
 
