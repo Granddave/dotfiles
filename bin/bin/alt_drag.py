@@ -4,6 +4,7 @@ import os
 import subprocess
 import argparse
 
+from middle_click_scroll import str2bool
 
 CURRENT_DESKTOP_ENV = os.getenv("XDG_CURRENT_DESKTOP")
 SUPPORTED_DESKTOP_ENVS = ["KDE", "ubuntu:GNOME"]
@@ -73,14 +74,11 @@ def _main():
         exit(1)
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("enabled", type=int)
+    parser.add_argument("enabled", type=str2bool)
     parser.add_argument("--verbose", "-v", action="store_true")
     args = parser.parse_args()
 
-    if args.enabled not in [0, 1]:
-        raise ValueError("Argument not 1 or 0")
-
-    set_alt_drag(bool(args.enabled), args.verbose)
+    set_alt_drag(args.enabled, args.verbose)
 
 
 if __name__ == "__main__":

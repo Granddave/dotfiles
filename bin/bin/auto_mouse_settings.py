@@ -8,6 +8,7 @@ import Xlib.error
 import Xlib.X
 
 from alt_drag import set_alt_drag
+import middle_click_scroll
 from xinput import filter_devices, has_prop, set_prop
 
 
@@ -30,8 +31,7 @@ def set_mouse_mode(enabled: bool, verbose=False):
         raise ValueError(f"'enabled' (type {type(enabled)}) is not of type bool")
 
     set_alt_drag(enabled, verbose)
-    set_prop(DEVICE_ID, "libinput Scroll Method Enabled", 0, 0, int(enabled))
-    set_prop(DEVICE_ID, "libinput Button Scrolling Button", 2)
+    middle_click_scroll.set_mode(enabled, device_id=DEVICE_ID)
 
 
 def _run(window_names, verbose):
