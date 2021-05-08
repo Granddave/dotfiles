@@ -4,7 +4,6 @@ COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="yyyy-mm-dd"
 
 setopt HIST_IGNORE_SPACE
-bindkey '^ ' autosuggest-accept
 
 plugins=(
   git
@@ -13,6 +12,8 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+
+bindkey '^ ' autosuggest-accept
 
 # Theme inspired from 'simple'
 SSH_HOSTNAME=$([[ -n "$SSH_CONNECTION" ]] && echo "$(hostname) ")

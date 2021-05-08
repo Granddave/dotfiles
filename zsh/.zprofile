@@ -1,4 +1,10 @@
-PATH="$HOME/bin/:$HOME/.local/bin/:$PATH"
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
 
 if [[ -z "$SSH_CONNECTION" ]]; then
     for id in $(get-mouse-id.sh 'Logitech G203'); do
