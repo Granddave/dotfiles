@@ -1,4 +1,10 @@
 {
-    "python.jediEnabled": false,
-    "python.linting.pylintEnabled": true
+  "python.pythonPath": "python3",
+  "python.linting.pylintEnabled": true,
+  "python.formatting.provider": "black",
+  "python.formatting.blackPath": "/home/david/.local/bin/black",
+  "python.formatting.blackArgs": ["--line-length", "100"],
+  "json.enable": false,
+  "prettier.tabWidth": 2,
+  "clangd.path": "/home/david/.config/coc/extensions/coc-clangd-data/install/12.0.0/clangd_12.0.0/bin/clangd"
 }

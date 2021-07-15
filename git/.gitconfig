@@ -1,13 +1,14 @@
 [core]
-    excludesfile = ~/.gitignore_global
+    excludesfile = ~/.gitignore
 [include]
     path = ~/.gitconfig_local
 [push]
-	default = current
+    default = current
 [alias]
     a = add
     d = diff
     f = fetch -p # Fetch and prune previously tracked branches
+    fa = fetch --prune --all --tags # Fetch and prune previously tracked branches
     co = checkout
     ci = commit
     st = status
@@ -18,3 +19,8 @@
     hist = log --decorate --oneline --graph --date=short --all
     h = hist
     dump = cat-file -p
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

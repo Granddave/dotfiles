@@ -4,7 +4,6 @@ COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="yyyy-mm-dd"
 
 setopt HIST_IGNORE_SPACE
-bindkey '^ ' autosuggest-accept
 
 plugins=(
   git
@@ -13,6 +12,8 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+
+bindkey '^ ' autosuggest-accept
 
 # Theme inspired from 'simple'
 SSH_HOSTNAME=$([[ -n "$SSH_CONNECTION" ]] && echo "$(hostname) ")
@@ -32,18 +33,14 @@ elif [[ -e /usr/share/doc/fzf/examples/key-bindings.zsh ]] then
     source /usr/share/doc/fzf/examples/key-bindings.zsh
 fi
 
-export VISUAL="/bin/vi -u NONE"
 export EDITOR="nvim"
+export VISUAL="$EDITOR"
 export PAGER="less"
 export TERM="xterm-256color"
 
 alias vi="$EDITOR"
 alias vim="$EDITOR"
 
-# virtualenvwrapper
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Dev
-source /usr/local/bin/virtualenvwrapper.sh
 
 open()
 {
