@@ -58,7 +58,10 @@ def _run(window_names, verbose):
                 if verbose:
                     print("Changed focus to", window_name)
 
-                mouse_mode_enabled_new = window_name not in window_names
+                mouse_mode_enabled_new = False
+                for w in window_names:
+                    if w not in window_name:
+                        mouse_mode_enabled_new = True
                 if mouse_mode_enabled_current != mouse_mode_enabled_new:
                     set_mouse_mode(mouse_mode_enabled_new, verbose)
                     mouse_mode_enabled_current = mouse_mode_enabled_new
