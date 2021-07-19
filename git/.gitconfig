@@ -8,6 +8,7 @@
     a = add
     d = diff
     f = fetch -p # Fetch and prune previously tracked branches
+    fa = fetch -p --all --tags # Fetch and prune previously tracked branches
     co = checkout
     ci = commit
     st = status
