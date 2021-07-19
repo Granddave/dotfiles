@@ -8,6 +8,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'airblade/vim-gitgutter'
+Plug 'puremourning/vimspector'
+Plug 'szw/vim-maximizer'
 Plug 'scrooloose/nerdtree'        " File explorer
 Plug 'junegunn/goyo.vim'          " Distraction free writing
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':['c', 'cpp']}
@@ -91,9 +93,9 @@ endfun
 
 noremap <silent><leader>dw :call CleanTrailingSpaces()<cr>
 
-autocmd FileType yaml setlocal shiftwidth=2 tabstop=2
-autocmd FileType markdown setlocal shiftwidth=2 tabstop=2
-
+autocmd FileType markdown,yaml setlocal shiftwidth=2 tabstop=2 colorcolumn=100
+autocmd FileType cpp,cmake,python setlocal colorcolumn=100
+autocmd BufRead,BufNewFile,BufEnter *.jrnl setlocal filetype=markdown
 " }}}
 " ---- Buffer handling {{{
 
@@ -110,6 +112,7 @@ nnoremap <leader>j :wincmd j<CR>
 nnoremap <leader>k :wincmd k<CR>
 nnoremap <leader>l :wincmd l<CR>
 
+nnoremap <leader>m :MaximizerToggle!<CR>
 " }}}
 " ---- Folding {{{
 
@@ -176,28 +179,9 @@ vnoremap p "_dP
 nnoremap <silent><leader>rc :so ~/.vimrc<CR>:echo "Config reloaded"<CR>
 nmap <leader>w :w<CR>
 
-function! ToggleBetweenHeaderAndSourceFile()
-  let bufname = bufname("%")
-  let ext = fnamemodify(bufname, ":e")
-  if ext == "h"
-    let ext = "cpp"
-  elseif ext == "cpp"
-    let ext = "h"
-  else
-    return
-  endif
-  let bufname_new = fnamemodify(bufname, ":r") . "." . ext
-  let bufname_alt = bufname("#")
-  if bufname_new == bufname_alt
-    execute ":e#"
-  else
-    execute ":e " . bufname_new
-  endif
-endfunction
-
 " }}}
 " ---- Function keys {{{
-map <silent> <F4> :call ToggleBetweenHeaderAndSourceFile()<CR>
+map <silent> <F4> :CocCommand clangd.switchSourceHeader<CR>
 map <F9> :setlocal spell! spelllang=en,sv<CR>
 map <silent><F10> :Goyo<CR>
 inoremap <F10> <esc>:Goyo<CR>a
@@ -277,7 +261,8 @@ nmap <leader>rn <Plug>(coc-rename)
 
 " Remap for format selected region
 xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  :CocCommand prettier.formatFile<CR>
+nmap <leader>f  <Plug>(coc-format)
+nmap <leader>pf  :CocCommand prettier.formatFile<CR>
 
 
 augroup mygroup
@@ -332,3 +317,37 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 "" Resume latest coc list
 "nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 " }}}
+" ---- Debugging {{{
+fun! GotoWindow(id)
+    call win_gotoid(a:id)
+    MaximizerToggle
+endfun
+
+" Debugger remaps
+nnoremap <leader>m :MaximizerToggle!<CR>
+nnoremap <leader>dd :call vimspector#Launch()<CR>
+nnoremap <leader>dc :call GotoWindow(g:vimspector_session_windows.code)<CR>
+nnoremap <leader>dt :call GotoWindow(g:vimspector_session_windows.tagpage)<CR>
+nnoremap <leader>dv :call GotoWindow(g:vimspector_session_windows.variables)<CR>
+"nnoremap <leader>dw :call GotoWindow(g:vimspector_session_windows.watches)<CR>
+nnoremap <leader>ds :call GotoWindow(g:vimspector_session_windows.stack_trace)<CR>
+nnoremap <leader>do :call GotoWindow(g:vimspector_session_windows.output)<CR>
+nnoremap <leader>de :call vimspector#Reset()<CR>
+
+nnoremap <leader>dtcb :call vimspector#CleanLineBreakpoint()<CR>
+
+nmap <leader>dl <Plug>VimspectorStepInto
+nmap <leader>dj <Plug>VimspectorStepOver
+nmap <leader>dk <Plug>VimspectorStepOut
+nmap <leader>d_ <Plug>VimspectorRestart
+nnoremap <leader>d<space> :call vimspector#Continue()<CR>
+
+nmap <leader>drc <Plug>VimspectorRunToCursor
+nmap <leader>dbp <Plug>VimspectorToggleBreakpoint
+nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
+
+" <Plug>VimspectorStop
+" <Plug>VimspectorPause
+" <Plug>VimspectorAddFunctionBreakpoint
+" }}}
+
