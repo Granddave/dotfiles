@@ -1,9 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-read -p "* Install fzf? [Y/n] " fzf
-fzf=${fzf:-Y}
-if [[ $fzf =~ ^[yY]$ ]]; then
-    bin/bin/install-package fzf
+read -p "* Install apt packages? [Y/n] " RESPONSE
+if [[ "${RESPONSE:-Y}" =~ ^[yY]$ ]]; then
+    xargs sudo apt-get install < apt-packages.txt
 fi
 
 read -p "* Install oh-my-zsh? [Y/n] " zsh
@@ -32,5 +31,16 @@ do
         stow $dir
     fi
 done
+
+read -p "* Enabling weather service? [Y/n] " RESPONSE
+if [[ "${RESPONSE:-Y}" =~ ^[yY]$ ]]; then
+    if [ ! -e $HOME/.config/systemd/user/weather.service ]; then
+        echo "! Tmux directory is not stowed"
+    else
+        systemctl --user daemon-reload
+        systemctl --user enable weather.timer
+        systemctl --user enable weather.service
+    fi
+fi
 
 echo "* Done."

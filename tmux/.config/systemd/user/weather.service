@@ -1,0 +1,9 @@
+[Unit]
+Description=Fetch weather stats
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c '{ /usr/bin/curl --silent --fail "wttr.in/?format=1" || echo "No internet"; } > /tmp/weather.txt'
+
+[Install]
+WantedBy=default.target
