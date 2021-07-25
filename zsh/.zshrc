@@ -33,19 +33,6 @@ elif [[ -e /usr/share/doc/fzf/examples/key-bindings.zsh ]] then
     source /usr/share/doc/fzf/examples/key-bindings.zsh
 fi
 
-export VISUAL="/bin/vi -u NONE"
-export EDITOR="nvim"
-export PAGER="less"
-export TERM="xterm-256color"
-
-alias vi="$EDITOR"
-alias vim="$EDITOR"
-
-# virtualenvwrapper
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Dev
-source /usr/local/bin/virtualenvwrapper.sh
-
 open()
 {
     if [ "$#" -ne 1 ]; then
@@ -64,6 +51,14 @@ toggle()
     fi
 }
 
+export EDITOR="nvim"
+export VISUAL="$EDITOR"
+export PAGER="less"
+export TERM="xterm-256color"
+
+alias vi="$EDITOR"
+alias vim="$EDITOR"
+
 alias here="open ."
 alias ls="ls --color=auto"
 alias ip="ip -c"
@@ -73,4 +68,3 @@ alias fd=fdfind
 alias lsupg="sudo apt update && apt list --upgradable"
 alias pubip="curl ipinfo.io/ip"
 alias mkdate="mkdir $(date '+%Y-%m-%d')"
-

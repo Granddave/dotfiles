@@ -1,2 +1,4 @@
 fzf
+fd-find
 curl
+zsh
