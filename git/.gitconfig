@@ -19,3 +19,6 @@
     hist = log --decorate --oneline --graph --date=short --all
     h = hist
     dump = cat-file -p
+[user]
+    name = David Isaksson
+    email = davidisaksson93@gmail.com
