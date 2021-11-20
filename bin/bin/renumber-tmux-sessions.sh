@@ -1,14 +1,15 @@
-#!/bin/bash
+#!/usr/bin/env bash
+#
+# Renumbers Tmux sessions sequentially starting from 1
 #
 # Thanks to maximbaz
 # https://github.com/tmux/tmux/issues/937
 # https://github.com/maximbaz/dotfiles/commit/925a5b88a8263805a5a24c6198dad23bfa62f44d
 
-sessions=$(tmux ls | grep '^[0-9]\+:' | cut -f1 -d':' | sort -n)
-
-new=1
-for old in $sessions
+SESSIONS=$(tmux ls | grep '^[0-9]\+:' | cut -f1 -d':' | sort -n)
+NEW=1
+for OLD in $SESSIONS
 do
-  tmux rename-session -t $old $new
-  ((new++))
+  tmux rename-session -t "$OLD" "$NEW"
+  ((NEW++))
 done

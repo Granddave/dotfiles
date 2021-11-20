@@ -1,6 +1,4 @@
-#!/bin/bash
-#
-# == Set mouse speed ==
+#!/usr/bin/env bash
 #
 # Sets the mouse speed with xinput for a specified device ID.
 
@@ -16,8 +14,8 @@ fi
 ACCEL=$1
 shift
 for ID in "$@"; do
-    if xinput --list-props $ID | grep "libinput Accel Speed (" > /dev/null; then
+    if xinput --list-props "$ID" | grep "libinput Accel Speed (" > /dev/null; then
         echo "Found accel prop for ID $ID"
-        xinput set-prop $ID 'libinput Accel Speed' $ACCEL
+        xinput set-prop "$ID" 'libinput Accel Speed' "$ACCEL"
     fi
 done

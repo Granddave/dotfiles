@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -e
 
-if [ ! -f CMakeLists.txt ] ; then
+if [ ! -f CMakeLists.txt ]; then
     echo "No CMakeLists.txt file was found in this directory"
     exit 1
 fi
@@ -10,11 +10,11 @@ fi
 BUILD_DIR=build
 EXTRA_FLAGS=
 
-if [ "$1" == "-d" ] ; then
+if [ "$1" == "-d" ]; then
     EXTRA_FLAGS="-DCMAKE_BUILD_TYPE=Debug"
     BUILD_DIR=build_debug
     echo "Debug build"
-elif [ "$1" == "-r" ] ; then
+elif [ "$1" == "-r" ]; then
     EXTRA_FLAGS="-DCMAKE_BUILD_TYPE=Release"
     BUILD_DIR=build_release
     echo "Release build"
@@ -22,7 +22,7 @@ fi
 
 mkdir -p $BUILD_DIR && cd $BUILD_DIR
 cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON $EXTRA_FLAGS
-cmake --build . -- -j 8
+cmake --build . -- -j $(($(nproc) - 1))
 if [ -f compile_commands.json ]; then
     mv compile_commands.json .. && echo "Copied compile_commands.json to base directory"
 else
