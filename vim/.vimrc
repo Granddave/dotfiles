@@ -8,7 +8,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'puremourning/vimspector'
+"Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'
 Plug 'scrooloose/nerdtree'        " File explorer
 Plug 'junegunn/goyo.vim'          " Distraction free writing
@@ -93,6 +93,8 @@ endfun
 
 noremap <silent><leader>dw :call CleanTrailingSpaces()<cr>
 
+vnoremap <leader>tc y:! timecalc.py <C-R>" \| xclip -in -selection clipboard<cr>
+
 autocmd FileType markdown,yaml setlocal shiftwidth=2 tabstop=2 colorcolumn=100
 autocmd FileType cpp,cmake,python setlocal colorcolumn=100
 autocmd BufRead,BufNewFile,BufEnter *.jrnl setlocal filetype=markdown
@@ -107,10 +109,10 @@ nmap <leader>bq :bp <BAR> bd #<cr>
 nmap <leader>bd :<c-u>up <bar> %bd <bar> e#<cr>
 nmap <leader>bl :ls<cr>
 
-nnoremap <leader>h :wincmd h<CR>
-nnoremap <leader>j :wincmd j<CR>
-nnoremap <leader>k :wincmd k<CR>
-nnoremap <leader>l :wincmd l<CR>
+nnoremap <C-h> :wincmd h<CR>
+nnoremap <C-j> :wincmd j<CR>
+nnoremap <C-k> :wincmd k<CR>
+nnoremap <C-l> :wincmd l<CR>
 
 nnoremap <leader>m :MaximizerToggle!<CR>
 " }}}
@@ -130,15 +132,16 @@ set smartcase
 " Highlighting search
 set hlsearch
 set incsearch
-" Search for word under curser
+" Search for selection
 vnoremap // y/<C-R>"<CR>
-" Search and replace global, with and without confirmation
+
 xnoremap <leader>sr y:%s%<C-R>"%%g<left><left>
 xnoremap <leader>sc y:%s%<C-R>"%%gc<left><left><left>
 " Esc to remove search findings
-nnoremap <silent><esc> :noh<CR><esc>
+nnoremap <silent> <esc> :noh<CR><esc>
 nnoremap <esc>^[ <esc>^[
 
+" Ripgrep
 nnoremap <leader>sf :Files<CR>
 nnoremap <leader>gf :GFiles<CR>
 nnoremap <leader>gr :Rg<CR>
@@ -167,11 +170,6 @@ vnoremap <C-k> :m '<-2<CR>gv=gv
 vnoremap < <gv
 vnoremap > >gv
 
-" Toggle between relative and absolute numbering
-nnoremap <silent><C-l> :set rnu!<CR>
-
-" Map ctrl+c to copy to system clipboard when in visual mode
-" Requires gvim(arch?) or vim-gui-common (Debian)
 vnoremap <silent><c-c> "*y :let @+=@*<cr>:echo "copied to system clipboard"<cr>
 
 vnoremap p "_dP
@@ -192,9 +190,6 @@ noremap § :NERDTreeToggle<CR>
 autocmd FileType python nnoremap <buffer> <F5> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
 
 " }}}
-" ---- Snippets {{{
-autocmd FileType cpp inoremap ;co std::cout<Space><<<Space>f<Space><<<Space> std::endl;<Esc>Ffcw
-"}}}
 " ---- CoC {{{
 set nobackup
 set nowritebackup
@@ -262,7 +257,7 @@ nmap <leader>rn <Plug>(coc-rename)
 " Remap for format selected region
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format)
-nmap <leader>pf  :CocCommand prettier.formatFile<CR>
+"nmap <leader>pf  :CocCommand prettier.formatFile<CR>
 
 
 augroup mygroup
@@ -350,4 +345,3 @@ nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
 " <Plug>VimspectorPause
 " <Plug>VimspectorAddFunctionBreakpoint
 " }}}
-
