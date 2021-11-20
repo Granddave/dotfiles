@@ -44,7 +44,9 @@ def available_devices():
 
 
 def filter_devices(
-    name_pattern: str = None, only_pointer: bool = False, only_keyboard: bool = False
+    name_pattern: str = None,
+    only_pointer: bool = False,
+    only_keyboard: bool = False,
 ):
     devices = available_devices()
     if name_pattern is not None:
@@ -97,26 +99,50 @@ def _main():
 
     device_parser = subparsers.add_parser("list-devices", help="list devices")
     device_parser.add_argument(
-        "--device-pattern", "-d", help="filter by device name pattern", type=str
+        "--device-pattern",
+        "-d",
+        help="filter by device name pattern",
+        type=str,
     )
-    device_parser.add_argument("--id", help="list the device IDs", action="store_true")
+    device_parser.add_argument(
+        "--id",
+        help="list the device IDs",
+        action="store_true",
+    )
+
     device_type = device_parser.add_mutually_exclusive_group()
     device_type.add_argument(
-        "--keyboard", "-k", help="filter by keyboard devices", action="store_true"
+        "--keyboard",
+        "-k",
+        help="filter by keyboard devices",
+        action="store_true",
     )
     device_type.add_argument(
-        "--pointer", "-p", help="filter by pointer devices", action="store_true"
+        "--pointer",
+        "-p",
+        help="filter by pointer devices",
+        action="store_true",
     )
 
     props_parser = subparsers.add_parser("list-props", help="list device properties")
     props_parser.add_argument("id", help="device ID")
 
     set_prop_parser = subparsers.add_parser("set-props", help="set device properties")
-    set_prop_parser.add_argument("device_id", help="device to operate on", type=int)
     set_prop_parser.add_argument(
-        "property_name", help="which properlibinput Button Scrolling Buttonty to alter", type=str
+        "device_id",
+        help="device to operate on",
+        type=int,
     )
-    set_prop_parser.add_argument("value", help="value(s) to set to property", nargs="+")
+    set_prop_parser.add_argument(
+        "property_name",
+        help="which properlibinput Button Scrolling Buttonty to alter",
+        type=str,
+    )
+    set_prop_parser.add_argument(
+        "value",
+        help="value(s) to set to property",
+        nargs="+",
+    )
 
     args = parser.parse_args()
 
