@@ -6,6 +6,18 @@ import argparse
 from pprint import pprint
 
 
+class DeviceNotFoundException(Exception):
+    pass
+
+
+class PropertyNotFoundException(Exception):
+    pass
+
+
+class PropertySetException(Exception):
+    pass
+
+
 def _run_command(command):
     stdout = ""
     stderr = ""
@@ -41,6 +53,8 @@ def filter_devices(
         devices = [d for d in devices if "pointer" == d["type"]]
     if only_keyboard:
         devices = [d for d in devices if "keyboard" == d["type"]]
+    if not len(devices):
+        raise DeviceNotFoundException(f"Could not find device with pattern {name_pattern}")
     return devices
 
 
@@ -67,12 +81,14 @@ def has_prop(device_id, property_name):
 
 def set_prop(device_id: int, property_name: str, *values):
     if not has_prop(device_id, property_name):
-        raise ValueError(f"Could not find property {property_name} for device {device_id}")
+        raise PropertyNotFoundException(
+            f"Could not find property {property_name} for device {device_id}"
+        )
     values = [str(v) for v in list(values)]
     command = ["xinput", "set-prop", str(device_id), property_name] + values
     output = _run_command(command)
     if output:
-        raise RuntimeError("Failed to set property")
+        raise PropertySetException
 
 
 def _main():

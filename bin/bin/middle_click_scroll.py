@@ -2,7 +2,7 @@
 
 import argparse
 
-from xinput import filter_devices, has_prop, set_prop
+from xinput import filter_devices, has_prop, set_prop, DeviceNotFoundException
 
 
 def set_mode(enabled: bool, device_name: str = None, device_id: int = None):
@@ -34,7 +34,10 @@ def _main():
     parser.add_argument("enabled", type=str2bool)
     args = parser.parse_args()
 
-    set_mode(args.enabled, args.device_name)
+    try:
+        set_mode(args.enabled, args.device_name)
+    except DeviceNotFoundException:
+        pass  # Don't care if we didn't find the device
 
 
 if __name__ == "__main__":
