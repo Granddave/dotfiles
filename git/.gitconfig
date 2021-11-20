@@ -1,5 +1,6 @@
 [core]
     excludesfile = ~/.gitignore
+    editor = nvim
 [include]
     path = ~/.gitconfig_local
 [push]
@@ -7,6 +8,7 @@
 [alias]
     a = add
     d = diff
+    ds = diff --staged
     f = fetch -p # Fetch and prune previously tracked branches
     fa = fetch -p --all --tags # Fetch and prune previously tracked branches
     co = checkout
@@ -19,6 +21,8 @@
     hist = log --decorate --oneline --graph --date=short --all
     h = hist
     dump = cat-file -p
+    s = submodule
+    sf = submodule foreach
 [user]
     name = David Isaksson
     email = davidisaksson93@gmail.com
