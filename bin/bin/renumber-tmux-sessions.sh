@@ -10,6 +10,8 @@ SESSIONS=$(tmux ls | grep '^[0-9]\+:' | cut -f1 -d':' | sort -n)
 NEW=1
 for OLD in $SESSIONS
 do
-  tmux rename-session -t "$OLD" "$NEW"
-  ((NEW++))
+    if [[ "$OLD" =~ ^[0-9]+$ ]]; then
+        tmux rename-session -t "$OLD" "$NEW"
+        ((NEW++))
+    fi
 done
