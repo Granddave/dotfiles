@@ -4,7 +4,6 @@
 export EDITOR="nvim"
 export VISUAL="$EDITOR"
 export PAGER="less"
-export TERM="xterm-256color"
 
 [ -e "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 

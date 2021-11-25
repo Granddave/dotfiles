@@ -24,6 +24,8 @@ ZSH_THEME_GIT_PROMPT_SUFFIX=")"
 ZSH_THEME_GIT_PROMPT_DIRTY=" ✗"
 ZSH_THEME_GIT_PROMPT_CLEAN=" ✔"
 
+[ -n $TMUX ] && export TERM="xterm-256color"
+
 if [ -f /usr/share/fzf/key-bindings.zsh ] && [ -f /usr/share/fzf/completion.zsh ]; then
     # For Arch based distros
     source /usr/share/fzf/key-bindings.zsh
