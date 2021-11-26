@@ -36,7 +36,7 @@ read -rp "* Stow directories? [Y/n] " RESPONSE
 if [[ "${RESPONSE:-Y}" =~ ^[yY]$ ]]; then
     echo "* Starting to stow dotfiles..."
     DIRS="alacritty bin git tmux vim xmodmap zsh"
-    for DIR in DIRS; do
+    for DIR in $DIRS; do
         if [ -d "$DIR" ]; then
             echo "* Stowing $DIR"
             stow "$DIR"
