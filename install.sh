@@ -24,7 +24,7 @@ fi
 read -rp "* Install vim-plug? [Y/n] " RESPONSE
 if [[ "${RESPONSE:-Y}" =~ ^[yY]$ ]]; then
     echo "* Installing vim-plug"
-    if [ ! -d $HOME/.vim/autoload/plug.vim ]; then
+    if [ ! -d "$HOME/.vim/autoload/plug.vim" ]; then
         curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     else
@@ -37,7 +37,7 @@ if [[ "${RESPONSE:-Y}" =~ ^[yY]$ ]]; then
     echo "* Starting to stow dotfiles..."
     DIRS="alacritty bin git tmux vim xmodmap zsh"
     for DIR in DIRS; do
-        if [ -d $DIR ]; then
+        if [ -d "$DIR" ]; then
             echo "* Stowing $DIR"
             stow "$DIR"
         fi
