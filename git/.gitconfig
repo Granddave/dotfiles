@@ -23,6 +23,10 @@
     dump = cat-file -p
     s = submodule
     sf = submodule foreach
+[status]
+	submoduleSummary = true
+[diff]
+	submodule = log
 [user]
     name = David Isaksson
     email = davidisaksson93@gmail.com
