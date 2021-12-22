@@ -50,7 +50,7 @@ alias vim="$EDITOR"
 alias here="open ."
 alias ls="ls --color=auto"
 alias ip="ip -c"
-alias r="ranger"
+alias r="lf"
 alias t="tig --date-order --all"
 alias fd=fdfind
 alias lsupg="sudo apt update && apt list --upgradable"
