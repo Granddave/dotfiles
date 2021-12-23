@@ -1,2 +1,3 @@
 set line-graphics = utf-8
 set main-view-id-display = yes
+set commit-order = date
