@@ -97,7 +97,7 @@ vnoremap <leader>tc y:! timecalc.py <C-R>" \| xclip -in -selection clipboard<cr>
 
 autocmd FileType markdown,yaml setlocal shiftwidth=2 tabstop=2 colorcolumn=100
 autocmd FileType cpp,cmake,python setlocal colorcolumn=100
-autocmd BufRead,BufNewFile,BufEnter *.jrnl setlocal filetype=markdown
+autocmd BufRead,BufNewFile,BufEnter *.jrnl setlocal filetype=markdown colorcolumn=0
 " }}}
 " ---- Buffer handling {{{
 
