@@ -15,6 +15,7 @@ Plug 'junegunn/goyo.vim'          " Distraction free writing
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':['c', 'cpp']}
 Plug 'gruvbox-community/gruvbox'
 Plug 'vim-airline/vim-airline'
+Plug 'jkramer/vim-checkbox'
 call plug#end()
 let g:coc_disable_startup_warning = 1
 filetype on
@@ -94,6 +95,7 @@ endfun
 noremap <silent><leader>dw :call CleanTrailingSpaces()<cr>
 
 vnoremap <leader>tc y:! timecalc.py <C-R>" \| xclip -in -selection clipboard<cr>
+nnoremap <silent> <leader>x :call checkbox#ToggleCB()<cr>
 
 autocmd FileType markdown,yaml setlocal shiftwidth=2 tabstop=2 colorcolumn=100
 autocmd FileType cpp,cmake,python setlocal colorcolumn=100
