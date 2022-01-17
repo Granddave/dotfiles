@@ -95,7 +95,7 @@ endfun
 noremap <silent><leader>dw :call CleanTrailingSpaces()<cr>
 
 vnoremap <leader>tc y:! timecalc.py <C-R>" \| xclip -in -selection clipboard<cr>
-nnoremap <silent> <leader>x :call checkbox#ToggleCB()<cr>
+xnoremap <silent> <leader>x :call checkbox#ToggleCB()<cr>
 
 autocmd FileType markdown,yaml setlocal shiftwidth=2 tabstop=2 colorcolumn=100
 autocmd FileType cpp,cmake,python setlocal colorcolumn=100
