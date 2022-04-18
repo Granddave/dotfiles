@@ -25,10 +25,10 @@ fi
 
 read -rp "* Install vim-plug? [Y/n] " RESPONSE
 if [[ "${RESPONSE:-Y}" =~ ^[yY]$ ]]; then
-    echo "* Installing vim-plug"
-    if [ ! -d "$HOME/.vim/autoload/plug.vim" ]; then
-        curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
-            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    VIMPLUG_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/plug.vim"
+    echo "* Installing vim-plug to $VIMPLUG_DIR"
+    if [ ! -e $VIMPLUG_DIR ]; then
+        sh -c "curl -fLo $VIMPLUG_DIR --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
     else
         echo "vim-plug already exists"
     fi
