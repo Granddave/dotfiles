@@ -1,3 +1,4 @@
+lua require('custom.init')
 " ---- Plugins {{{
 
 set nocompatible
@@ -5,17 +6,17 @@ filetype off
 
 call plug#begin()
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+"Plug 'junegunn/fzf.vim'
 Plug 'airblade/vim-gitgutter'
 "Plug 'puremourning/vimspector'
-Plug 'szw/vim-maximizer'
-Plug 'scrooloose/nerdtree'        " File explorer
+"Plug 'szw/vim-maximizer'
+"Plug 'scrooloose/nerdtree'        " File explorer
 Plug 'junegunn/goyo.vim'          " Distraction free writing
-Plug 'octol/vim-cpp-enhanced-highlight', {'for':['c', 'cpp']}
+"Plug 'octol/vim-cpp-enhanced-highlight', {'for':['c', 'cpp']}
 Plug 'gruvbox-community/gruvbox'
 Plug 'vim-airline/vim-airline'
-Plug 'jkramer/vim-checkbox'
+"Plug 'jkramer/vim-checkbox'
 call plug#end()
 let g:coc_disable_startup_warning = 1
 filetype on
@@ -55,7 +56,7 @@ autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufRead,BufNewFile ~/.ssh/config.d/* set syntax=sshconfig
 " }}}
 " ---- General {{{
-let mapleader=" "
+"let mapleader=" "
 
 set wildmenu
 set wildmode=longest:list,full
@@ -104,19 +105,19 @@ autocmd BufRead,BufNewFile,BufEnter *.jrnl setlocal filetype=markdown colorcolum
 " ---- Buffer handling {{{
 
 set hidden
-nmap <leader>T :enew<cr>
-nmap <leader>n :bnext<cr>
-nmap <leader>p :bprevious<cr>
-nmap <leader>bq :bp <BAR> bd #<cr>
-nmap <leader>bd :<c-u>up <bar> %bd <bar> e#<cr>
-nmap <leader>bl :ls<cr>
-
-nnoremap <C-h> :wincmd h<CR>
-nnoremap <C-j> :wincmd j<CR>
-nnoremap <C-k> :wincmd k<CR>
-nnoremap <C-l> :wincmd l<CR>
-
-nnoremap <leader>m :MaximizerToggle!<CR>
+"nmap <leader>T :enew<cr>
+"nmap <leader>n :bnext<cr>
+"nmap <leader>p :bprevious<cr>
+"nmap <leader>bq :bp <BAR> bd #<cr>
+"nmap <leader>bd :<c-u>up <bar> %bd <bar> e#<cr>
+"nmap <leader>bl :ls<cr>
+"
+"nnoremap <C-h> :wincmd h<CR>
+"nnoremap <C-j> :wincmd j<CR>
+"nnoremap <C-k> :wincmd k<CR>
+"nnoremap <C-l> :wincmd l<CR>
+"
+"nnoremap <leader>m :MaximizerToggle!<CR>
 " }}}
 " ---- Folding {{{
 
@@ -176,7 +177,7 @@ vnoremap <silent><c-c> "*y :let @+=@*<cr>:echo "copied to system clipboard"<cr>
 
 vnoremap p "_dP
 
-nnoremap <silent><leader>rc :so ~/.vimrc<CR>:echo "Config reloaded"<CR>
+nnoremap <silent><leader>rc :so ~/.config/nvim/init.vim<CR>:echo "Config reloaded"<CR>
 nmap <leader>w :w<CR>
 
 " }}}
@@ -280,9 +281,9 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Use <tab> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-nmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
+"nmap <silent> <TAB> <Plug>(coc-range-select)
+"xmap <silent> <TAB> <Plug>(coc-range-select)
+"xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
@@ -347,3 +348,4 @@ nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
 " <Plug>VimspectorPause
 " <Plug>VimspectorAddFunctionBreakpoint
 " }}}
+
