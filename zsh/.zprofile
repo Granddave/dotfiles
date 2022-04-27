@@ -1,4 +1,4 @@
-if [ -z "$SSH_CONNECTION" ]; then
+if [ -z "$SSH_CONNECTION" ] && ! grep -q WSL /proc/sys/kernel/osrelease; then
     middle_click_scroll.py --device g203 1
 
     # Set key repeat speeds
