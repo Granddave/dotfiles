@@ -2,6 +2,8 @@
 
 set -e
 
+mkdir -p ~/.config/systemd/user
+
 read -rp "* Install apt packages? [Y/n] " RESPONSE
 if [[ "${RESPONSE:-Y}" =~ ^[yY]$ ]]; then
     xargs -a apt-packages.txt sudo apt-get install
@@ -52,6 +54,7 @@ if [[ "${RESPONSE:-Y}" =~ ^[yY]$ ]]; then
         systemctl --user daemon-reload
         systemctl --user enable weather.timer
         systemctl --user enable weather.service
+        systemctl --user start weather.timer
     fi
 fi
 

@@ -1,9 +1,9 @@
 [Unit]
-Description=Run custom command periodically
+Description=Triggers a weather update periodically
 
 [Timer]
-Unit=weather.service
 OnCalendar=*:0/5
+OnStartupSec=30s
 
 [Install]
 WantedBy=timers.target network-online.target
