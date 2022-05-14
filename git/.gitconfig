@@ -1,6 +1,7 @@
 [core]
     excludesfile = ~/.gitignore
     editor = nvim
+    pager = delta
 [include]
     path = ~/.gitconfig_local
 [push]
@@ -27,3 +28,11 @@
     submoduleSummary = true
 [diff]
     submodule = log
+    colorMoved = default
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    navigate = true
+    light = false
+[merge]
+    conflictstyle = diff3

@@ -34,6 +34,18 @@ if [[ "${RESPONSE:-Y}" =~ ^[yY]$ ]]; then
     fi
 fi
 
+read -rp "* Install git-delta? [Y/n] " RESPONSE
+if [[ "${RESPONSE:-Y}" =~ ^[yY]$ ]]; then
+    if ! $(dpkg -l | grep -q git-delta); then
+        VERSION="0.13.0"
+        DEB="git-delta_${VERSION}_amd64.deb"
+        curl -fLo $HOME/Downloads/$DEB https://github.com/dandavison/delta/releases/download/$VERSION/$DEB
+        sudo dpkg -i $HOME/Downloads/$DEB
+    else
+        echo "git-delta already exists"
+    fi
+fi
+
 read -rp "* Stow directories? [Y/n] " RESPONSE
 if [[ "${RESPONSE:-Y}" =~ ^[yY]$ ]]; then
     echo "* Starting to stow dotfiles..."
