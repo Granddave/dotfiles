@@ -13,7 +13,7 @@ read -rp "* Install oh-my-zsh? [Y/n] " RESPONSE
 if [[ "${RESPONSE:-Y}" =~ ^[yY]$ ]]; then
     echo "* Installing oh-my-zsh..."
     if [ ! -d "$HOME/.oh-my-zsh" ]; then
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+        curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh
         chsh -s /bin/zsh
 
         git clone https://github.com/zsh-users/zsh-autosuggestions.git "$HOME/.oh-my-zsh/plugins/zsh-autosuggestions"
