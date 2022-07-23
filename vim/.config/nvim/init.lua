@@ -1,0 +1,13 @@
+require("custom.plugins")
+require("custom.gruvbox")
+require("custom.maps")
+require("custom.general")
+
+require("plugins.goyo")
+require("plugins.lualine")
+require("plugins.nvim-lsp-installer")
+require("plugins.nvim-lspconfig")
+require("plugins.nvim-tree")
+require("plugins.telescope")
+require("plugins.treesitter")
+require("plugins.vim-checkbox")
