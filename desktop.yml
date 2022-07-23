@@ -1,0 +1,229 @@
+---
+- name: Set up desktop
+  hosts: localhost
+  vars:
+    apt_packages:
+      # Dev tools
+      - fd-find
+      - fzf
+      - git
+      - ripgrep
+      - tig
+      - tmux
+      - zsh
+
+      # Utils
+      - curl
+      - htop
+      - net-tools
+      - nload
+      - stow
+
+      # Misc
+      - fonts-hack-ttf
+
+      # GUI apps
+      - flameshot
+      - gromit-mpx
+      - meld
+      - pavucontrol
+      - speedcrunch
+    dotfiles_dir: "{{ lookup('env','HOME') }}/.dotfiles"
+    keyboard_shortcuts:
+      - index: 0
+        name: "'Launch Alacritty'"
+        command: "'alacritty'"
+        binding: "'<Primary><Alt>t'"
+      - index: 1
+        name: "'Flameshot'"
+        command: "'flameshot gui'"
+        binding: "'Print'"
+
+  tasks:
+    - name: Install system packages
+      become: yes
+      apt:
+        pkg: "{{ apt_packages }}"
+      tags: apt
+
+    - name: Install lf
+      tags: lf
+      vars:
+        lf_version: "r27"
+        lf_install_dir: "{{ lookup('env','HOME') }}/.local/bin/"
+      block:
+        - name: Register current lf version
+          ansible.builtin.shell: "{{ lf_install_dir }}/lf --version"
+          register: lf_version_call
+          ignore_errors: yes
+          changed_when: false
+
+        - name: Decide if installation of lf should continue
+          set_fact:
+            install_lf: "{{ lf_version_call is defined and lf_version_call.stdout != lf_version }}"
+
+        - name: Create temporary build directory
+          ansible.builtin.tempfile:
+            state: directory
+            suffix: build
+          register: lf_tmp
+          when: install_lf
+
+        - name: Download lf
+          ansible.builtin.get_url:
+            url: "https://github.com/gokcehan/lf/releases/download/{{ lf_version }}/lf-linux-amd64.tar.gz"
+            dest: "{{ lf_tmp.path }}/lf.tar.gz"
+          when: install_lf
+
+        - name: Unpack lf
+          ansible.builtin.unarchive:
+            src: "{{ lf_tmp.path }}/lf.tar.gz"
+            dest: "{{ lf_install_dir }}"
+          when: install_lf
+
+        - name: Cleanup tarball
+          ansible.builtin.file:
+            path: "{{ lf_tmp.path }}"
+            state: absent
+          when: install_lf
+
+    - name: Stow dotfiles
+      tags: stow
+      ansible.builtin.shell: "stow --dir {{ dotfiles_dir }} {{ item }}"
+      register: stow_out
+      with_items:
+        - alacritty
+        - bin
+        - git
+        - tmux
+        - vim
+        - xmodmap
+        - zsh
+
+    #- debug: var=stow_out
+    #  tags: stow
+
+    # Install oh-my-zsh
+    #  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    #  git clone https://github.com/zsh-users/zsh-autosuggestions.git "$HOME/.oh-my-zsh/plugins/zsh-autosuggestions"
+    #  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME/.oh-my-zsh/plugins/zsh-syntax-highlighting"
+
+    # set shell
+
+    - name: Set dconf settings
+      tags: gnome
+      dconf:
+        key: "{{ item.key }}"
+        value: "{{ item.value }}"
+      with_items:
+        - name: Set windows action key
+          key: "/org/gnome/desktop/wm/preferences/mouse-button-modifier"
+          value: "'<Alt>'"
+        - name: Set a flat mouse acceleration profile
+          key: "/org/gnome/desktop/peripherals/mouse/accel-profile"
+          value: "'flat'"
+        - name: Disable notifications when screen is locked
+          key: "/org/gnome/desktop/notifications/show-in-lock-screen"
+          value: "false"
+        - name: Don't attach modal windows to its parent
+          key: "/org/gnome/mutter/attach-modal-dialogs"
+          value: "true"
+        - name: Show week numbers
+          key: "/org/gnome/desktop/calendar/show-weekdate"
+          value: "true"
+        - name: Set blank screen timeout
+          key: "/org/gnome/desktop/session/idle-delay"
+          value: "uint32 {{ 10 * 60 }}"
+        - name: Disable default terminal shortcut
+          key: "/org/gnome/settings-daemon/plugins/media-keys/terminal"
+          value: "@as []"
+
+    - name: Set keyboard shortcuts
+      tags: shortcuts
+      block:
+        - name: Set shortcut names
+          dconf:
+            key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom{{ item.index }}/name"
+            value: "{{ item.name }}"
+          with_items: "{{ keyboard_shortcuts }}"
+
+        - name: Set shortcut commands
+          dconf:
+            key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom{{ item.index }}/command"
+            value: "{{ item.command }}"
+          with_items: "{{ keyboard_shortcuts }}"
+
+        - name: Set shortcut binding
+          dconf:
+            key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom{{ item.index }}/binding"
+            value: "{{ item.binding }}"
+          with_items: "{{ keyboard_shortcuts }}"
+
+        #- name: Set shortcut list
+        #  dconf:
+        #    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
+        #    value: "[
+        #      '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/',
+        #      '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/'
+        #    ]"
+        - name: Generate shortcut list
+          set_fact:
+            shortcut_list: "{{ [prefix] | product(indices) | map('join') | list | product([suffix]) | map('join') | list }}"
+          vars:
+            prefix: "'/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom"
+            suffix: "/'"
+            indices: "{{ keyboard_shortcuts | map(attribute='index') }}"
+
+        - name: Set shortcut list
+          dconf:
+            key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
+            value: "[{{ ','.join(shortcut_list) }}]"
+
+# "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/'']"
+
+# ---------
+
+
+        # Shortcuts
+        #- name: Alacritty shortcut - Name
+        #  key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name"
+        #  value: "'Launch Alacritty'"
+        #- name: Alacritty shortcut - Command
+        #  key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command"
+        #  value: "'alacritty'"
+        #- name: Alacritty shortcut - Shortcut
+        #  key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding"
+        #  value: "'<Primary><Alt>t'"
+
+#/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/binding
+#'Print'
+#/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/name
+#'Flameshot'
+#/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command
+#'flameshot gui'
+
+#/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/name
+#'Set dual display'
+#/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/command
+#'/home/david/.screenlayout/home-main-only.sh'
+#/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/binding
+#'<Primary><Alt>1'
+
+#/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/name
+#'Set main display only'
+#/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/command
+#'/home/david/.screenlayout/home-main-only.sh'
+#/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/binding
+#'<Primary><Alt>0'
+
+        #        - name: Shortcut list
+        #          key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
+        #          value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/'']"
+        #
+
+
+#---
+#
+#
+# https://gist.github.com/carlwgeorge/dbe186ce7562843932ebd03ccccd1a6d
+# https://gist.github.com/carlwgeorge/c560a532b6929f49d9c0df52f75a68ae
