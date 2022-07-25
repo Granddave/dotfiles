@@ -18,6 +18,8 @@
       - net-tools
       - nload
       - stow
+      - xdotool
+      - xsel
 
       # Misc
       - fonts-hack-ttf
@@ -28,6 +30,7 @@
       - meld
       - pavucontrol
       - speedcrunch
+      - rofi
     dotfiles_dir: "{{ lookup('env','HOME') }}/.dotfiles"
     keyboard_shortcuts:
       - index: 0
