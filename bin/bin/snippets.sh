@@ -11,7 +11,7 @@ if [ -f "${SNIPPET}" ]; then
         DATA=$(head --bytes=-1 "${SNIPPET}")
     fi
 
-    printf "$DATA" | xsel -p -i
-    printf "$DATA" | xsel -b -i
+    printf "%s" "$DATA" | xsel -p -i
+    printf "%s" "$DATA" | xsel -b -i
     xdotool key shift+Insert
 fi
