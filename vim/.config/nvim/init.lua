@@ -5,6 +5,7 @@ require("custom.general")
 
 require("plugins.goyo")
 require("plugins.lualine")
+require("plugins.nvim-cmp")
 require("plugins.nvim-lsp-installer")
 require("plugins.nvim-lspconfig")
 require("plugins.nvim-tree")
