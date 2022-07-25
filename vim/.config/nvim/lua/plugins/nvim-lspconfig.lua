@@ -24,7 +24,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<Leader>D', vim.lsp.buf.type_definition, bufopts)
   vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set("n", "<Leader>gr", ":Telescope lsp_references theme=dropdown<CR>", opts)
+  vim.keymap.set("n", "<Leader>gr", ":Telescope lsp_references<CR>", opts)
   vim.keymap.set('n', '<Leader>fo', vim.lsp.buf.formatting, bufopts)
 
   if client.resolved_capabilities.document_highlight then

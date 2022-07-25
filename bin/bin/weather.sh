@@ -5,9 +5,9 @@
     rc=$?
     if [ $rc -ne 0 ]; then
         echo "No internet";
-    elif echo $response | grep -q "Unknown location"; then
+    elif echo "$response" | grep -q "Unknown location"; then
         echo "wttr.in failed";
     else
-        echo $response
+        echo "$response"
     fi
 } | tee /tmp/weather.txt

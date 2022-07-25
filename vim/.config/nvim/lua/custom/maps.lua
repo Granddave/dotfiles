@@ -41,6 +41,8 @@ map("v", "<C-k>", ":m '<-2<CR>gv=gv", opts)
 map("v", "<", "<gv", opts)
 map("v", ">", ">gv", opts)
 
+map("i", "<S-Tab>", "<C-d>", opts)
+
 map("v", "p", '"_dP', opts)
 map("v", "<C-c>", '"*y :let @+=@*<CR>:echo "Copied to system clipboard"<CR>', opts)
 map("n", "<Leader>w", ":w<CR>", opts)

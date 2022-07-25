@@ -11,6 +11,7 @@ vim.opt.linebreak = true -- Don't split words in a word wrap
 
 vim.opt.number = true -- Show line numbers
 vim.opt.numberwidth = 5 -- Width of numberline
+vim.opt.signcolumn = 'yes'
 
 vim.opt.scrolloff = 4 -- Pad at top and bottom of buffer when scrolling
 
@@ -26,7 +27,7 @@ vim.opt.termguicolors = true
 
 vim.opt.mouse = 'a'
 
-vim.opt.foldmethod = "marker"
+vim.opt.foldmethod = 'marker'
 
 vim.opt.cursorline = true
 vim.cmd([[
