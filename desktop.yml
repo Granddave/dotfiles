@@ -1,55 +1,70 @@
 ---
 - name: Set up desktop
   hosts: localhost
+  become_user: "{{ lookup('env', 'USER') }}"
   vars:
-    apt_packages:
-      # Dev tools
-      - fd-find
-      - fzf
-      - git
-      - ripgrep
-      - tig
-      - tmux
-      - zsh
-
-      # Utils
-      - curl
-      - htop
-      - net-tools
-      - nload
-      - stow
-      - xdotool
-      - xsel
-
-      # Misc
-      - fonts-hack-ttf
-
-      # GUI apps
-      - flameshot
-      - gromit-mpx
-      - meld
-      - pavucontrol
-      - speedcrunch
-      - rofi
     dotfiles_dir: "{{ lookup('env','HOME') }}/.dotfiles"
-    keyboard_shortcuts:
-      - index: 0
-        name: "'Launch Alacritty'"
-        command: "'alacritty'"
-        binding: "'<Primary><Alt>t'"
-      - index: 1
-        name: "'Flameshot'"
-        command: "'flameshot gui'"
-        binding: "'Print'"
 
   tasks:
     - name: Install system packages
+      tags: apt
       become: yes
       apt:
-        pkg: "{{ apt_packages }}"
-      tags: apt
+        pkg:
+          # Dev tools
+          - fd-find
+          - fzf
+          - git
+          - ripgrep
+          - tig
+          - tmux
+          - zsh
+
+          # Utils
+          - curl
+          - htop
+          - net-tools
+          - nload
+          - stow
+          - xdotool
+          - xsel
+
+          # Misc
+          - fonts-hack-ttf
+
+          # GUI apps
+          - arandr
+          - flameshot
+          - gromit-mpx
+          - meld
+          - pavucontrol
+          - speedcrunch
+          - rofi
+
+    - name: Create systemd directory for user
+      # This is created so that the stowing of certain directories only creates symlinks to the
+      # files and not to any directory above.
+      ansible.builtin.file:
+        path: "{{ lookup('env','HOME') }}/.config/systemd/user"
+        state: directory
+        recurse: yes
+
+    - name: Stow dotfiles
+      tags: stow
+      ansible.builtin.shell: "stow --dir {{ dotfiles_dir }} {{ item }}"
+      register: stow_out
+      with_items:
+        - alacritty
+        - bin
+        - gdb
+        - git
+        - tmux
+        - vim
+        - xmodmap
+        - zsh
 
     - name: Install lf
+      # https://github.com/gokcehan/lf/tags
       tags: lf
       vars:
         lf_version: "r27"
@@ -90,28 +105,126 @@
             state: absent
           when: install_lf
 
-    - name: Stow dotfiles
-      tags: stow
-      ansible.builtin.shell: "stow --dir {{ dotfiles_dir }} {{ item }}"
-      register: stow_out
-      with_items:
-        - alacritty
-        - bin
-        - git
-        - tmux
-        - vim
-        - xmodmap
-        - zsh
+    - name: Install oh-my-zsh
+      tags: zsh
+      vars:
+        oh_my_zsh_dir: "{{ lookup('env','HOME') }}/.oh-my-zsh"
+      block:
+        - name: Register oh-my-zsh directory
+          ansible.builtin.stat:
+            path: "{{ oh_my_zsh_dir }}"
+          register: oh_my_zsh_dir_stat
+          changed_when: false
 
-    #- debug: var=stow_out
-    #  tags: stow
+        - name: Decide if installation of oh-my-zsh should continue
+          set_fact:
+            install_oh_my_zsh: "{{ oh_my_zsh_dir_stat is defined and not oh_my_zsh_dir_stat.stat.exists }}"
 
-    # Install oh-my-zsh
-    #  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-    #  git clone https://github.com/zsh-users/zsh-autosuggestions.git "$HOME/.oh-my-zsh/plugins/zsh-autosuggestions"
-    #  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME/.oh-my-zsh/plugins/zsh-syntax-highlighting"
+        - name: Create temporary build directory
+          ansible.builtin.tempfile:
+            state: directory
+            suffix: build
+          register: oh_my_zsh_tmp
+          when: install_oh_my_zsh
 
-    # set shell
+        - name: Download oh_my_zsh
+          ansible.builtin.get_url:
+            url: "https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh"
+            dest: "{{ oh_my_zsh_tmp.path }}/install.sh"
+          when: install_oh_my_zsh
+
+        - name: Install oh_my_zsh
+          become: yes
+          ansible.builtin.shell: "/bin/sh {{ oh_my_zsh_tmp.path }}/install.sh --unattended --keep-zshrc"
+          when: install_oh_my_zsh
+
+        - name: Cleanup install.sh
+          ansible.builtin.file:
+            path: "{{ oh_my_zsh_tmp.path }}"
+            state: absent
+          when: install_oh_my_zsh
+
+        - name: Install auto suggestions
+          ansible.builtin.git:
+            repo: https://github.com/zsh-users/zsh-autosuggestions.git
+            dest: "{{ oh_my_zsh_dir }}/plugins/zsh-autosuggestions"
+            depth: 1
+
+        - name: Install syntax highlighting
+          ansible.builtin.git:
+            repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+            dest: "{{ oh_my_zsh_dir }}/plugins/zsh-syntax-highlighting"
+            depth: 1
+
+        - name: Set zsh as default shell
+          become: yes
+          become_user: root
+          ansible.builtin.user:
+            name: "{{ ansible_user_id }}"
+            shell: /bin/zsh
+
+    - name: Install delta
+      # https://github.com/dandavison/delta/tags
+      tags: delta
+      vars:
+        delta_version: "0.13.0"
+        delta_expected_version_output: "\u001b[0mdelta {{ delta_version }}\n\u001b[0m" # Stupid escape codes...
+      block:
+        - name: Register current delta version
+          ansible.builtin.shell: "delta --version"
+          register: delta_version_call
+          ignore_errors: yes
+          changed_when: false
+
+        - name: Install delta's deb package
+          become: yes
+          become_user: root
+          apt:
+            deb: "https://github.com/dandavison/delta/releases/download/{{ delta_version }}/git-delta_{{ delta_version }}_amd64.deb"
+          when: delta_version_call is defined and delta_version_call.stdout != delta_expected_version_output
+
+    - name: Install Neovim
+      # https://github.com/neovim/neovim/tags
+      tags: nvim
+      vars:
+        nvim_version: "0.7.2"
+        nvim_expected_version_output: "NVIM v{{ nvim_version }}"
+      block:
+        - name: Register current nvim version
+          ansible.builtin.shell: "nvim --version | grep \"NVIM v\""
+          register: nvim_version_call
+          ignore_errors: yes
+          changed_when: false
+
+        - name: Install nvim's deb package
+          become: yes
+          become_user: root
+          apt:
+            deb: "https://github.com/neovim/neovim/releases/download/v{{ nvim_version }}/nvim-linux64.deb"
+          when: nvim_version_call is defined and nvim_version_call.stdout != nvim_expected_version_output
+
+    - name: Install Packer.nvim
+      ansible.builtin.git:
+        repo: https://github.com/wbthomason/packer.nvim
+        dest: "{{ lookup('env','HOME') }}/.local/share/nvim/site/pack/packer/start/packer.nvim"
+        depth: 1
+
+    - name: Enable weather systemd units
+      tags: weather
+      block:
+        - name: Enable weather service
+          ansible.builtin.systemd:
+            daemon_reload: yes
+            scope: user
+            name: weather.service
+            enabled: yes
+
+        - name: Enable weather timer
+          ansible.builtin.systemd:
+            scope: user
+            name: weather.timer
+            state: started
+            enabled: yes
 
     - name: Set dconf settings
       tags: gnome
@@ -134,7 +247,7 @@
         - name: Show week numbers
           key: "/org/gnome/desktop/calendar/show-weekdate"
           value: "true"
-        - name: Set blank screen timeout
+        - name: Set blank screen timeout (seconds)
           key: "/org/gnome/desktop/session/idle-delay"
           value: "uint32 {{ 10 * 60 }}"
         - name: Disable default terminal shortcut
@@ -143,6 +256,24 @@
 
     - name: Set keyboard shortcuts
       tags: shortcuts
+      vars:
+        keyboard_shortcuts:
+          - index: 0
+            name: "'Launch Alacritty'"
+            command: "'alacritty'"
+            binding: "'<Primary><Alt>t'"
+          - index: 1
+            name: "'Flameshot'"
+            command: "'flameshot gui'"
+            binding: "'Print'"
+          - index: 2
+            name: "'Set dual display'"
+            command: "'{{ lookup('env', 'HOME') }}/.screenlayout/default.sh'"
+            binding: "'<Primary><Alt>1'"
+          - index: 3
+            name: "'Set main display only'"
+            command: "'{{ lookup('env', 'HOME') }}/.screenlayout/main-only.sh'"
+            binding: "'<Primary><Alt>0'"
       block:
         - name: Set shortcut names
           dconf:
@@ -162,13 +293,6 @@
             value: "{{ item.binding }}"
           with_items: "{{ keyboard_shortcuts }}"
 
-        #- name: Set shortcut list
-        #  dconf:
-        #    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
-        #    value: "[
-        #      '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/',
-        #      '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/'
-        #    ]"
         - name: Generate shortcut list
           set_fact:
             shortcut_list: "{{ [prefix] | product(indices) | map('join') | list | product([suffix]) | map('join') | list }}"
@@ -182,51 +306,9 @@
             key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
             value: "[{{ ','.join(shortcut_list) }}]"
 
-# "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/'']"
-
-# ---------
-
-
-        # Shortcuts
-        #- name: Alacritty shortcut - Name
-        #  key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name"
-        #  value: "'Launch Alacritty'"
-        #- name: Alacritty shortcut - Command
-        #  key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command"
-        #  value: "'alacritty'"
-        #- name: Alacritty shortcut - Shortcut
-        #  key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding"
-        #  value: "'<Primary><Alt>t'"
-
-#/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/binding
-#'Print'
-#/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/name
-#'Flameshot'
-#/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command
-#'flameshot gui'
-
-#/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/name
-#'Set dual display'
-#/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/command
-#'/home/david/.screenlayout/home-main-only.sh'
-#/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/binding
-#'<Primary><Alt>1'
-
-#/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/name
-#'Set main display only'
-#/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/command
-#'/home/david/.screenlayout/home-main-only.sh'
-#/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/binding
-#'<Primary><Alt>0'
-
-        #        - name: Shortcut list
-        #          key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
-        #          value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/'']"
-        #
-
-
-#---
+# ---
+# TODO:
+#   - Install Syncthing https://gist.github.com/carlwgeorge/dbe186ce7562843932ebd03ccccd1a6d
 #
-#
-# https://gist.github.com/carlwgeorge/dbe186ce7562843932ebd03ccccd1a6d
-# https://gist.github.com/carlwgeorge/c560a532b6929f49d9c0df52f75a68ae
+# References:
+#   - https://gist.github.com/carlwgeorge/c560a532b6929f49d9c0df52f75a68ae
