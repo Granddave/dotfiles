@@ -17,6 +17,7 @@ vim.opt.scrolloff = 4 -- Pad at top and bottom of buffer when scrolling
 vim.opt.listchars = 'tab:→ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»'
 
 vim.opt.showmatch = true
+vim.opt.updatetime = 500
 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
