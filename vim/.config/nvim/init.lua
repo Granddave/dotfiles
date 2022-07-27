@@ -3,6 +3,7 @@ require("custom.gruvbox")
 require("custom.maps")
 require("custom.general")
 
+require("plugins.comment")
 require("plugins.goyo")
 require("plugins.lualine")
 require("plugins.nvim-cmp")
