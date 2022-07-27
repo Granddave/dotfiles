@@ -274,6 +274,10 @@
             name: "'Set main display only'"
             command: "'{{ lookup('env', 'HOME') }}/.screenlayout/main-only.sh'"
             binding: "'<Primary><Alt>0'"
+          - index: 4
+            name: "'Activate snippets'"
+            command: "'{{ lookup('env', 'HOME') }}/bin/snippets.sh'"
+            binding: "'<Primary><Alt>s'"
       block:
         - name: Set shortcut names
           dconf:
