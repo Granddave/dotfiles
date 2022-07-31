@@ -30,33 +30,50 @@ vim.opt.mouse = 'a'
 vim.opt.foldmethod = 'marker'
 
 vim.opt.cursorline = true
-vim.cmd([[
-augroup CursorLine
-  au!
-  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-  au WinLeave * setlocal nocursorline
-augroup END
-]])
+local cursorline_au_group = vim.api.nvim_create_augroup("CursorLine", {})
+vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "BufWinEnter" }, {
+  buffer = 0,
+  callback = function() vim.opt.cursorline = true end,
+  group = cursorline_au_group,
+})
+vim.api.nvim_create_autocmd("WinLeave", {
+  buffer = 0,
+  callback = function() vim.opt.cursorline = false end,
+  group = cursorline_au_group,
+})
 
-vim.cmd([[
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-]])
+-- vim.api.nvim_set_hl(0, "ExtraWhitespace", { bg="red" })
+-- vim.cmd([[match ExtraWhitespace /\s\+$/]])
+-- local trailing_whitespace_au_group = vim.api.nvim_create_augroup("TrailingWhitespace", {})
+-- vim.api.nvim_create_autocmd({ "BufWinEnter", "InsertLeave"}, {
+--   group = trailing_whitespace_au_group,
+--   callback = function() vim.cmd([[match ExtraWhitespace /\s\+$/]]) end,
+-- })
+-- vim.api.nvim_create_autocmd("InsertEnter", {
+--   group = trailing_whitespace_au_group,
+--   callback = function() vim.cmd([[match ExtraWhitespace /\s\+\%#\@<!$/]]) end,
+-- })
 
-vim.cmd([[
-function! CleanTrailingSpaces()
-  let save_cursor = getpos(".")
-  let old_query = getreg('/')
-  silent! %s/\s\+$//e
-  call setpos('.', save_cursor)
-  call setreg('/', old_query)
-endfun
-]])
+local filetypes_au_group = vim.api.nvim_create_augroup("FiletypeSettings", {})
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile", "BufEnter" }, {
+  pattern = "*/.ssh/config.d/*",
+  group = filetypes_au_group,
+  callback = function() vim.opt.filetype = "sshconfig" end,
+})
 
-vim.cmd("autocmd BufRead,BufNewFile ~/.ssh/config.d/* set syntax=sshconfig")
-vim.cmd("autocmd FileType markdown,yaml,lua setlocal shiftwidth=2 tabstop=2 colorcolumn=100")
-vim.cmd("autocmd FileType cpp,cmake,python setlocal colorcolumn=100")
-vim.cmd("autocmd BufRead,BufNewFile,BufEnter *.jrnl setlocal filetype=markdown colorcolumn=0")
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile", "BufEnter" }, {
+  pattern = "*.jrnl",
+  group = filetypes_au_group,
+  callback = function()
+    vim.opt.filetype = "markdown"
+    vim.opt.colorcolumn = ""
+    vim.keymap.set("n", "<Leader>qs", "<Cmd>read ~/sync/loggbok/qs.txt<CR>", { noremap = true })
+  end,
+})
+
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group = vim.api.nvim_create_augroup("YankHighlight", {}),
+  callback = function()
+    vim.highlight.on_yank({higroup="IncSearch", timeout=150})
+  end,
+})

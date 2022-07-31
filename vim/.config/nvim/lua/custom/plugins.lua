@@ -25,4 +25,5 @@ return require('packer').startup(function()
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
   use 'numToStr/Comment.nvim'
+  use 'ntpeters/vim-better-whitespace'
 end)

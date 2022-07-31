@@ -1,11 +1,12 @@
 require('telescope').setup({
 })
 
-local map = vim.api.nvim_set_keymap
+local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
-map("n", "<Leader>ff", ":Telescope find_files<CR>", opts)
-map("n", "<Leader>fg", ":Telescope git_files<CR>", opts)
-map("n", "<Leader>fr", ":Telescope live_grep<CR>", opts)
-map("n", "<Leader>fb", ":Telescope buffers<CR>", opts)
-map("n", "<Leader>fh", ":Telescope help_tags<CR>", opts)
-map("n", "<Leader>fs", ":Telescope lsp_dynamic_workspace_symbols<CR>", opts)
+local telescope = require('telescope.builtin')
+map("n", "<Leader>ff", function() telescope.find_files() end, opts)
+map("n", "<Leader>fi", function() telescope.file_browser() end, opts)
+map("n", "<Leader>fg", function() telescope.git_files() end, opts)
+map("n", "<Leader>fr", function() telescope.live_grep() end, opts)
+map("n", "<Leader>fb", function() telescope.buffers() end, opts)
+map("n", "<Leader>fh", function() telescope.help_tags() end, opts)

@@ -1,5 +1,5 @@
-local map = vim.api.nvim_set_keymap
-local opts = { noremap = true, silent = true }
+local map = vim.keymap.set
+local opts = { noremap = false, silent = true }
 
 map("n", "<Space>", "", {})
 vim.g.mapleader = " "
@@ -15,19 +15,25 @@ map("n", "<C-j>", ":wincmd j<CR>", opts)
 map("n", "<C-k>", ":wincmd k<CR>", opts)
 map("n", "<C-l>", ":wincmd l<CR>", opts)
 
+local resize_step = 4
+map("n", "<M-C-h>", ":vertical resize -" .. resize_step .. "<CR>", opts)
+map("n", "<M-C-j>", ":resize +" .. resize_step .. "<CR>", opts)
+map("n", "<M-C-k>", ":resize -" .. resize_step .. "<CR>", opts)
+map("n", "<M-C-l>", ":vertical resize +" .. resize_step .. "<CR>", opts)
+
 map("n", "<Leader>sl", ":set list!<CR>", opts)
 map("n", "<Leader><Leader>", "za", opts)
 
 map("v", "//", 'y/<C-r>"<CR>', { noremap = true })
-map("x", "<Leader>sr", 'y:%s%<C-r>"%%g<left><left>', { noremap = true })
-map("x", "<Leader>sc", 'y:%s%<C-r>"%%gc<left><left><left>', { noremap = true })
+map("x", "<Leader>sr", 'y:%s%<C-r>"%%g<Left><Left>', { noremap = true })
+map("x", "<Leader>sc", 'y:%s%<C-r>"%%gc<Left><Left><Left>', { noremap = true })
 
-map("n", "<Esc>", ":nohlsearch<CR><Esc>", opts)
+map("n", "<Esc>", ":nohlsearch<CR>", opts)
 --map("n", "<Esc>^[", "<Esc>^[", opts)
 
-local scroll_amount = 2
-map("", "<C-e>", scroll_amount .. "<C-e>", opts)
-map("", "<C-y>", scroll_amount .. "<C-y>", opts)
+local scroll_step = 2
+map("", "<C-e>", scroll_step .. "<C-e>", opts)
+map("", "<C-y>", scroll_step .. "<C-y>", opts)
 map("", "<C-Up>", "<C-U>", {})
 map("", "<C-Down>", "<C-u>", {})
 
@@ -46,6 +52,6 @@ map("i", "<S-Tab>", "<C-d>", opts)
 map("v", "p", '"_dP', opts)
 map("v", "<C-c>", '"*y :let @+=@*<CR>:echo "Copied to system clipboard"<CR>', opts)
 map("n", "<Leader>w", ":w<CR>", opts)
-map("n", "<Leader>dw", ':call CleanTrailingSpaces()<CR>', opts)
+map("n", "<Leader>dw", require("custom.utils").clean_trailing_spaces, opts)
 map("v", "<Leader>tc", 'y:! timecalc.py <C-r>" <Bar> xclip -in -selection clipboard<CR>', opts)
-map("n", "<F9>", ":setlocal spell! spelllang=en,sv<CR>", opts)
+map("n", "<Leader>sp", ":setlocal spell! spelllang=en,sv<CR>", opts)

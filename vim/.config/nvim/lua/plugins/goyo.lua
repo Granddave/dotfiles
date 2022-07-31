@@ -1,4 +1,1 @@
-local map = vim.api.nvim_set_keymap
-local opts = { noremap = true, silent = true }
-map("n", "<F10>", ":Goyo<CR>", opts)
-map("i", "<F10>", "<Esc>:Goyo<CR>a", opts)
+vim.keymap.set("n", "<Leader>go", "<Cmd>Goyo<CR>", { noremap = true, silent = true })
