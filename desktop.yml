@@ -9,6 +9,7 @@
     - name: Install system packages
       tags: apt
       become: yes
+      become_user: root
       apt:
         pkg:
           # Dev tools
@@ -28,6 +29,7 @@
           - stow
           - xdotool
           - xsel
+          - python3-psutil
 
           # Misc
           - fonts-hack-ttf
