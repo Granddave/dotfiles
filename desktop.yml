@@ -65,6 +65,23 @@
         - xmodmap
         - zsh
 
+    - name: Install nvm and Nodejs
+      # https://github.com/nvm-sh/nvm
+      tags: node
+      vars:
+        nvm_version: "v0.39.1"
+      block:
+        - name: Install nvm
+          shell: "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/{{ nvm_version }}/install.sh | bash"
+          args:
+            creates: "{{ lookup('env','HOME') }}/.nvm/nvm.sh"
+        - name: Install Node.js
+          shell: '. {{ ansible_env.HOME }}/.nvm/nvm.sh; nvm install --lts'
+          args:
+            creates: "{{ ansible_env.HOME }}/.nvm/versions/node"
+            chdir: "{{ ansible_env.HOME }}"
+            executable: /bin/zsh
+
     - name: Install lf
       # https://github.com/gokcehan/lf/tags
       tags: lf
