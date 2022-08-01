@@ -332,6 +332,8 @@
 # ---
 # TODO:
 #   - Install Syncthing https://gist.github.com/carlwgeorge/dbe186ce7562843932ebd03ccccd1a6d
+#   - Install pip packages
+#     - virtualenvwrapper
 #
 # References:
 #   - https://gist.github.com/carlwgeorge/c560a532b6929f49d9c0df52f75a68ae
