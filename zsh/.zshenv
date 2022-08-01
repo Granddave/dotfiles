@@ -5,8 +5,16 @@ export EDITOR="nvim"
 export VISUAL="$EDITOR"
 export PAGER="less"
 
+if [ -d "$HOME/sync/Life/daily" ]; then
+    export NOTE_DIR="$HOME/sync/Life/daily"
+else
+    export NOTE_DIR="$HOME/Documents/notes"
+fi
+
+# Rust
 [ -e "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 
+# Python virtual environments
 if [ -f "$HOME/.local/bin/virtualenvwrapper.sh" ]; then
     export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
     export WORKON_HOME=$HOME/.virtualenvs

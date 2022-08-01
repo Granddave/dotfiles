@@ -43,6 +43,23 @@ open()
     done
 }
 
+note()
+{
+    mkdir -p "$NOTE_DIR"
+    local note_file="$NOTE_DIR/$(date '+%F').md"
+    if ! [ -f "$note_file" ]; then
+        echo "# $(date '+%F')\n" > "$note_file"
+    fi
+
+    $EDITOR '+normal Go' +startinsert "$note_file"
+    echo "$note_file"
+}
+
+mkdate()
+{
+    mkdir $(date '+%F')
+}
+
 alias vi="$EDITOR"
 alias vim="$EDITOR"
 
@@ -54,4 +71,4 @@ alias t="tig --all"
 alias fd=fdfind
 alias lsupg="sudo apt update && apt list --upgradable"
 alias pubip="curl ipinfo.io/ip"
-alias mkdate="mkdir $(date '+%Y-%m-%d')"
+alias notes="$EDITOR $NOTE_DIR"
