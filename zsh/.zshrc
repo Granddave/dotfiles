@@ -37,11 +37,10 @@ fi
 
 open()
 {
-    if [ "$#" -ne 1 ]; then
-        echo "open only support one argument"
-        return
-    fi
-    xdg-open $1 2>&1 > /dev/null
+    while [ "$#" -gt 0 ]; do
+        xdg-open $1 2>&1 > /dev/null
+        shift
+    done
 }
 
 alias vi="$EDITOR"
