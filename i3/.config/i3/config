@@ -55,6 +55,7 @@ bindsym $mod+Control+l exec i3lock \
     --show-failed-attempts \
     --color=1d2021
 bindsym $mod+i exec gnome-control-center
+bindsym $mod+Shift+s exec snippets.sh
 
 # kill focused window
 bindsym $mod+Shift+q kill
