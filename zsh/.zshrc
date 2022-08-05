@@ -16,9 +16,9 @@ source $ZSH/oh-my-zsh.sh
 bindkey '^ ' autosuggest-accept
 
 # Theme inspired from 'simple'
-SSH_HOSTNAME=$([ -n "$SSH_CONNECTION" ] && echo "$(hostname) ")
+PROMPT_PREFIX="$([ -n "$SSH_CONNECTION" ] && echo "$(hostname) ")$([ -n "$dockerenv" ] && echo "docker ")"
 local return_code="%(?..%{$fg[red]%}%? %{$reset_color%})"
-PROMPT='$return_code$SSH_HOSTNAME%(!.%{$fg[red]%}.%{$fg[green]%})%~%{$fg_bold[blue]%}$(git_prompt_info)%{$reset_color%} '
+PROMPT='$return_code$PROMPT_PREFIX%(!.%{$fg[red]%}.%{$fg[green]%})%~%{$fg_bold[blue]%}$(git_prompt_info)%{$reset_color%} '
 ZSH_THEME_GIT_PROMPT_PREFIX="("
 ZSH_THEME_GIT_PROMPT_SUFFIX=")"
 ZSH_THEME_GIT_PROMPT_DIRTY=" ✗"
