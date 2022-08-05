@@ -69,6 +69,8 @@ bindsym $mod+d exec --no-startup-id "rofi -show run"
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
 focus_follows_mouse no
+bindsym $mod+n workspace next
+bindsym $mod+p workspace prev
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down
