@@ -127,3 +127,8 @@ require('lspconfig')['jsonls'].setup {
   flags = lsp_flags,
   capabilities = capabilities
 }
+require('lspconfig')['groovyls'].setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities
+}
