@@ -1,47 +1,70 @@
 ---
 - name: Set up desktop
   hosts: localhost
-  become_user: "{{ lookup('env', 'USER') }}"
   vars:
     dotfiles_dir: "{{ lookup('env','HOME') }}/.dotfiles"
+    apt_packages:
+      cli:
+        # Dev tools
+        - fd-find
+        - fzf
+        - git
+        - ripgrep
+        - tig
+        - tmux
+        - zsh
+
+        # Utils
+        - curl
+        - htop
+        - net-tools
+        - nload
+        - stow
+        - python3-psutil
+      gui:
+        # Utils
+        - xdotool
+        - xsel
+
+        # Misc
+        - fonts-hack-ttf
+
+        # GUI apps
+        - arandr
+        - flameshot
+        - gromit-mpx
+        - meld
+        - pavucontrol
+        - speedcrunch
+        - rofi
+
+  pre_tasks:
+    - name: Check if gtk is installed
+      command: dpkg-query -l gtk
+      register: gtk_check
+      ignore_errors: yes
+
+    - name: Set GUI fact
+      set_fact:
+        has_gui: "{{ gtk_check.stdout.find('no packages found') != -1 }}"
+
+    - name: debug
+      debug:
+        var: has_gui
 
   tasks:
-    - name: Install system packages
+    - name: Install GUI packages
       tags: apt
-      become: yes
-      become_user: root
+      become: true
       apt:
-        pkg:
-          # Dev tools
-          - fd-find
-          - fzf
-          - git
-          - ripgrep
-          - tig
-          - tmux
-          - zsh
+        pkg: "{{ apt_packages.gui }}"
+      when: has_gui
 
-          # Utils
-          - curl
-          - htop
-          - net-tools
-          - nload
-          - stow
-          - xdotool
-          - xsel
-          - python3-psutil
-
-          # Misc
-          - fonts-hack-ttf
-
-          # GUI apps
-          - arandr
-          - flameshot
-          - gromit-mpx
-          - meld
-          - pavucontrol
-          - speedcrunch
-          - rofi
+    - name: Install CLI packages
+      tags: apt
+      become: true
+      apt:
+        pkg: "{{ apt_packages.cli }}"
 
     - name: Create systemd directory for user
       # This is created so that the stowing of certain directories only creates symlinks to the
@@ -60,6 +83,7 @@
         - bin
         - gdb
         - git
+        - i3
         - tmux
         - vim
         - xmodmap
@@ -177,7 +201,6 @@
 
         - name: Set zsh as default shell
           become: yes
-          become_user: root
           ansible.builtin.user:
             name: "{{ ansible_user_id }}"
             shell: /bin/zsh
@@ -197,7 +220,6 @@
 
         - name: Install delta's deb package
           become: yes
-          become_user: root
           apt:
             deb: "https://github.com/dandavison/delta/releases/download/{{ delta_version }}/git-delta_{{ delta_version }}_amd64.deb"
           when: delta_version_call is defined and delta_version_call.stdout != delta_expected_version_output
@@ -217,7 +239,6 @@
 
         - name: Install nvim's deb package
           become: yes
-          become_user: root
           apt:
             deb: "https://github.com/neovim/neovim/releases/download/v{{ nvim_version }}/nvim-linux64.deb"
           when: nvim_version_call is defined and nvim_version_call.stdout != nvim_expected_version_output
@@ -272,6 +293,7 @@
         - name: Disable default terminal shortcut
           key: "/org/gnome/settings-daemon/plugins/media-keys/terminal"
           value: "@as []"
+      when: has_gui
 
     - name: Set keyboard shortcuts
       tags: shortcuts
@@ -297,6 +319,7 @@
             name: "'Activate snippets'"
             command: "'{{ lookup('env', 'HOME') }}/bin/snippets.sh'"
             binding: "'<Primary><Alt>s'"
+      when: has_gui
       block:
         - name: Set shortcut names
           dconf:
