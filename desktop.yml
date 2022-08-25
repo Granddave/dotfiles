@@ -177,7 +177,6 @@
           when: install_oh_my_zsh
 
         - name: Install oh_my_zsh
-          become: yes
           ansible.builtin.shell: "/bin/sh {{ oh_my_zsh_tmp.path }}/install.sh --unattended --keep-zshrc"
           when: install_oh_my_zsh
 
