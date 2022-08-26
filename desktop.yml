@@ -41,18 +41,14 @@
         - rofi
 
   pre_tasks:
-    - name: Check if gtk is installed
-      command: dpkg-query -l gtk
+    - name: Check if GTK is installed
+      shell: "bash -c 'dpkg -l | grep gtk'"
       register: gtk_check
       ignore_errors: yes
 
-    - name: Set GUI fact
+    - name: Set GTK fact
       set_fact:
-        has_gui: "{{ gtk_check.stdout.find('no packages found') != -1 }}"
-
-    - name: debug
-      debug:
-        var: has_gui
+        has_gtk: "{{ gtk_check.rc == 0 }}"
 
   tasks:
     - name: Install GUI packages
@@ -60,7 +56,7 @@
       become: true
       apt:
         pkg: "{{ apt_packages.gui }}"
-      when: has_gui
+      when: has_gtk
 
     - name: Install CLI packages
       tags: apt
@@ -294,7 +290,7 @@
         - name: Disable default terminal shortcut
           key: "/org/gnome/settings-daemon/plugins/media-keys/terminal"
           value: "@as []"
-      when: has_gui
+      when: has_gtk
 
     - name: Set keyboard shortcuts
       tags: shortcuts
@@ -320,7 +316,7 @@
             name: "'Activate snippets'"
             command: "'{{ lookup('env', 'HOME') }}/bin/snippets.sh'"
             binding: "'<Primary><Alt>s'"
-      when: has_gui
+      when: has_gtk
       block:
         - name: Set shortcut names
           dconf:
