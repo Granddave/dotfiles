@@ -21,6 +21,7 @@
         - nload
         - stow
         - python3-psutil
+        - ncdu
       gui:
         # Utils
         - xdotool
