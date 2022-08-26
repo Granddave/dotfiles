@@ -22,6 +22,7 @@
         - stow
         - python3-psutil
         - ncdu
+        - uuid
       gui:
         # Utils
         - xdotool
