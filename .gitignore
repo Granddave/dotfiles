@@ -1,3 +1,4 @@
 *.swp
 private/
 __pycache__
+vim/.config/nvim/spell
