@@ -2,9 +2,16 @@
 
 This is my personal dotfiles repository.
 
-I am using [stow](https://www.gnu.org/software/stow/) to manage the files together with git.
+A single Ansible playbook installs and sets up all applications and uses [stow](https://www.gnu.org/software/stow/) to install symlinks to the dotfiles.
 
-Check out [this](http://www.garin.io/dotfiles-with-stow) or [this guide](https://alexpearce.me/2016/02/managing-dotfiles-with-stow/) if you are interested in how I have done implemented it.
+
+## Installation
+
+```bash
+$ ./bootstrap.sh
+$ ansible-playbook setup.yml -K
+```
+
 
 ## Other fun stuff
 
