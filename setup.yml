@@ -206,7 +206,7 @@
       # https://github.com/dandavison/delta/tags
       tags: delta
       vars:
-        delta_version: "0.13.0"
+        delta_version: "0.14.0"
         delta_expected_version_output: "\u001b[0mdelta {{ delta_version }}\n\u001b[0m" # Stupid escape codes...
       block:
         - name: Register current delta version
