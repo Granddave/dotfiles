@@ -88,7 +88,7 @@
         - zsh
 
     - name: Install nvm and Nodejs
-      # https://github.com/nvm-sh/nvm
+      # https://github.com/nvm-sh/nvm/tags
       tags: node
       vars:
         nvm_version: "v0.39.1"
