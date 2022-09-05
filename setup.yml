@@ -1,5 +1,5 @@
 ---
-- name: Set up desktop
+- name: Set up dev environment
   hosts: localhost
   vars:
     dotfiles_dir: "{{ lookup('env','HOME') }}/.dotfiles"
