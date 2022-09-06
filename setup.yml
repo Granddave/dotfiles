@@ -27,6 +27,7 @@
         # Utils
         - xdotool
         - xsel
+        - xclip
 
         # Misc
         - fonts-hack-ttf
