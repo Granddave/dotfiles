@@ -46,6 +46,7 @@
       shell: "bash -c 'dpkg -l | grep gtk'"
       register: gtk_check
       ignore_errors: yes
+      changed_when: False
 
     - name: Set GTK fact
       set_fact:
@@ -75,8 +76,11 @@
 
     - name: Stow dotfiles
       tags: stow
-      ansible.builtin.shell: "stow --dir {{ dotfiles_dir }} {{ item }}"
+      ansible.builtin.shell:
+        chdir: "{{ dotfiles_dir }}"
+        cmd: "stow --verbose {{ item }}"
       register: stow_out
+      changed_when: 'stow_out.stderr is search("LINK: ")'
       with_items:
         - alacritty
         - bin
