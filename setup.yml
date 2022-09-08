@@ -92,6 +92,18 @@
         - xmodmap
         - zsh
 
+    - name: Compile and install Alacritty
+      tags: alacritty
+      when: has_gtk
+      block:
+        - name: Install Rust
+        - name: Select Rust branch
+        - name: Install build dependencies
+        - name: Create Dev directory
+        - name: Clone Alacritty
+        - name: Build Alacritty
+        - name: Install Alacritty
+
     - name: Install nvm and Nodejs
       # https://github.com/nvm-sh/nvm/tags
       tags: node
