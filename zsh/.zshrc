@@ -6,6 +6,7 @@ HIST_STAMPS="yyyy-mm-dd"
 setopt HIST_IGNORE_SPACE
 
 plugins=(
+    command-not-found
     git
     zsh-autosuggestions
     zsh-syntax-highlighting
