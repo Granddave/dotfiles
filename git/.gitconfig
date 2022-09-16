@@ -24,6 +24,7 @@
     dump = cat-file -p
     s = submodule
     sf = submodule foreach
+    su = submodule update
 [status]
     submoduleSummary = true
 [diff]
