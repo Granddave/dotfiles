@@ -93,7 +93,7 @@ bindsym $mod+Control+l move workspace to output right
 
 bindsym $mod+g split h
 bindsym $mod+v split v
-bindsym $mod+f fullscreen toggle
+bindsym $mod1+Return fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
