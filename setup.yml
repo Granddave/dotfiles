@@ -66,13 +66,16 @@
       apt:
         pkg: "{{ apt_packages.cli }}"
 
-    - name: Create systemd directory for user
+    - name: Create dotfile directories
       # This is created so that the stowing of certain directories only creates symlinks to the
       # files and not to any directory above.
       ansible.builtin.file:
-        path: "{{ lookup('env','HOME') }}/.config/systemd/user"
+        path: "{{ lookup('env','HOME') }}/{{ item }}"
         state: directory
         recurse: yes
+      with_items:
+        - .config/systemd/user
+        - .config/nvim
 
     - name: Stow dotfiles
       tags: stow
