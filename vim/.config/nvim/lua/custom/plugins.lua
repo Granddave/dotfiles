@@ -5,6 +5,7 @@ return require('packer').startup(function()
   use 'airblade/vim-gitgutter'
   use 'kyazdani42/nvim-tree.lua'
   use 'junegunn/goyo.vim'
+  use 'junegunn/limelight.vim'
   use 'jkramer/vim-checkbox'
   use {
     'nvim-telescope/telescope.nvim', tag = '0.1.0',
