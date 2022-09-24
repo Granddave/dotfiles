@@ -72,6 +72,9 @@ bindsym $mod+d exec --no-startup-id "rofi -matching fuzzy -show run"
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
+bindsym $mod+Shift+o exec --no-startup-id ~/bin/edit-in-vim.sh
+for_window [ title="edit-in-vim" ] floating enable
+
 focus_follows_mouse no
 bindsym $mod+n workspace next_on_output
 bindsym $mod+p workspace prev_on_output
