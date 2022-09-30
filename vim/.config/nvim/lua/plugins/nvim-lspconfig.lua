@@ -39,7 +39,10 @@ local on_attach = function(client, bufnr)
     function() telescope.lsp_references(telescope_opts) end,
     bufopts
   )
-  vim.keymap.set('n', '<Leader>fo', vim.lsp.buf.formatting, bufopts)
+  vim.keymap.set('n', '<Leader>fo',
+    function() vim.lsp.buf.format({ async = true }) end,
+    bufopts
+  )
   vim.keymap.set("n", "<Leader>fs",
     function() telescope.lsp_dynamic_workspace_symbols(telescope_opts) end,
     bufopts
