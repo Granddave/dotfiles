@@ -24,7 +24,6 @@ map("n", "<M-C-l>", ":vertical resize +" .. resize_step .. "<CR>", opts)
 map("n", "<Leader>sl", ":set list!<CR>", opts)
 map("n", "<Leader><Leader>", "za", opts)
 
-map("v", "//", 'y/<C-r>"<CR>', { noremap = true })
 map("x", "<Leader>sr", 'y:%s%<C-r>"%%g<Left><Left>', { noremap = true })
 map("x", "<Leader>sc", 'y:%s%<C-r>"%%gc<Left><Left><Left>', { noremap = true })
 
