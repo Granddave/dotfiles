@@ -25,8 +25,6 @@ vim.opt.smartcase = true
 
 vim.opt.termguicolors = true
 
-vim.opt.mouse = 'a'
-
 vim.opt.foldmethod = 'marker'
 
 vim.opt.cursorline = true
