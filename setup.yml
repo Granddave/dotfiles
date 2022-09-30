@@ -254,6 +254,14 @@
             dest: "{{ lookup('env','HOME') }}/.local/share/nvim/site/pack/packer/start/packer.nvim"
             depth: 1
 
+        - name: Install nvim plugins
+          ansible.builtin.shell: "nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'"
+          changed_when: false
+
+        - name: Install TreeSitter grammars
+          ansible.builtin.shell: "nvim --headless +:TSUpdateSync +qa"
+          changed_when: false
+
     - name: Enable weather systemd units
       tags: weather
       block:
