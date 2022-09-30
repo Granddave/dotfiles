@@ -45,7 +45,7 @@ local on_attach = function(client, bufnr)
     bufopts
   )
 
-  if client.resolved_capabilities.document_highlight then
+  if client.server_capabilities["documentHighlightProvider"] then
     vim.cmd [[
       hi! LspReferenceRead cterm=bold ctermbg=Gray guibg=#555555
       hi! LspReferenceText cterm=bold ctermbg=Gray guibg=#555555
