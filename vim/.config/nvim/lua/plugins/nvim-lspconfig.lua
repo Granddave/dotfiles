@@ -1,9 +1,9 @@
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = true }
 --vim.keymap.set('n', '<Leader>e', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<Leader>q', vim.diagnostic.setloclist, opts)
+vim.keymap.set('n', '<Leader>dp', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', '<Leader>dn', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<Leader>dl', vim.diagnostic.setloclist, opts)
 
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
