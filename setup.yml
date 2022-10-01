@@ -46,6 +46,7 @@
       shell: "bash -c 'dpkg -l | grep gtk'"
       register: gtk_check
       ignore_errors: yes
+      check_mode: no
       changed_when: False
 
     - name: Set GTK fact
