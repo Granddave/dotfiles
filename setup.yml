@@ -42,6 +42,11 @@
         - rofi
 
   pre_tasks:
+    - name: Set WSL fact
+      set_fact:
+        in_wsl: "{{ lookup('env', 'WSL_DISTRO_NAME') != '' }}"
+      tags: wsl
+
     - name: Check if GTK is installed
       shell: "bash -c 'dpkg -l | grep gtk'"
       register: gtk_check
@@ -109,6 +114,7 @@
           shell: "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/{{ nvm_version }}/install.sh | bash"
           args:
             creates: "{{ lookup('env','HOME') }}/.nvm/nvm.sh"
+
         - name: Install Node.js
           shell: '. {{ ansible_env.HOME }}/.nvm/nvm.sh; nvm install --lts'
           args:
@@ -264,6 +270,7 @@
 
     - name: Enable weather systemd units
       tags: weather
+      when: not in_wsl
       block:
         - name: Enable weather service
           ansible.builtin.systemd:
