@@ -240,7 +240,7 @@
         nvim_expected_version_output: "NVIM v{{ nvim_version }}"
       block:
         - name: Register current nvim version
-          ansible.builtin.shell: "nvim --version | grep \"NVIM v\""
+          ansible.builtin.shell: "nvim --version | grep -P -o 'NVIM v\\d\\.\\d\\.\\d'"
           register: nvim_version_call
           ignore_errors: yes
           changed_when: false
