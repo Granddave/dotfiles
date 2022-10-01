@@ -74,8 +74,11 @@
         state: directory
         recurse: yes
       with_items:
-        - .config/systemd/user
+        - .config/alacritty
+        - .config/autostart
         - .config/nvim
+        - .config/systemd/user
+        - bin
 
     - name: Stow dotfiles
       tags: stow
