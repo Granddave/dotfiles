@@ -50,7 +50,7 @@
       tags: wsl
 
     - name: Check if GTK is installed
-      shell: "bash -c 'dpkg -l | grep gtk'"
+      ansible.builtin.shell: "bash -c 'dpkg -l | grep gtk'"
       register: gtk_check
       ignore_errors: yes
       check_mode: no
@@ -113,12 +113,12 @@
         nvm_version: "v0.39.1"
       block:
         - name: Install nvm
-          shell: "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/{{ nvm_version }}/install.sh | bash"
+          ansible.builtin.shell: "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/{{ nvm_version }}/install.sh | bash"
           args:
             creates: "{{ lookup('env','HOME') }}/.nvm/nvm.sh"
 
         - name: Install Node.js
-          shell: '. {{ ansible_env.HOME }}/.nvm/nvm.sh; nvm install --lts'
+          ansible.builtin.shell: '. {{ ansible_env.HOME }}/.nvm/nvm.sh; nvm install --lts'
           args:
             creates: "{{ ansible_env.HOME }}/.nvm/versions/node"
             chdir: "{{ ansible_env.HOME }}"
