@@ -8,12 +8,13 @@
     default = current
 [alias]
     a = add
+    ap = add -p
     d = diff
     ds = diff --staged
     f = fetch -p # Fetch and prune previously tracked branches
     fa = fetch -p --all --tags # Fetch and prune previously tracked branches
     co = checkout
-    ci = commit
+    cm = commit
     st = status
     br = branch
     bd = branch -d # Delete merged branch
