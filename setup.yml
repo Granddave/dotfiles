@@ -3,6 +3,8 @@
   hosts: localhost
   vars:
     dotfiles_dir: "{{ lookup('env','HOME') }}/.dotfiles"
+    alacritty_binary_path: "/usr/local/bin/alacritty"
+    alacritty_version: "0.10.1" # https://github.com/alacritty/alacritty/tags
     apt_packages:
       cli:
         # Dev tools
@@ -371,6 +373,103 @@
           dconf:
             key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
             value: "[{{ ','.join(shortcut_list) }}]"
+
+    - name: Register current Alacritty version
+      ansible.builtin.shell: "{{ alacritty_binary_path }} --version | grep -P -o '\\d+\\.\\d+\\.\\d+'"
+      register: alacritty_version_call
+      ignore_errors: yes
+      changed_when: false
+      tags: alacritty
+
+    - name: Decide if Alacritty build should continue
+      set_fact:
+        build_alacritty: "{{ has_gtk and alacritty_version_call is defined and alacritty_version_call.stdout != alacritty_version }}"
+      tags: alacritty
+
+    - name: Build Alacritty
+      when: build_alacritty
+      vars:
+        git_dir: "{{ lookup('env','HOME') }}/Dev/other"
+        repo_dir: "{{ git_dir }}/alacritty"
+      tags: alacritty
+      block:
+        # Installation instructions: https://github.com/alacritty/alacritty/blob/master/INSTALL.md
+        - name: Install Rustup and Cargo
+          ansible.builtin.shell: "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path -y"
+          register: curl_out
+          changed_when: 'curl_out.stdout is not search("unchanged")'
+          args:
+            executable: /bin/zsh
+
+        - name: Use the stable Rust compiler
+          ansible.builtin.shell: "rustup override set stable"
+          changed_when: false
+          args:
+            executable: /bin/zsh
+
+        - name: Make sure that the Rust compiler is up to date
+          ansible.builtin.shell: "rustup update stable"
+          changed_when: false
+          args:
+            executable: /bin/zsh
+
+        - name: Install build dependencies
+          become: true
+          ansible.builtin.apt:
+            pkg:
+              - cmake
+              - libfontconfig1-dev
+              - libfreetype6-dev
+              - libxcb-xfixes0-dev
+              - libxkbcommon-dev
+              - pkg-config
+              - python3
+
+        - name: Set up repo directory
+          ansible.builtin.file:
+            path: "{{ git_dir }}"
+            state: directory
+            recurse: yes
+
+        - name: Clone repo
+          ansible.builtin.git:
+            repo: git@github.com:alacritty/alacritty.git
+            dest: "{{ repo_dir }}"
+            version: "v{{ alacritty_version }}"
+            depth: 1
+
+        - name: Build Alacritty
+          ansible.builtin.shell: "cargo build --release"
+          register: build_out
+          changed_when: 'build_out.stderr is search("Compiling alacritty")'
+          args:
+            chdir: "{{ repo_dir }}"
+            executable: /bin/zsh
+
+        - name: Install files
+          become: true
+          copy:
+            src: "{{ item.src }}"
+            dest: "{{ item.dest }}"
+            mode: "{{ item.mode }}"
+          with_items:
+            - src: "{{ repo_dir }}/target/release/alacritty"
+              dest: "{{ alacritty_binary_path }}"
+              mode: "0755"
+            - src: "{{ repo_dir }}/extra/logo/alacritty-term.svg"
+              dest: "/usr/share/pixmaps/Alacritty.svg"
+              mode: "0644"
+
+        - name: Install .desktop file
+          become: true
+          ansible.builtin.shell: "desktop-file-install extra/linux/Alacritty.desktop"
+          args:
+            creates: "/usr/share/applications/Alacritty.desktop"
+            chdir: "{{ repo_dir }}"
+
+        - name: Update desktop database
+          become: true
+          ansible.builtin.shell: "update-desktop-database"
 
 # ---
 # TODO:
