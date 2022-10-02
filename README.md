@@ -7,11 +7,11 @@ A single Ansible playbook installs and sets up all applications and uses [stow](
 
 ## Installation
 
-**NOTE: Please READ and UNDERSTAND what the script and playbook does before executing**
+**NOTE: Please *READ* and *UNDERSTAND* what the script and playbook does before executing**
 
 ```bash
 $ ./bootstrap.sh
-$ ansible-playbook setup.yml -K
+$ Ansible-playbook setup.yml -K
 ```
 
 
