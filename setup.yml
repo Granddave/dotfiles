@@ -432,6 +432,7 @@
             recurse: yes
 
         - name: Clone repo
+          diff: no
           ansible.builtin.git:
             repo: git@github.com:alacritty/alacritty.git
             dest: "{{ repo_dir }}"
