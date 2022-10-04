@@ -11,7 +11,7 @@ A single Ansible playbook installs and sets up all applications and uses [stow](
 
 ```bash
 $ ./bootstrap.sh
-$ Ansible-playbook setup.yml -K
+$ ansible-playbook setup.yml -K
 ```
 
 
