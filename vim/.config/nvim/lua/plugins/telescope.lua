@@ -5,7 +5,6 @@ local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 local telescope = require('telescope.builtin')
 map("n", "<Leader>ff", function() telescope.find_files() end, opts)
-map("n", "<Leader>fi", function() telescope.file_browser() end, opts)
 map("n", "<Leader>fg", function() telescope.git_files() end, opts)
 map("n", "<Leader>fr", function() telescope.live_grep() end, opts)
 map("n", "<Leader>fb", function() telescope.buffers() end, opts)
