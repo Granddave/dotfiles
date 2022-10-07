@@ -1,5 +1,10 @@
 M = {}
 
+P = function(v)
+  print(vim.inspect(v))
+  return v
+end
+
 if pcall(require, "plenary") then
   RELOAD = require("plenary.reload").reload_module
 
