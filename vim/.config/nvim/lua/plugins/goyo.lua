@@ -1,4 +1,4 @@
-vim.keymap.set("n", "<Leader>go", "<Cmd>Goyo<CR><Cmd>Goyo<CR><Cmd>Goyo<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<Leader>go", "<Cmd>Goyo<CR>", { noremap = true, silent = true })
 
 vim.api.nvim_create_autocmd("User", {
   pattern = "GoyoEnter",
@@ -10,8 +10,10 @@ vim.api.nvim_create_autocmd("User", {
     vim.cmd("Limelight")
     vim.opt.cursorline = false
     vim.opt.showmode = false
+    vim.opt.showtabline = 0
   end,
 })
+
 vim.api.nvim_create_autocmd("User", {
   pattern = "GoyoLeave",
   callback = function()
@@ -22,5 +24,6 @@ vim.api.nvim_create_autocmd("User", {
     vim.cmd("Limelight!")
     vim.opt.cursorline = true
     vim.opt.showmode = true
+    vim.opt.showtabline = 1
   end,
 })
