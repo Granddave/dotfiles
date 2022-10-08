@@ -12,6 +12,7 @@
         - fzf
         - git
         - ripgrep
+        - shellcheck
         - tig
         - tmux
         - zsh
