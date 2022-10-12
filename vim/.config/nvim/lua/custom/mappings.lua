@@ -21,6 +21,9 @@ map("n", "<M-C-j>", ":resize +" .. resize_step .. "<CR>", opts)
 map("n", "<M-C-k>", ":resize -" .. resize_step .. "<CR>", opts)
 map("n", "<M-C-l>", ":vertical resize +" .. resize_step .. "<CR>", opts)
 
+map("n", "<Leader>qn", ":cnext<CR>", opts)
+map("n", "<Leader>qp", ":cprev<CR>", opts)
+
 map("n", "<Leader>sl", ":set list!<CR>", opts)
 map("n", "<Leader><Leader>", "za", opts)
 
