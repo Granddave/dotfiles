@@ -47,7 +47,7 @@ if [ -f "$HOME/.local/bin/virtualenvwrapper.sh" ]; then
     source $HOME/.local/bin/virtualenvwrapper.sh
 fi
 
-load_nvm() {
+nvm_load_environment() {
     # Node version manager
     export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
