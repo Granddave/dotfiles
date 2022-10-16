@@ -48,4 +48,22 @@ M.reload_current_lua_file = function()
   M.reload_lua_file(vim.api.nvim_buf_get_name(0))
 end
 
+M.get_branch_name = function()
+  local git = vim.fn.system("git rev-parse --is-inside-work-tree 2> /dev/null")
+  if git ~= "" then
+    local branch = vim.fn.system("git branch --show-current")
+    return branch:gsub("\n", "")
+  end
+
+  return ""
+end
+
+M.find_jira_key_from_string = function(str)
+  local match = string.match(str, [[%a+-%d+]])
+  if match == nil then
+    return ""
+  end
+  return match
+end
+
 return M

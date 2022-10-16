@@ -75,3 +75,24 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     vim.highlight.on_yank({ higroup = "IncSearch", timeout = 150 })
   end,
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "gitcommit",
+  group = vim.api.nvim_create_augroup("GitCommitJiraKey", {}),
+  callback = function()
+    local commit_summary = vim.api.nvim_buf_get_lines(0, 0, 1, false)[0]
+    if commit_summary ~= nil then
+      return
+    end
+    local branch = require("custom.utils").get_branch_name()
+    if branch == "" then
+      return
+    end
+    local jira_key = require("custom.utils").find_jira_key_from_string(branch)
+    if jira_key ~= "" then
+      commit_summary = jira_key .. " "
+      vim.api.nvim_buf_set_lines(0, 0, 1, false, { commit_summary })
+      vim.cmd("startinsert!")
+    end
+  end
+})
