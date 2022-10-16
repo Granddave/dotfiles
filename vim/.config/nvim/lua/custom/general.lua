@@ -80,8 +80,8 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = "gitcommit",
   group = vim.api.nvim_create_augroup("GitCommitJiraKey", {}),
   callback = function()
-    local commit_summary = vim.api.nvim_buf_get_lines(0, 0, 1, false)[0]
-    if commit_summary ~= nil then
+    local commit_summary = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1]
+    if commit_summary ~= "" then
       return
     end
     local branch = require("custom.utils").get_branch_name()
