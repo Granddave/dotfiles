@@ -80,19 +80,25 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = "gitcommit",
   group = vim.api.nvim_create_augroup("GitCommitJiraKey", {}),
   callback = function()
-    local commit_summary = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1]
-    if commit_summary ~= "" then
+    -- Get first line (Git commit subject line)
+    local subject_line_index = 0
+    local commit_subject_line = vim.api.nvim_buf_get_lines(0, subject_line_index, subject_line_index + 1, false)[1]
+    if commit_subject_line ~= "" then
+      -- Don't override subject line from e.g. `commit --amend`
       return
     end
     local branch = require("custom.utils").get_branch_name()
     if branch == "" then
       return
     end
-    local jira_key = require("custom.utils").find_jira_key_from_string(branch)
-    if jira_key ~= "" then
-      commit_summary = jira_key .. " "
-      vim.api.nvim_buf_set_lines(0, 0, 1, false, { commit_summary })
-      vim.cmd("startinsert!")
+    local jira_key = require("custom.utils").find_jira_key(branch)
+    if jira_key == "" then
+      return
     end
+    -- Set the Jira key to the begining of the line and change to insert mode
+    -- at the end of the line.
+    commit_subject_line = jira_key .. " "
+    vim.api.nvim_buf_set_lines(0, subject_line_index, subject_line_index + 1, false, { commit_subject_line })
+    vim.cmd("startinsert!")
   end
 })

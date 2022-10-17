@@ -49,21 +49,15 @@ M.reload_current_lua_file = function()
 end
 
 M.get_branch_name = function()
-  local git = vim.fn.system("git rev-parse --is-inside-work-tree 2> /dev/null")
-  if git ~= "" then
-    local branch = vim.fn.system("git branch --show-current")
-    return branch:gsub("\n", "")
-  end
-
-  return ""
-end
-
-M.find_jira_key_from_string = function(str)
-  local match = string.match(str, [[%a+-%d+]])
-  if match == nil then
+  local is_inside_git_repo = vim.fn.system("git rev-parse --is-inside-work-tree 2> /dev/null") ~= ""
+  if not is_inside_git_repo then
     return ""
   end
-  return match
+  return vim.fn.system("git branch --show-current"):gsub("\n", "")
+end
+
+M.find_jira_key = function(str)
+  return string.match(str, [[%a+-%d+]]) or ""
 end
 
 return M
