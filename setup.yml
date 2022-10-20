@@ -32,9 +32,6 @@
         - xsel
         - xclip
 
-        # Misc
-        - fonts-hack-ttf
-
         # GUI apps
         - arandr
         - flameshot
@@ -106,6 +103,31 @@
         - vim
         - xmodmap
         - zsh
+
+    - name: Download and install Hack nerd font
+      # https://github.com/ryanoasis/nerd-fonts/tags
+      tags: font
+      vars:
+        font_version: "v2.2.2"
+        fonts_dir: "{{ lookup('env','HOME') }}/.fonts"
+      block:
+        - name: Check if fonts are installed
+          ansible.builtin.stat:
+            path: "{{ fonts_dir }}/Hack Regular Nerd Font Complete Mono.ttf"
+          register: font_result
+
+        - name: Create fonts directory
+          ansible.builtin.file:
+            path: "{{ fonts_dir }}"
+            state: directory
+          when: not font_result.stat.exists
+
+        - name: Download fonts
+          ansible.builtin.unarchive:
+            src: "https://github.com/ryanoasis/nerd-fonts/releases/download/{{ font_version }}/Hack.zip"
+            dest: "{{ fonts_dir }}"
+            remote_src: yes
+          when: not font_result.stat.exists
 
     - name: Install nvm and Nodejs
       # https://github.com/nvm-sh/nvm/tags
