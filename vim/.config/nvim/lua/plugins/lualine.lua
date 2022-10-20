@@ -30,7 +30,16 @@ require('lualine').setup({
     lualine_z = {}
   },
   tabline = {
-    lualine_a = { 'buffers' },
+    lualine_a = {
+      {
+        'buffers',
+        symbols = {
+          alternate_file = '',
+          modified = ' ',
+        },
+      }
+
+    },
     lualine_b = {},
     lualine_c = {},
     lualine_x = {},
