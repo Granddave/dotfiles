@@ -2,7 +2,10 @@ return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'gruvbox-community/gruvbox'
-  use 'nvim-lualine/lualine.nvim'
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
   use 'airblade/vim-gitgutter'
   use 'kyazdani42/nvim-tree.lua'
   use 'junegunn/goyo.vim'
