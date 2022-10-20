@@ -26,6 +26,7 @@
         - python3-psutil
         - ncdu
         - uuid
+        - jq
       gui:
         # Utils
         - xdotool

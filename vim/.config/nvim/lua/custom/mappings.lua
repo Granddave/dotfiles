@@ -58,3 +58,8 @@ map("n", "<Leader>dw", require("custom.utils").clean_trailing_spaces, opts)
 map("v", "<Leader>tc", 'y:! timecalc.py <C-r>" <Bar> xclip -in -selection clipboard<CR>', opts)
 map("n", "<Leader>sp", ":setlocal spell! spelllang=en,sv<CR>", opts)
 map("n", "<Leader>rc", require("custom.utils").reload_current_lua_file, opts)
+
+map("n", "<Leader>fj", "<Cmd>%!jq<CR>", opts)
+map("v", "<Leader>fj", "<Cmd>'<,'>!jq<CR>", opts)
+map("n", "<Leader>fcj", "<Cmd>%!jq --compact-output<CR>", opts)
+map("v", "<Leader>fcj", "<Cmd>'<,'>!jq --compact-output<CR>", opts)
