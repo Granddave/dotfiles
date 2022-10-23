@@ -1,3 +1,34 @@
+-- LSP servers to configure and optional override opts
+local servers = {
+  bashls = {},
+  pyright = {},
+  clangd = {},
+  cmake = {},
+  yamlls = {},
+  vimls = {},
+  sumneko_lua = {
+    settings = {
+      Lua = {
+        runtime = {
+          version = 'LuaJIT',
+        },
+        diagnostics = {
+          globals = { 'vim', 'use' },
+        },
+        workspace = {
+          library = vim.api.nvim_get_runtime_file("", true),
+        },
+        telemetry = {
+          enable = false,
+        },
+      },
+    },
+  },
+  jsonls = {},
+  groovyls = {},
+  tsserver = {},
+}
+
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = true }
 --vim.keymap.set('n', '<Leader>e', vim.diagnostic.open_float, opts)
@@ -68,75 +99,15 @@ local on_attach = function(client, bufnr)
   end
 end
 
-local lsp_flags = {
-  debounce_text_changes = 150,
-}
-
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-require('lspconfig')['bashls'].setup {
-  on_attach = on_attach,
-  flags = lsp_flags,
-  capabilities = capabilities
-}
-require('lspconfig')['pyright'].setup {
-  on_attach = on_attach,
-  flags = lsp_flags,
-  capabilities = capabilities
-}
-require('lspconfig')['clangd'].setup {
-  on_attach = on_attach,
-  flags = lsp_flags,
-  capabilities = capabilities
-}
-require('lspconfig')['cmake'].setup {
-  on_attach = on_attach,
-  flags = lsp_flags,
-  capabilities = capabilities
-}
-require('lspconfig')['yamlls'].setup {
-  on_attach = on_attach,
-  flags = lsp_flags,
-  capabilities = capabilities
-}
-require('lspconfig')['vimls'].setup {
-  on_attach = on_attach,
-  flags = lsp_flags,
-  capabilities = capabilities
-}
-require('lspconfig')['sumneko_lua'].setup {
-  on_attach = on_attach,
-  flags = lsp_flags,
-  settings = {
-    Lua = {
-      runtime = {
-        version = 'LuaJIT',
-      },
-      diagnostics = {
-        globals = { 'vim', 'use' },
-      },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file("", true),
-      },
-      telemetry = {
-        enable = false,
-      },
+for server_name, user_opts in pairs(servers) do
+  local lsp_opts = {
+    on_attach = on_attach,
+    flags = {
+      debounce_text_changes = 150,
     },
-  },
-  capabilities = capabilities
-}
-require('lspconfig')['jsonls'].setup {
-  on_attach = on_attach,
-  flags = lsp_flags,
-  capabilities = capabilities
-}
-require('lspconfig')['groovyls'].setup {
-  on_attach = on_attach,
-  flags = lsp_flags,
-  capabilities = capabilities
-}
-require('lspconfig')['tsserver'].setup {
-  on_attach = on_attach,
-  flags = lsp_flags,
-  capabilities = capabilities
-}
+    capabilities = require('cmp_nvim_lsp').default_capabilities()
+  }
+  lsp_opts = vim.tbl_deep_extend("force", lsp_opts, user_opts)
+  require('lspconfig')[server_name].setup(lsp_opts)
+end
+
