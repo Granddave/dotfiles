@@ -27,6 +27,7 @@
         - ncdu
         - uuid
         - jq
+        - unzip
       gui:
         # Utils
         - xdotool
