@@ -34,7 +34,7 @@ vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "BufWinEnter" }, {
   callback = function() vim.opt.cursorline = true end,
   group = cursorline_au_group,
 })
-vim.api.nvim_create_autocmd("WinLeave", {
+vim.api.nvim_create_autocmd({ "VimLeave", "WinLeave", "BufWinLeave" }, {
   buffer = 0,
   callback = function() vim.opt.cursorline = false end,
   group = cursorline_au_group,
