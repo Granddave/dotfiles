@@ -38,7 +38,6 @@ require('lualine').setup({
           modified = ' ',
         },
       }
-
     },
     lualine_b = {},
     lualine_c = {},
