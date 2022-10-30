@@ -4,7 +4,7 @@
   vars:
     dotfiles_dir: "{{ lookup('env','HOME') }}/.dotfiles"
     alacritty_binary_path: "/usr/local/bin/alacritty"
-    alacritty_version: "0.10.1" # https://github.com/alacritty/alacritty/tags
+    alacritty_version: "0.11.0" # https://github.com/alacritty/alacritty/tags
     apt_packages:
       cli:
         # Dev tools
