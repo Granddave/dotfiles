@@ -135,7 +135,7 @@
       # https://github.com/nvm-sh/nvm/tags
       tags: node
       vars:
-        nvm_version: "v0.39.1"
+        nvm_version: "v0.39.2"
       block:
         - name: Install nvm
           ansible.builtin.shell: "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/{{ nvm_version }}/install.sh | bash"
