@@ -4,10 +4,15 @@ return require('packer').startup(function()
   use 'gruvbox-community/gruvbox'
   use {
     'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    requires = { 'nvim-tree/nvim-web-devicons', opt = true }
   }
   use 'airblade/vim-gitgutter'
-  use 'kyazdani42/nvim-tree.lua'
+  use {
+    'nvim-tree/nvim-tree.lua',
+    requires = {
+      'nvim-tree/nvim-web-devicons',
+    },
+  }
   use 'junegunn/goyo.vim'
   use 'junegunn/limelight.vim'
   use 'jkramer/vim-checkbox'
@@ -29,7 +34,7 @@ return require('packer').startup(function()
   use 'hrsh7th/cmp-cmdline'
   use {
     "folke/trouble.nvim",
-    requires = "kyazdani42/nvim-web-devicons"
+    requires = "nvim-tree/nvim-web-devicons"
   }
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
