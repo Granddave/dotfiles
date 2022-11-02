@@ -24,6 +24,7 @@
         - nload
         - stow
         - python3-psutil
+        - python3-venv
         - ncdu
         - uuid
         - jq
