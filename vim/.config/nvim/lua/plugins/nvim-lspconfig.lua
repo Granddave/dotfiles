@@ -50,10 +50,7 @@ local on_attach = function(client, bufnr)
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', 'gd',
-    function() telescope.lsp_definitions(telescope_opts) end,
-    bufopts
-  )
+  vim.keymap.set('n', 'gd', function() telescope.lsp_definitions(telescope_opts) end, bufopts)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
   --vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
@@ -110,4 +107,3 @@ for server_name, user_opts in pairs(servers) do
   lsp_opts = vim.tbl_deep_extend("force", lsp_opts, user_opts)
   require('lspconfig')[server_name].setup(lsp_opts)
 end
-
