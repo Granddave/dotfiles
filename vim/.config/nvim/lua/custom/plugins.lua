@@ -32,6 +32,7 @@ return require('packer').startup(function()
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-cmdline'
+  use 'onsails/lspkind.nvim'
   use {
     "folke/trouble.nvim",
     requires = "nvim-tree/nvim-web-devicons"

@@ -1,6 +1,3 @@
-vim.opt.wildmenu = true
-vim.opt.wildmode = 'longest:list,full'
-
 vim.opt.tabstop = 4 -- The width of a tab character
 vim.opt.shiftwidth = 4 -- Size of an 'indent', e.g. when pressing tab key
 vim.opt.expandtab = true -- Make tabs expand to spaces

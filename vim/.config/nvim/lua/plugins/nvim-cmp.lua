@@ -1,14 +1,12 @@
 local cmp = require('cmp')
 
+vim.opt.completeopt = "menu,menuone,noinsert"
+
 cmp.setup({
   snippet = {
     expand = function(args)
       require('luasnip').lsp_expand(args.body)
     end,
-  },
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -23,8 +21,25 @@ cmp.setup({
     { name = 'luasnip' },
     { name = 'path' },
     { name = 'buffer', keyword_length = 4 },
-  }, {
-  })
+  }),
+  experimental = {
+    ghost_text = true
+  },
+  formatting = {
+    format = require('lspkind').cmp_format({
+      mode = 'symbol_text',
+      maxwidth = 50,
+      ellipsis_char = '...',
+      menu = {
+        buffer = "[buf]",
+        nvim_lsp = "[LSP]",
+        nvim_lua = "[api]",
+        path = "[path]",
+        luasnip = "[snip]",
+        cmdline = "[cmd]",
+      },
+    })
+  },
 })
 
 cmp.setup.cmdline('/', {
