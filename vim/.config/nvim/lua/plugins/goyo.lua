@@ -39,7 +39,7 @@ vim.api.nvim_create_autocmd("User", {
     if vim.fn.executable('tmux') == 1 and os.getenv('TMUX') then
       io.popen('tmux set status off')
     end
-    require('lualine').hide()
+    require('lualine').hide({})
     vim.cmd("Limelight")
     vim.cmd("DisableWhitespace")
     vim.opt.cursorline = false
