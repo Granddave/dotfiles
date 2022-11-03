@@ -1,4 +1,6 @@
 require("custom.plugins")
+require('impatient')
+
 require("custom.mappings")
 require("custom.general")
 require("custom.utils")
