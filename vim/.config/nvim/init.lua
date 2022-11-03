@@ -4,6 +4,7 @@ require("custom.general")
 require("custom.utils")
 
 require("plugins.comment")
+require("plugins.gitsigns")
 require("plugins.goyo")
 require("plugins.gruvbox")
 require("plugins.lualine")

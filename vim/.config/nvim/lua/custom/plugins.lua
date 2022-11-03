@@ -6,7 +6,7 @@ return require('packer').startup(function()
     'nvim-lualine/lualine.nvim',
     requires = { 'nvim-tree/nvim-web-devicons', opt = true }
   }
-  use 'airblade/vim-gitgutter'
+  use 'lewis6991/gitsigns.nvim'
   use {
     'nvim-tree/nvim-tree.lua',
     requires = {
