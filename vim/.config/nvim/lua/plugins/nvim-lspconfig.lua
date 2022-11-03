@@ -96,14 +96,26 @@ local on_attach = function(client, bufnr)
   end
 end
 
+local lsp_opts = {
+  on_attach = on_attach,
+  flags = {
+    debounce_text_changes = 150,
+  },
+  capabilities = require('cmp_nvim_lsp').default_capabilities()
+}
 for server_name, user_opts in pairs(servers) do
-  local lsp_opts = {
-    on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150,
-    },
-    capabilities = require('cmp_nvim_lsp').default_capabilities()
-  }
   lsp_opts = vim.tbl_deep_extend("force", lsp_opts, user_opts)
   require('lspconfig')[server_name].setup(lsp_opts)
 end
+
+-- Attach to a remote Clangd server run by:
+-- `socat tcp-listen:4444,reuseaddr exec:"$CLANGD_BIN --background-index"`
+vim.keymap.set("n", "<Leader>cpp",
+  function()
+    lsp_opts = vim.tbl_deep_extend("force", lsp_opts, {
+      cmd = { "nc", "127.0.0.1", "4444" },
+    })
+    require('lspconfig')['clangd'].setup(lsp_opts)
+  end,
+  { noremap = true, silent = true }
+)
