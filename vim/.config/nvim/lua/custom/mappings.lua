@@ -59,6 +59,13 @@ map("v", "<Leader>tc", [[y:! timecalc.py <C-r>" <Bar> tr -d "\n" <Bar> xclip -in
 map("v", "<Leader>j", [[mj/\a\+-\d\+<CR><Cmd>noh<CR>y3e`jPa<Space>]], opts)
 map("n", "<Leader>sp", ":setlocal spell! spelllang=en,sv<CR>", opts)
 map("n", "<Leader>rc", require("custom.utils").reload_current_lua_file, opts)
+map("n", "<Leader>rw",
+  function()
+    vim.cmd("write")
+    require("custom.utils").reload_current_lua_file()
+  end,
+  opts
+)
 
 map("n", "<Leader>fj", "<Cmd>%!jq<CR>", opts)
 map("v", "<Leader>fj", "<Cmd>'<,'>!jq<CR>", opts)
