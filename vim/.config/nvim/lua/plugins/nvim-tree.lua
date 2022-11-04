@@ -2,6 +2,11 @@ require("nvim-tree").setup({
   view = {
     adaptive_size = true,
     width = 40,
+    mappings = {
+      list = {
+        { key = "<C-e>", action = "" },
+      },
+    },
   },
   renderer = {
     icons = {
