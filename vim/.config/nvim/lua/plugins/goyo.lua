@@ -1,12 +1,6 @@
 vim.keymap.set("n", "<Leader>go", "<Cmd>Goyo<CR>", { noremap = true, silent = true })
 
 local cached_opts = {
-  limelight = nil,
-  whitespace = nil,
-  cursorline = nil,
-  showmode = nil,
-  showtabline = nil,
-  scrolloff = nil,
 }
 
 local backup_opts = function()
