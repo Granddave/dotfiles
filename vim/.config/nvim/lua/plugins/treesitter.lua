@@ -22,10 +22,10 @@ require("nvim-treesitter.configs").setup({
   highlight = {
     enable = true,
     disable = function(lang, bufnr)
-      return (
-          lang == "markdown" and vim.api.nvim_buf_line_count(bufnr) > 5000
-              or vim.api.nvim_buf_get_option(0, "filetype") == "help"
-          )
+      local megabytes_in_buffer = require("custom.utils").bytes_in_buffer(bufnr) / (10 ^ 6)
+      return lang == "markdown" and megabytes_in_buffer > 1
+          or lang == "json" and megabytes_in_buffer > 1
+          or vim.api.nvim_buf_get_option(0, "filetype") == "help"
     end,
 
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.

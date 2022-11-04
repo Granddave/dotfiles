@@ -60,4 +60,9 @@ M.find_jira_key = function(str)
   return string.match(str, [[%a+-%d+]]) or ""
 end
 
+M.bytes_in_buffer = function(bufnr)
+  local num_lines = vim.api.nvim_buf_line_count(bufnr)
+  return vim.fn.line2byte(num_lines + 1)
+end
+
 return M
