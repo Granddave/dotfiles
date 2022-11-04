@@ -1,10 +1,12 @@
 require("nvim-tree").setup({
   view = {
     adaptive_size = true,
-    width = 40,
+    width = 35,
     mappings = {
       list = {
         { key = "<C-e>", action = "" },
+        { key = "h", action = "close_node" },
+        { key = "l", action = "open" },
       },
     },
   },
@@ -15,6 +17,9 @@ require("nvim-tree").setup({
   },
   git = {
     ignore = false,
+  },
+  diagnostics = {
+    enable = true,
   },
 })
 
