@@ -25,6 +25,7 @@ map("n", "<Leader>qn", ":cnext<CR>", opts)
 map("n", "<Leader>qp", ":cprev<CR>", opts)
 
 map("n", "<Leader>sl", ":set list!<CR>", opts)
+map("n", "<Leader>rt", ":retab!<CR>", opts)
 map("n", "<Leader><Leader>", "za", opts)
 
 map("x", "<Leader>sr", 'y:%s%<C-r>"%%g<Left><Left>', { noremap = true })
