@@ -44,6 +44,9 @@ return require('packer').startup(function()
   }
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
+  use 'mfussenegger/nvim-dap'
+  use 'rcarriga/nvim-dap-ui'
+  use 'mfussenegger/nvim-dap-python'
   use 'numToStr/Comment.nvim'
   use 'ntpeters/vim-better-whitespace'
 end)
