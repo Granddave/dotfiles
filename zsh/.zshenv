@@ -5,6 +5,7 @@ _try_add_path() {
 _try_add_path "$HOME/bin"
 _try_add_path "$HOME/.local/bin"
 _try_add_path "$HOME/go/bin"
+_try_add_path "$HOME/.nvm/versions/node/v18.12.1/bin"
 
 export EDITOR="nvim"
 export VISUAL="$EDITOR"
