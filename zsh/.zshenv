@@ -1,5 +1,10 @@
-[ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
-[ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
+_try_add_path() {
+    [ -d "$1" ] && PATH="$1:$PATH"
+}
+
+_try_add_path "$HOME/bin"
+_try_add_path "$HOME/.local/bin"
+_try_add_path "$HOME/go/bin"
 
 export EDITOR="nvim"
 export VISUAL="$EDITOR"
