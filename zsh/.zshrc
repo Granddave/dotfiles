@@ -17,24 +17,19 @@ source $ZSH/oh-my-zsh.sh
 bindkey '^ ' autosuggest-accept
 
 # Theme inspired from 'simple'
-PROMPT_PREFIX="$([ -n "$SSH_CONNECTION" ] && echo "$(hostname) ")$([ -n "$dockerenv" ] && echo "docker ")"
-local return_code="%(?..%{$fg[red]%}%? %{$reset_color%})"
-PROMPT='$return_code$PROMPT_PREFIX%(!.%{$fg[red]%}.%{$fg[green]%})%~%{$fg_bold[blue]%}$(git_prompt_info)%{$reset_color%} '
+prompt_prefix=""
+[ -n "$SSH_CONNECTION" ] && prompt_prefix="${prompt_prefix}$(hostname) "
+[ -n "$dockerenv" ] && prompt_prefix="${prompt_prefix}docker "
+return_code="%(?..%{$fg[red]%}%? %{$reset_color%})"
 ZSH_THEME_GIT_PROMPT_PREFIX="("
 ZSH_THEME_GIT_PROMPT_SUFFIX=")"
 ZSH_THEME_GIT_PROMPT_DIRTY=" ✗"
 ZSH_THEME_GIT_PROMPT_CLEAN=" ✔"
+PROMPT='$return_code$prompt_prefix%(!.%{$fg[red]%}.%{$fg[green]%})%~%{$fg_bold[blue]%}$(git_prompt_info)%{$reset_color%} '
 
 [ -n $TMUX ] && export TERM="xterm-256color"
 
-if [ -f /usr/share/fzf/key-bindings.zsh ] && [ -f /usr/share/fzf/completion.zsh ]; then
-    # For Arch based distros
-    source /usr/share/fzf/key-bindings.zsh
-    source /usr/share/fzf/completion.zsh
-elif [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]; then
-    # For Debian based distros
-    source /usr/share/doc/fzf/examples/key-bindings.zsh
-fi
+[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
 
 # Rust
 [ -e "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
