@@ -50,4 +50,5 @@ return require('packer').startup(function()
   use 'mfussenegger/nvim-dap-python'
   use 'numToStr/Comment.nvim'
   use 'ntpeters/vim-better-whitespace'
+  use 'windwp/nvim-autopairs'
 end)
