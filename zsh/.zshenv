@@ -16,3 +16,6 @@ if [ -d "$HOME/sync/Life/daily" ]; then
 else
     export NOTE_DIR="$HOME/Documents/notes"
 fi
+
+# Enable mouse support for lnav
+export LNAV_EXP=mouse
