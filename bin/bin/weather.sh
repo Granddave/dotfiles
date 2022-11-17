@@ -1,7 +1,7 @@
 #!/bin/bash
 
 {
-    response=$(/usr/bin/curl --silent --fail "wttr.in/?format=1")
+    response=$(/usr/bin/curl --silent --fail "wttr.in/?format=%C+%t")
     rc=$?
     if [ $rc -ne 0 ]; then
         echo "No internet";
