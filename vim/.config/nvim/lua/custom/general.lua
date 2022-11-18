@@ -99,3 +99,12 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.cmd("startinsert!")
   end
 })
+
+vim.api.nvim_create_autocmd("BufEnter", {
+  group = vim.api.nvim_create_augroup("HelpVertical", {}),
+  callback = function()
+    if vim.api.nvim_buf_get_option(0, "filetype") == "help" then
+      vim.cmd("wincmd L")
+    end
+  end,
+})
