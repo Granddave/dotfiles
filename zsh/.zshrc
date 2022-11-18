@@ -17,15 +17,15 @@ source $ZSH/oh-my-zsh.sh
 bindkey '^ ' autosuggest-accept
 
 # Theme inspired from 'simple'
-prompt_prefix=""
+local prompt_prefix
 [ -n "$SSH_CONNECTION" ] && prompt_prefix="${prompt_prefix}$(hostname) "
 [ -n "$dockerenv" ] && prompt_prefix="${prompt_prefix}docker "
-return_code="%(?..%{$fg[red]%}%? %{$reset_color%})"
+local last_rc="%(?..%{$fg[red]%}%? %{$reset_color%})"
+PROMPT='${last_rc}${prompt_prefix}%(!.%{$fg[red]%}.%{$fg[green]%})%~%{$fg_bold[blue]%}$(git_prompt_info)%{$reset_color%} '
 ZSH_THEME_GIT_PROMPT_PREFIX="("
 ZSH_THEME_GIT_PROMPT_SUFFIX=")"
 ZSH_THEME_GIT_PROMPT_DIRTY=" ✗"
 ZSH_THEME_GIT_PROMPT_CLEAN=" ✔"
-PROMPT='$return_code$prompt_prefix%(!.%{$fg[red]%}.%{$fg[green]%})%~%{$fg_bold[blue]%}$(git_prompt_info)%{$reset_color%} '
 
 [ -n $TMUX ] && export TERM="xterm-256color"
 
