@@ -52,4 +52,5 @@ return require('packer').startup(function()
   use 'numToStr/Comment.nvim'
   use 'ntpeters/vim-better-whitespace'
   use 'windwp/nvim-autopairs'
+  use 'kylechui/nvim-surround'
 end)
