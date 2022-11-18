@@ -75,6 +75,7 @@ local on_attach = function(client, bufnr)
     function() telescope.lsp_dynamic_workspace_symbols(telescope_opts) end,
     bufopts
   )
+  vim.keymap.set("n", "<M-o>", [[<Cmd>ClangdSwitchSourceHeader<CR>]], bufopts)
 
   if client.server_capabilities["documentHighlightProvider"] then
     vim.cmd [[
