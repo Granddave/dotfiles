@@ -2,6 +2,7 @@
 #
 # Prints a short battery status string
 
+# TODO: Support other types of batteries
 BATTERY_SOURCE_FILE="/sys/class/power_supply/BAT0/uevent"
 
 remaining_battery_percentage()

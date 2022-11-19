@@ -26,7 +26,7 @@ vim.opt.foldmethod = 'marker'
 
 vim.opt.cursorline = true
 local cursorline_au_group = vim.api.nvim_create_augroup("CursorLine", {})
-vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "BufWinEnter" }, {
+vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "BufWinEnter" }, { -- TODO: Fix. Broken when changing buffers
   buffer = 0,
   callback = function() vim.opt.cursorline = true end,
   group = cursorline_au_group,

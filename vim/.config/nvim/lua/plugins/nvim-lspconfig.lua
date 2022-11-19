@@ -133,6 +133,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
     local last_popup_cursor = vim.w.lsp_diagnostics_last_cursor or { nil, nil }
     -- Show the pop-up diagnostics window,
     -- but only once for the current cursor location (unless moved afterwards).
+    -- TODO: Don't show diagnostics if it's already opened.
     if not (current_cursor[1] == last_popup_cursor[1] and current_cursor[2] == last_popup_cursor[2]) then
       vim.w.lsp_diagnostics_last_cursor = current_cursor
       vim.diagnostic.open_float(0, { scope = "cursor" })
