@@ -16,15 +16,23 @@ set -e
 SNIPPET_DIR_PATH="$HOME/sync/Snippets"
 [ ! -d "$SNIPPET_DIR_PATH" ] && exit 1
 
-SEARCH_CACHE_PATH="$HOME/.cache/snippet-history"
-[ ! -f "$SEARCH_CACHE_PATH" ] && touch "$SEARCH_CACHE_PATH"
+# TODO: Remove this legacy path moving logic
+SEARCH_HISTORY_FILEPATH="$HOME/.local/state/snippet-history"
+if [ ! -f "$SEARCH_HISTORY_FILEPATH" ]; then
+    LEGACY_PATH="$HOME/.cache/snippet-history"
+    if [ -f "$LEGACY_PATH" ]; then
+        mv "$LEGACY_PATH" "$SEARCH_HISTORY_FILEPATH"
+    else
+        touch "$SEARCH_HISTORY_FILEPATH"
+    fi
+fi
 
 AVAILABLE_SNIPPETS=$(find "$SNIPPET_DIR_PATH" -type f -printf "%f\n")
-CACHED_HISTORY=$(cat "$SEARCH_CACHE_PATH")
-COMBINED_WITH_SCORE=$(echo -e "${AVAILABLE_SNIPPETS}\n${CACHED_HISTORY}" | sed '/^$/d' | sort | uniq -c | sort -nr)
+SEARCH_HISTORY=$(cat "$SEARCH_HISTORY_FILEPATH")
+COMBINED_WITH_SCORE=$(echo -e "${AVAILABLE_SNIPPETS}\n${SEARCH_HISTORY}" | sed '/^$/d' | sort | uniq -c | sort -nr)
 AVAILABLE_SNIPPETS_WITH_SCORE=$(awk -F' ' 'NR==FNR{++a[$1];next} ($2 in a)' <(echo "$AVAILABLE_SNIPPETS") <(echo "$COMBINED_WITH_SCORE"))
 SNIPPET_FILENAME=$(echo "$AVAILABLE_SNIPPETS_WITH_SCORE" | awk '{ print $2 }' | /usr/bin/rofi -dmenu -matching fuzzy)
-echo "$SNIPPET_FILENAME" >> "$SEARCH_CACHE_PATH"
+echo "$SNIPPET_FILENAME" >> "$SEARCH_HISTORY_FILEPATH"
 
 SNIPPET_FILEPATH="$SNIPPET_DIR_PATH/$SNIPPET_FILENAME"
 if [ -f "$SNIPPET_FILEPATH" ]; then
