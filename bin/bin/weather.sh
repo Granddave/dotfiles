@@ -10,4 +10,4 @@
     else
         echo "$response"
     fi
-} | tee /tmp/weather.txt
+} | tee "$HOME/.cache/weather"
