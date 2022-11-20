@@ -1,9 +1,11 @@
 require("trouble").setup({
 })
 
-vim.keymap.set("n", "<Leader>qt", "<Cmd>TroubleToggle<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<Leader>qw", "<Cmd>TroubleToggle workspace_diagnostics<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<Leader>qd", "<Cmd>TroubleToggle document_diagnostics<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<Leader>ql", "<Cmd>TroubleToggle loclist<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<Leader>qq", "<Cmd>TroubleToggle quickfix<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "gR", "<Cmd>TroubleToggle lsp_references<CR>", { silent = true, noremap = true })
+local map = vim.keymap.set
+local opts = { noremap = true, silent = true }
+map("n", "<Leader>qt", "<Cmd>TroubleToggle<CR>", opts)
+map("n", "<Leader>qw", "<Cmd>TroubleToggle workspace_diagnostics<CR>", opts)
+map("n", "<Leader>qd", "<Cmd>TroubleToggle document_diagnostics<CR>", opts)
+map("n", "<Leader>ql", "<Cmd>TroubleToggle loclist<CR>", opts)
+map("n", "<Leader>qq", "<Cmd>TroubleToggle quickfix<CR>", opts)
+map("n", "gR", "<Cmd>TroubleToggle lsp_references<CR>", opts)
