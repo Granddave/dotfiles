@@ -53,4 +53,5 @@ return require('packer').startup(function()
   use 'ntpeters/vim-better-whitespace'
   use 'windwp/nvim-autopairs'
   use 'kylechui/nvim-surround'
+  use 'nvim-tree/nvim-web-devicons'
 end)
