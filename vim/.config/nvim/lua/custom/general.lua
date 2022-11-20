@@ -98,11 +98,11 @@ vim.api.nvim_create_autocmd("FileType", {
   end
 })
 
-vim.api.nvim_create_autocmd("BufEnter", {
+vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup("HelpVertical", {}),
+  pattern = "help",
   callback = function()
-    if vim.api.nvim_buf_get_option(0, "filetype") == "help" then
-      vim.cmd("wincmd L")
-    end
+    vim.cmd("wincmd L")
+    vim.cmd("vert resize 80")
   end,
 })
