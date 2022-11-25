@@ -54,4 +54,5 @@ return require('packer').startup(function()
   use 'windwp/nvim-autopairs'
   use 'kylechui/nvim-surround'
   use 'nvim-tree/nvim-web-devicons'
+  use 'ojroques/vim-oscyank'
 end)

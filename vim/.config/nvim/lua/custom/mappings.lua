@@ -53,7 +53,7 @@ map("v", ">", ">gv", opts)
 map("i", "<S-Tab>", "<C-d>", opts)
 
 map("v", "p", '"_dP', opts)
-map("v", "<C-c>", '"*y :let @+=@*<CR>:echo "Copied to system clipboard"<CR>', opts)
+map("v", "<C-c>", ':OSCYank<CR>:echo "Copied to system clipboard"<CR>', opts)
 map("n", "<Leader>w", ":w<CR>", opts)
 map("n", "<Leader>dw", require("custom.utils").clean_trailing_spaces, opts)
 map("v", "<Leader>tc", [[y:! timecalc.py <C-r>" <Bar> tr -d "\n" <Bar> xclip -in -selection clipboard<CR>A = <Esc>"+p]], opts)
