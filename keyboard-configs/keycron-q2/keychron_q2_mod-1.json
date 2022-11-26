@@ -1,7 +1,24 @@
 {
   "name": "Keychron Q2",
   "vendorProductId": 875823379,
-  "macros": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+  "macros": [
+    "{KC_EQL}{KC_SPC}",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
   "layers": [
     [
       "KC_ESC",
@@ -93,7 +110,7 @@
       "KC_9",
       "KC_0",
       "KC_MINS",
-      "KC_EQL",
+      "MACRO00",
       "KC_BSPC",
       "KC_MUTE",
       "KC_TAB",
@@ -388,5 +405,6 @@
       "KC_TRNS",
       "KC_TRNS"
     ]
-  ]
+  ],
+  "encoders": []
 }
