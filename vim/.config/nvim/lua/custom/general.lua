@@ -61,6 +61,15 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile", "BufEnter" }, {
     vim.opt.filetype = "markdown"
     vim.opt.colorcolumn = ""
     vim.keymap.set("n", "<Leader>qs", "<Cmd>read ~/sync/loggbok/qs.txt<CR>", { noremap = true })
+    vim.o.shada = ""
+    vim.o.swapfile = false
+    vim.o.undofile = false
+    vim.o.backup = false
+    vim.o.writebackup = false
+    vim.o.shelltemp = false
+    vim.o.history = 0
+    vim.o.modeline = false
+    vim.o.secure = true
   end,
 })
 
