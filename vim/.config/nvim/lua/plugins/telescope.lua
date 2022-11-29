@@ -27,6 +27,12 @@ local telescope = require('telescope.builtin')
 local themes = require('telescope.themes')
 
 map("n", "<Leader>ff", function() telescope.find_files() end, opts)
+map("n", "<Leader>fdf",
+  function()
+    vim.cmd([[cd ~/.dotfiles]])
+    telescope.find_files()
+  end, opts
+)
 map("n", "<Leader>fnv",
   function()
     vim.cmd([[cd ~/.config/nvim]])
