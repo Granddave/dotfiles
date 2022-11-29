@@ -6,7 +6,17 @@ require('telescope').setup({
         width = 0.95
       },
     },
-  }
+  },
+  pickers = {
+    live_grep = {
+      additional_args = function(opts)
+        return { "--hidden" }
+      end
+    },
+    find_files = {
+      hidden = true,
+    },
+  },
 })
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('harpoon')
@@ -16,19 +26,11 @@ local opts = { noremap = true, silent = true }
 local telescope = require('telescope.builtin')
 local themes = require('telescope.themes')
 
-map("n", "<Leader>ff",
-  function()
-    telescope.find_files({
-      hidden = false,
-    })
-  end, opts
-)
+map("n", "<Leader>ff", function() telescope.find_files() end, opts)
 map("n", "<Leader>fnv",
   function()
     vim.cmd([[cd ~/.config/nvim]])
-    telescope.find_files({
-      no_ignore = true,
-    })
+    telescope.find_files()
   end, opts
 )
 map("n", "<Leader>fg", function() telescope.git_files() end, opts)
