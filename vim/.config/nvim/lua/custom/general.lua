@@ -48,13 +48,13 @@ vim.api.nvim_create_autocmd({ "WinLeave" }, {
 -- })
 
 local filetypes_au_group = vim.api.nvim_create_augroup("FiletypeSettings", {})
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile", "BufEnter" }, {
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufReadPre" }, {
   pattern = "*/.ssh/config.d/*",
   group = filetypes_au_group,
   callback = function() vim.opt.filetype = "sshconfig" end,
 })
 
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile", "BufEnter" }, {
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufReadPre" }, {
   pattern = "*.jrnl",
   group = filetypes_au_group,
   callback = function()
