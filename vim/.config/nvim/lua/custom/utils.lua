@@ -41,7 +41,6 @@ M.reload_lua_file = function(filepath)
   local module_filepath = string.sub(filepath, j + 1)
   local module_name = M.get_module_name(module_filepath)
   R(module_name)
-  print("Reloaded " .. module_name)
 end
 
 M.reload_current_lua_file = function()
