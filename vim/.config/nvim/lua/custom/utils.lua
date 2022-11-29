@@ -65,4 +65,16 @@ M.bytes_in_buffer = function(bufnr)
   return vim.fn.line2byte(num_lines + 1)
 end
 
+M.set_private_mode = function()
+  vim.o.shada = ""
+  vim.o.swapfile = false
+  vim.o.undofile = false
+  vim.o.backup = false
+  vim.o.writebackup = false
+  vim.o.shelltemp = false
+  vim.o.history = 0
+  vim.o.modeline = false
+  vim.o.secure = true
+end
+
 return M
