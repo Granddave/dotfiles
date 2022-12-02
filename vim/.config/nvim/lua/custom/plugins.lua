@@ -32,6 +32,7 @@ return require('packer').startup(function()
   }
   use 'neovim/nvim-lspconfig'
   use 'williamboman/nvim-lsp-installer'
+  use 'j-hui/fidget.nvim'
   use 'jose-elias-alvarez/null-ls.nvim'
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lua'
