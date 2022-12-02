@@ -23,9 +23,7 @@ require("nvim-treesitter.configs").setup({
     enable = true,
     disable = function(lang, bufnr)
       local megabytes_in_buffer = require("custom.utils").bytes_in_buffer(bufnr) / (10 ^ 6)
-      return lang == "markdown" and megabytes_in_buffer > 1
-          or lang == "json" and megabytes_in_buffer > 1
-          or vim.api.nvim_buf_get_option(0, "filetype") == "help"
+      return megabytes_in_buffer
     end,
 
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
