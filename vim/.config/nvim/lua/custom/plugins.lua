@@ -18,8 +18,9 @@ return require('packer').startup(function()
   use 'junegunn/limelight.vim'
   use 'jkramer/vim-checkbox'
   use {
-    'nvim-telescope/telescope.nvim', tag = '0.1.0',
-    requires = { { 'nvim-lua/plenary.nvim' } }
+    'nvim-telescope/telescope.nvim',
+    branch = '0.1.x',
+    requires = { 'nvim-lua/plenary.nvim' }
   }
   use {
     'nvim-telescope/telescope-fzf-native.nvim',
