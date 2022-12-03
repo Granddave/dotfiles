@@ -25,6 +25,7 @@ local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 local telescope = require('telescope.builtin')
 local themes = require('telescope.themes')
+local actions = require('telescope.actions')
 
 map("n", "<Leader>ff", function() telescope.find_files() end, opts)
 map("n", "<Leader>fdf", function()
@@ -37,7 +38,16 @@ map("n", "<Leader>fnv", function()
 end, opts)
 map("n", "<Leader>fg", function() telescope.git_files() end, opts)
 map("n", "<Leader>fr", function() telescope.live_grep() end, opts)
-map("n", "<Leader>fb", function() telescope.buffers() end, opts)
+map("n", "<Leader>fb", function()
+  telescope.buffers({
+    attach_mappings = function(_, attach_map)
+      attach_map("n", "D", function(prompt_bufnr)
+        actions.delete_buffer(prompt_bufnr)
+      end)
+      return true
+    end
+  })
+end, opts)
 map("n", "<Leader>fh", function() telescope.help_tags() end, opts)
 map("n", "<Leader>ss", function()
   telescope.spell_suggest(themes.get_cursor({
