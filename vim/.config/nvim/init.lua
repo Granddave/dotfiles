@@ -1,4 +1,4 @@
-require("custom.plugins")
+require("custom.packer")
 require('impatient')
 
 require("custom.mappings")
