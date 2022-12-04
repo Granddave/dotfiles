@@ -1,3 +1,8 @@
+local ok, _ = pcall(require, "lspconfig")
+if not ok then
+  return
+end
+
 -- LSP servers to configure and optional override opts
 local servers = {
   bashls = {},

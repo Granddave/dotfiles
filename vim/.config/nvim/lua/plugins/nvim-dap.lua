@@ -1,4 +1,8 @@
-local dap = require('dap')
+local ok, dap = pcall(require, "dap")
+if not ok then
+  return
+end
+
 require('dapui').setup()
 
 local opts = { noremap = true, silent = true }

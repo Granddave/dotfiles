@@ -1,3 +1,8 @@
+local ok, _ = pcall(require, "nvim-treesitter")
+if not ok then
+  return
+end
+
 require("nvim-treesitter.configs").setup({
   auto_install = true,
   ensure_installed = {

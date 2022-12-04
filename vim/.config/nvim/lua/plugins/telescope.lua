@@ -1,4 +1,9 @@
-require('telescope').setup({
+local ok, telescope = pcall(require, "telescope")
+if not ok then
+  return
+end
+
+telescope.setup({
   defaults = {
     winblend = 5,
     layout_config = {
@@ -18,28 +23,29 @@ require('telescope').setup({
     },
   },
 })
-require('telescope').load_extension('fzf')
-require('telescope').load_extension('harpoon')
+
+telescope.load_extension('fzf')
+telescope.load_extension('harpoon')
 
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
-local telescope = require('telescope.builtin')
+local builtin = require('telescope.builtin')
 local themes = require('telescope.themes')
 local actions = require('telescope.actions')
 
-map("n", "<Leader>ff", function() telescope.find_files() end, opts)
+map("n", "<Leader>ff", function() builtin.find_files() end, opts)
 map("n", "<Leader>fdf", function()
   vim.cmd([[cd ~/.dotfiles]])
-  telescope.find_files()
+  builtin.find_files()
 end, opts)
 map("n", "<Leader>fnv", function()
   vim.cmd([[cd ~/.config/nvim]])
-  telescope.find_files()
+  builtin.find_files()
 end, opts)
-map("n", "<Leader>fg", function() telescope.git_files() end, opts)
-map("n", "<Leader>fr", function() telescope.live_grep() end, opts)
+map("n", "<Leader>fg", function() builtin.git_files() end, opts)
+map("n", "<Leader>fr", function() builtin.live_grep() end, opts)
 map("n", "<Leader>fb", function()
-  telescope.buffers({
+  builtin.buffers({
     attach_mappings = function(_, attach_map)
       attach_map("n", "D", function(prompt_bufnr)
         actions.delete_buffer(prompt_bufnr)
@@ -48,12 +54,12 @@ map("n", "<Leader>fb", function()
     end
   })
 end, opts)
-map("n", "<Leader>fh", function() telescope.help_tags() end, opts)
+map("n", "<Leader>fh", function() builtin.help_tags() end, opts)
 map("n", "<Leader>ss", function()
-  telescope.spell_suggest(themes.get_cursor({
+  builtin.spell_suggest(themes.get_cursor({
     layout_config = {
       height = 20
     },
   }))
 end, opts)
-map("n", "<Leader>sft", function() telescope.filetypes(themes.get_dropdown({})) end, opts)
+map("n", "<Leader>sft", function() builtin.filetypes(themes.get_dropdown({})) end, opts)

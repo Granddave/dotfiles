@@ -1,4 +1,9 @@
-require("harpoon").setup({
+local ok, harpoon = pcall(require, "harpoon")
+if not ok then
+  return
+end
+
+harpoon.setup({
 })
 
 local map = vim.keymap.set

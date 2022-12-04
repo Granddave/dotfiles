@@ -1,6 +1,10 @@
+local ok, gitsigns = pcall(require, "gitsigns")
+if not ok then
+  return
+end
+
 local map = vim.keymap.set
 local opts = { noremap = false, silent = true }
-local gitsigns = require('gitsigns')
 
 gitsigns.setup({
   numhl = true,
