@@ -1,4 +1,4 @@
-M = {}
+local M = {}
 
 P = function(v)
   print(vim.inspect(v))
