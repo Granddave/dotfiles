@@ -271,7 +271,7 @@
       # https://github.com/neovim/neovim/tags
       tags: nvim
       vars:
-        nvim_version: "0.8.0"
+        nvim_version: "0.8.1"
         nvim_expected_version_output: "NVIM v{{ nvim_version }}"
       block:
         - name: Register current nvim version
