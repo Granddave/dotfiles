@@ -7,6 +7,8 @@ _try_add_path "$HOME/.local/bin"
 _try_add_path "$HOME/go/bin"
 _try_add_path "$HOME/.nvm/versions/node/v18.12.1/bin"
 
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
 export EDITOR="nvim"
 export VISUAL="$EDITOR"
 export PAGER="less"
