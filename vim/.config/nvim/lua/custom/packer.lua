@@ -33,7 +33,7 @@ return require('packer').startup(function()
   }
   use 'nvim-treesitter/nvim-treesitter-context'
   use 'neovim/nvim-lspconfig'
-  use 'williamboman/nvim-lsp-installer'
+  use 'williamboman/mason.nvim'
   use 'j-hui/fidget.nvim'
   use 'jose-elias-alvarez/null-ls.nvim'
   use 'hrsh7th/nvim-cmp'
