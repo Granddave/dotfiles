@@ -14,6 +14,14 @@ if pcall(require, "plenary") then
   end
 end
 
+M.table_keys = function(tab)
+  local keys = {}
+  for k, _ in pairs(tab) do
+    table.insert(keys, k)
+  end
+  return keys
+end
+
 M.clean_trailing_spaces = function()
   local old_cursor = vim.api.nvim_win_get_cursor(0)
   local old_query = vim.fn.getreg("/")

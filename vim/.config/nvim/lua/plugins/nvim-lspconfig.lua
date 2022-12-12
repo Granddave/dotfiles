@@ -1,16 +1,20 @@
-local ok, _ = pcall(require, "lspconfig")
-if not ok then
-  return
+for _, plugin in pairs({ "mason", "mason-lspconfig", "lspconfig" }) do
+  local ok, _ = pcall(require, plugin)
+  if not ok then
+    return
+  end
 end
 
 -- LSP servers to configure and optional override opts
 local servers = {
+  ansiblels = {},
   bashls = {},
-  pyright = {},
   clangd = {},
   cmake = {},
-  yamlls = {},
-  vimls = {},
+  dockerls = {},
+  --groovyls = {},
+  jsonls = {},
+  pyright = {},
   sumneko_lua = {
     settings = {
       Lua = {
@@ -30,10 +34,15 @@ local servers = {
       },
     },
   },
-  jsonls = {},
-  groovyls = {},
   tsserver = {},
+  vimls = {},
+  yamlls = {},
 }
+
+require("mason").setup()
+require("mason-lspconfig").setup({
+  ensure_installed = require("custom.utils").table_keys(servers)
+})
 
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = true }

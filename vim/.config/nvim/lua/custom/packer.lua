@@ -32,8 +32,11 @@ return require('packer').startup(function()
     run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
   }
   use 'nvim-treesitter/nvim-treesitter-context'
-  use 'neovim/nvim-lspconfig'
-  use 'williamboman/mason.nvim'
+  use {
+    'williamboman/mason.nvim',
+    'williamboman/mason-lspconfig.nvim',
+    'neovim/nvim-lspconfig',
+  }
   use 'j-hui/fidget.nvim'
   use 'jose-elias-alvarez/null-ls.nvim'
   use 'hrsh7th/nvim-cmp'
