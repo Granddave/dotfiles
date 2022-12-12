@@ -6,6 +6,7 @@ vim.opt.smartindent = true
 vim.opt.wrap = true -- Wrap words visually
 vim.opt.linebreak = true -- Don't split words in a word wrap
 
+vim.opt.relativenumber = true
 vim.opt.number = true -- Show line numbers
 vim.opt.numberwidth = 5 -- Width of numberline
 vim.opt.signcolumn = 'yes'

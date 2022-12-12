@@ -28,6 +28,8 @@ map("n", "<Leader>sl", ":set list!<CR>", opts)
 map("n", "<Leader>rt", ":retab!<CR>", opts)
 map("n", "<Leader><Leader>", "za", opts)
 
+map("n", "<Leader>sr", ":set relativenumber!<CR>", opts)
+
 map("x", "<Leader>sr", 'y:%s%<C-r>"%%g<Left><Left>', { noremap = true })
 map("x", "<Leader>sc", 'y:%s%<C-r>"%%gc<Left><Left><Left>', { noremap = true })
 
