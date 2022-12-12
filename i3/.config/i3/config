@@ -51,6 +51,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod1
 
+bindsym $mod+b exec google-chrome --password-store=gnome
 bindsym $mod+Return exec alacritty
 bindsym $mod+$mod1+l exec i3lock \
     --ignore-empty-password \
