@@ -5,7 +5,7 @@ end
 
 nvim_tree.setup({
   view = {
-    --adaptive_size = true,
+    adaptive_size = true,
     width = 35,
     mappings = {
       list = {
@@ -14,6 +14,11 @@ nvim_tree.setup({
         { key = "l", action = "open" },
       },
     },
+  },
+  actions = {
+    open_file = {
+      resize_window = false,
+    }
   },
   renderer = {
     icons = {
