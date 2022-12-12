@@ -59,7 +59,7 @@ map("x", "<C-c>", function()
   require("osc52").copy_visual()
   print("Copied to system clipboard")
 end, opts)
-map("n", "<Leader>w", ":w<CR>", opts)
+map("n", "<Leader>w", ":update<CR>", opts)
 map("n", "<Leader>dw", require("custom.utils").clean_trailing_spaces, opts)
 map("v", "<Leader>tc",
   [[y:! timecalc.py <C-r>" <Bar> tr -d "\n" <Bar> xclip -in -selection clipboard<CR>A = <Esc>"+p]],
