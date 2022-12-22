@@ -1,7 +1,7 @@
 #!/bin/bash
 
 {
-    response=$(/usr/bin/curl --silent --fail "wttr.in/?format=%C+%t")
+    response=$(/usr/bin/curl --silent --fail --connect-timeout 3 "wttr.in/Jonkoping?format=%C+%t")
     rc=$?
     if [ $rc -ne 0 ]; then
         echo "No internet";
