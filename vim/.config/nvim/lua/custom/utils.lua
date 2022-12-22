@@ -14,8 +14,28 @@ if pcall(require, "plenary") then
   end
 end
 
-HAS = function(module)
-  return pcall(require, module)
+-- Check if modules are available
+-- Pass either a string or a table of strings
+HAS = function(arg)
+  if type(arg) == "table" then
+    for _, module in pairs(arg) do
+      if not HAS(module) then
+        return false
+      end
+    end
+    return true
+  elseif type(arg) == "string" then
+    return pcall(require, arg)
+  end
+  error("Invalid argument with type=" .. type(arg))
+end
+
+M.table_keys = function(tab)
+  local keys = {}
+  for k, _ in pairs(tab) do
+    table.insert(keys, k)
+  end
+  return keys
 end
 
 M.clean_trailing_spaces = function()
