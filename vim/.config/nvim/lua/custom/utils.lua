@@ -14,6 +14,10 @@ if pcall(require, "plenary") then
   end
 end
 
+HAS = function(module)
+  return pcall(require, module)
+end
+
 M.clean_trailing_spaces = function()
   local old_cursor = vim.api.nvim_win_get_cursor(0)
   local old_query = vim.fn.getreg("/")

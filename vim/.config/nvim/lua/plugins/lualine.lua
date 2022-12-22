@@ -1,9 +1,8 @@
-local ok, lualine = pcall(require, "lualine")
-if not ok then
+if not HAS("lualine") then
   return
 end
 
-lualine.setup({
+require("lualine").setup({
   options = {
     icons_enabled = true,
     theme = 'auto',
@@ -35,20 +34,33 @@ lualine.setup({
     lualine_z = {}
   },
   tabline = {
-    lualine_a = {
-      {
-        'buffers',
-        symbols = {
-          alternate_file = '',
-          modified = ' ',
-        },
-      }
-    },
-    lualine_b = {},
-    lualine_c = {},
-    lualine_x = {},
-    lualine_y = {},
-    lualine_z = { 'tabs' }
+    -- lualine_a = {
+    --   {
+    --     'buffers',
+    --     symbols = {
+    --       alternate_file = '',
+    --       modified = ' ',
+    --     },
+    --   }
+    -- },
+    -- lualine_b = {},
+    -- lualine_c = {},
+    -- lualine_x = {},
+    -- lualine_y = {},
+    -- lualine_z = { 'tabs' }
   },
   extensions = {}
 })
+
+if HAS("bufferline") then
+  vim.opt.termguicolors = true
+  require("bufferline").setup({})
+
+  local map = vim.keymap.set
+  local opts = { noremap = true, silent = true }
+  map("n", "<Leader>n", "<Cmd>:BufferLineCycleNext<CR>", opts)
+  map("n", "<Leader>p", "<Cmd>:BufferLineCyclePrev<CR>", opts)
+  map("n", "<c-n>", "<Cmd>:BufferLineMoveNext<CR>", opts)
+  map("n", "<c-p>", "<Cmd>:BufferLineMovePrev<CR>", opts)
+  map("n", "<Leader>bp", "<Cmd>:BufferLineTogglePin<CR>", opts)
+end
