@@ -8,6 +8,7 @@ return require('packer').startup(function()
     requires = { 'nvim-tree/nvim-web-devicons', opt = true }
   }
   use 'akinsho/bufferline.nvim'
+  use 'petertriho/nvim-scrollbar'
   use 'lewis6991/gitsigns.nvim'
   use {
     'nvim-tree/nvim-tree.lua',
