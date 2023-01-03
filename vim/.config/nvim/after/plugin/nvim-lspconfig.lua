@@ -59,9 +59,12 @@ local on_attach = function(client, bufnr)
   local telescope = require('telescope.builtin')
   local telescope_opts = {
     sorting_strategy = 'ascending',
+    fname_width = 60,
+    path_display = { "smart" },
+    layout_strategy = "vertical",
     layout_config = {
-      prompt_position = "top"
-    }
+      width = 0.95
+    },
   }
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
