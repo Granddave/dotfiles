@@ -57,12 +57,19 @@ M.get_module_name = function(module_path)
 end
 
 M.reload_lua_file = function(filepath)
-  local _, j = string.find(filepath, ".config/nvim/")
-  if j == nil then
+  local string_pos = nil
+  for _, path in pairs({ ".config/nvim/lua/", ".config/nvim/after/" }) do
+    local _, j = string.find(filepath, path)
+    if j ~= nil then
+      string_pos = j
+      break
+    end
+  end
+  if not string_pos then
     print("Reload failed: Not a lua config file")
     return
   end
-  local module_filepath = string.sub(filepath, j + 1)
+  local module_filepath = string.sub(filepath, string_pos + 1)
   local module_name = M.get_module_name(module_filepath)
   R(module_name)
 end
