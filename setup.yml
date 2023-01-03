@@ -107,7 +107,7 @@
         - xmodmap
         - zsh
 
-    - name: Download and install Hack nerd font
+    - name: Download and install nerd font
       # https://github.com/ryanoasis/nerd-fonts/tags
       tags: font
       vars:
@@ -116,7 +116,7 @@
       block:
         - name: Check if fonts are installed
           ansible.builtin.stat:
-            path: "{{ fonts_dir }}/Hack Regular Nerd Font Complete Mono.ttf"
+            path: "{{ fonts_dir }}/JetBrains Mono Regular Nerd Font Complete.ttf"
           register: font_result
 
         - name: Create fonts directory
@@ -127,7 +127,7 @@
 
         - name: Download fonts
           ansible.builtin.unarchive:
-            src: "https://github.com/ryanoasis/nerd-fonts/releases/download/{{ font_version }}/Hack.zip"
+            src: "https://github.com/ryanoasis/nerd-fonts/releases/download/{{ font_version }}/JetBrainsMono.zip"
             dest: "{{ fonts_dir }}"
             remote_src: yes
           when: not font_result.stat.exists

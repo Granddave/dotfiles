@@ -29,7 +29,7 @@ $ ansible-playbook setup.yml -K
 
 ## Other fun stuff
 
-- Monospace font: [Hack](https://github.com/source-foundry/Hack)
+- Monospace font: [Jetbrains Mono](https://www.jetbrains.com/lp/mono/) or [Hack](https://github.com/source-foundry/Hack)
 - Color scheme: [Gruvbox](https://github.com/morhetz/gruvbox)
 
 Custom [Vimium](https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb) mappings for Chrome
