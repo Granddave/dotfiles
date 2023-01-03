@@ -1,7 +1,6 @@
 vim.keymap.set("n", "<Leader>go", "<Cmd>Goyo<CR>", { noremap = true, silent = true })
 
-local cached_opts = {
-}
+local cached_opts = {}
 
 local backup_opts = function()
   cached_opts.limelight = vim.fn.exists('#limelight')
@@ -10,6 +9,7 @@ local backup_opts = function()
   cached_opts.showmode = vim.opt.showmode:get()
   cached_opts.showtabline = vim.opt.showtabline:get()
   cached_opts.scrolloff = vim.opt.scrolloff:get()
+  cached_opts.scrollbar = require("custom.scrollbar").is_shown()
 end
 
 local restore_opts = function()
@@ -23,6 +23,7 @@ local restore_opts = function()
   vim.opt.showmode = cached_opts.showmode
   vim.opt.showtabline = cached_opts.showtabline
   vim.opt.scrolloff = cached_opts.scrolloff
+  require("custom.scrollbar").show(cached_opts.scrollbar)
 end
 
 local goyo_group = vim.api.nvim_create_augroup("GoyoEvents", {})
@@ -40,6 +41,7 @@ vim.api.nvim_create_autocmd("User", {
     vim.opt.showmode = false
     vim.opt.showtabline = 0
     vim.opt.scrolloff = 0
+    require("custom.scrollbar").show(false)
   end,
   group = goyo_group,
 })
