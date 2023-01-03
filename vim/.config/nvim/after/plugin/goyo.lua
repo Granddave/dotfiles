@@ -53,6 +53,7 @@ vim.api.nvim_create_autocmd("User", {
     end
     restore_opts()
     require('lualine').hide({ unhide = true })
+    require("bufferline").setup() -- TODO: save previous state
   end,
   group = goyo_group,
 })
