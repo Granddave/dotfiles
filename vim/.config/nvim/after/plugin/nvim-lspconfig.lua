@@ -115,12 +115,15 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<Leader>dl', vim.diagnostic.setloclist, bufopts)
 end
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
 local lsp_opts = {
   on_attach = on_attach,
   flags = {
     debounce_text_changes = 150,
   },
-  capabilities = require('cmp_nvim_lsp').default_capabilities()
+  capabilities = capabilities
 }
 for server_name, user_opts in pairs(servers) do
   lsp_opts = vim.tbl_deep_extend("force", lsp_opts, user_opts)

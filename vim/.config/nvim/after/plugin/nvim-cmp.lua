@@ -12,11 +12,39 @@ cmp.setup({
     end,
   },
   mapping = cmp.mapping.preset.insert({
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-n>'] = function()
+      if cmp.visible() then
+        cmp.select_next_item()
+      else
+        cmp.complete()
+      end
+    end,
+    ['<C-p>'] = function()
+      if cmp.visible() then
+        cmp.select_prev_item()
+      else
+        cmp.complete()
+      end
+    end,
     ['<C-Space>'] = cmp.mapping.complete({}),
     ['<C-e>'] = cmp.mapping.abort(),
     ['<C-j>'] = cmp.mapping.confirm({ select = true }),
+    ['<C-d>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item({ count = 5 })
+      else
+        fallback()
+      end
+    end,
+    ['<C-u>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item({ count = 5 })
+      else
+        fallback()
+      end
+    end,
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
   }),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
