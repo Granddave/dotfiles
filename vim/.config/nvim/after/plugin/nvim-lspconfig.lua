@@ -45,13 +45,6 @@ require("mason-lspconfig").setup({
   ensure_installed = require("custom.utils").table_keys(servers)
 })
 
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { noremap = true, silent = true }
---vim.keymap.set('n', '<Leader>e', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '<Leader>dp', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', '<Leader>dn', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<Leader>dl', vim.diagnostic.setloclist, opts)
-
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -114,6 +107,10 @@ local on_attach = function(client, bufnr)
       callback = vim.lsp.buf.clear_references,
     })
   end
+
+  vim.keymap.set('n', '<Leader>dp', function() vim.diagnostic.goto_prev({ float = false }) end, bufopts)
+  vim.keymap.set('n', '<Leader>dn', function() vim.diagnostic.goto_next({ float = false }) end, bufopts)
+  vim.keymap.set('n', '<Leader>dl', vim.diagnostic.setloclist, bufopts)
 end
 
 local lsp_opts = {
