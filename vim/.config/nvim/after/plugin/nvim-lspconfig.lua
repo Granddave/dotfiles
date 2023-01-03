@@ -19,7 +19,11 @@ local servers = {
           version = 'LuaJIT',
         },
         diagnostics = {
-          globals = { 'vim', 'use' },
+          globals = {
+            'vim',
+            'use',
+            'print',
+          },
         },
         workspace = {
           library = vim.api.nvim_get_runtime_file("", true),
