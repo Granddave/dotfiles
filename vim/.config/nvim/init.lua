@@ -1,5 +1,5 @@
 require("custom.packer")
-require('impatient')
+require("impatient")
 
 require("custom.mappings")
 require("custom.general")
