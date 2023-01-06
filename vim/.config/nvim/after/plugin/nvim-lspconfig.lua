@@ -127,18 +127,18 @@ local lsp_opts = {
   capabilities = capabilities
 }
 for server_name, user_opts in pairs(servers) do
-  lsp_opts = vim.tbl_deep_extend("force", lsp_opts, user_opts)
-  require("lspconfig")[server_name].setup(lsp_opts)
+  local opts = vim.tbl_deep_extend("force", lsp_opts, user_opts)
+  require("lspconfig")[server_name].setup(opts)
 end
 
 -- Attach to a remote Clangd server run by:
 -- `socat tcp-listen:4444,reuseaddr exec:"$CLANGD_BIN --background-index"`
 vim.keymap.set("n", "<Leader>cpp",
   function()
-    lsp_opts = vim.tbl_deep_extend("force", lsp_opts, {
+    local opts = vim.tbl_deep_extend("force", lsp_opts, {
       cmd = { "nc", "127.0.0.1", "4444" },
     })
-    require("lspconfig")["clangd"].setup(lsp_opts)
+    require("lspconfig")["clangd"].setup(opts)
   end,
   { noremap = true, silent = true }
 )
