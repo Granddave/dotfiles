@@ -23,6 +23,7 @@ local servers = {
             'vim',
             'use',
             'print',
+            'require',
           },
         },
         workspace = {
