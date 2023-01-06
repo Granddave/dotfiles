@@ -95,6 +95,64 @@ M.bytes_in_buffer = function(bufnr)
   return vim.fn.line2byte(num_lines + 1)
 end
 
+M.open_url = function(url)
+  vim.loop.spawn('xdg-open', { args = { url } })
+end
+
+M.browse_jira_issue = function(jira_key)
+  local hostname = M.parse_config().jira_server_host
+  if hostname == nil then
+    error("Failed to load hostname for Jira server")
+  end
+  local url = "https://" .. hostname .. "/browse/" .. jira_key
+  M.open_url(url)
+end
+
+M.match_regex_under_cursor = function(pattern)
+  local line = vim.api.nvim_get_current_line()
+  local cursor = vim.api.nvim_win_get_cursor(0)
+
+  local start_pos = 0
+  local end_pos = 0
+  while true do
+    start_pos, end_pos = line:find(pattern, start_pos + 1)
+    if not start_pos then
+      -- No more matches
+      break
+    end
+    if cursor[2] + 1 >= start_pos and cursor[2] < end_pos then
+      return line:sub(start_pos, end_pos)
+    end
+  end
+end
+
+M.open_jira_issue_under_cursor = function()
+  local jira_key_pattern = "%a+-%d"
+  -- wrap with word boundary matching as well
+  local full_pattern = "%f[%w_]" .. jira_key_pattern .. "+%f[^%w_]"
+  local jira_key = M.match_regex_under_cursor(full_pattern)
+  if jira_key then
+    M.browse_jira_issue(jira_key)
+  end
+end
+
+M.parse_config = function()
+  local filepath = "~/.config/nvim.json"
+  local file = io.open(filepath, 'r')
+  if file == nil then
+    error("Failed to open file: " .. filepath)
+    return
+  end
+  local json_string = file:read('*a') -- Read the entire file
+  file:close()
+  local loaded_table = vim.fn.json_decode(json_string)
+  if loaded_table == nil then
+    error("Failed to parse json: " .. json_string)
+    return
+  end
+  return loaded_table
+end
+
 M.set_private_mode = function()
   vim.o.shada = ""
   vim.o.swapfile = false

@@ -65,6 +65,7 @@ map("v", "<Leader>tc",
   [[y:! timecalc.py <C-r>" <Bar> tr -d "\n" <Bar> xclip -in -selection clipboard<CR>A = <Esc>"+p]],
   opts)
 map("v", "<Leader>j", [[mj/\a\+-\d\+<CR><Cmd>noh<CR>y3e`jPa<Space>]], opts)
+map("n", "<Leader>vj", require("custom.utils").open_jira_issue_under_cursor, opts)
 map("n", "<Leader>sp", ":setlocal spell! spelllang=en,sv<CR>", opts)
 map("n", "<Leader>rc", require("custom.utils").reload_current_lua_file, opts)
 map("n", "<Leader>rw", function()
