@@ -96,7 +96,7 @@ M.bytes_in_buffer = function(bufnr)
 end
 
 M.open_url = function(url)
-  vim.loop.spawn('xdg-open', { args = { url } })
+  vim.loop.spawn("xdg-open", { args = { url } })
 end
 
 M.browse_jira_issue = function(jira_key)
@@ -138,12 +138,12 @@ end
 
 M.parse_config = function()
   local filepath = "~/.config/nvim.json"
-  local file = io.open(filepath, 'r')
+  local file = io.open(filepath, "r")
   if file == nil then
     error("Failed to open file: " .. filepath)
     return
   end
-  local json_string = file:read('*a') -- Read the entire file
+  local json_string = file:read("*a") -- Read the entire file
   file:close()
   local loaded_table = vim.fn.json_decode(json_string)
   if loaded_table == nil then

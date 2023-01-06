@@ -9,11 +9,11 @@ vim.opt.linebreak = true -- Don't split words in a word wrap
 vim.opt.relativenumber = true
 vim.opt.number = true -- Show line numbers
 vim.opt.numberwidth = 5 -- Width of numberline
-vim.opt.signcolumn = 'yes'
+vim.opt.signcolumn = "yes"
 
 vim.opt.scrolloff = 4 -- Pad at top and bottom of buffer when scrolling
 
-vim.opt.listchars = 'tab:→ ,space:·,nbsp:␣,trail:•,eol:↲,precedes:«,extends:»'
+vim.opt.listchars = "tab:→ ,space:·,nbsp:␣,trail:•,eol:↲,precedes:«,extends:»"
 
 vim.opt.showmatch = true
 vim.opt.updatetime = 500
@@ -23,7 +23,7 @@ vim.opt.smartcase = true
 
 vim.opt.termguicolors = true
 
-vim.opt.foldmethod = 'marker'
+vim.opt.foldmethod = "marker"
 
 vim.opt.cursorline = true
 local cursorline_au_group = vim.api.nvim_create_augroup("CursorLine", {})

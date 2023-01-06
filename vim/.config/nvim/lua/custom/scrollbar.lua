@@ -4,7 +4,7 @@ local is_shown = false
 
 M.show = function(show)
   is_shown = show
-  require('scrollbar').setup({
+  require("scrollbar").setup({
     show = show,
     handlers = {
       cursor = true,

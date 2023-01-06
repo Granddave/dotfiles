@@ -16,14 +16,14 @@ local servers = {
     settings = {
       Lua = {
         runtime = {
-          version = 'LuaJIT',
+          version = "LuaJIT",
         },
         diagnostics = {
           globals = {
-            'vim',
-            'use',
-            'print',
-            'require',
+            "vim",
+            "use",
+            "print",
+            "require",
           },
         },
         workspace = {
@@ -48,11 +48,11 @@ require("mason-lspconfig").setup({
 
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-  local telescope = require('telescope.builtin')
+  local telescope = require("telescope.builtin")
   local telescope_opts = {
-    sorting_strategy = 'ascending',
+    sorting_strategy = "ascending",
     fname_width = 60,
     path_display = { "smart" },
     layout_strategy = "vertical",
@@ -62,10 +62,10 @@ local on_attach = function(client, bufnr)
   }
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', 'gd', function() telescope.lsp_definitions(telescope_opts) end, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set("n", "gd", function() telescope.lsp_definitions(telescope_opts) end, bufopts)
+  vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
+  vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
   --vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
   --vim.keymap.set('n', '<Leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
   --vim.keymap.set('n', '<Leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
@@ -73,14 +73,14 @@ local on_attach = function(client, bufnr)
   --  function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
   --  bufopts
   --)
-  vim.keymap.set('n', '<Leader>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set("n", "<Leader>D", vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename, bufopts)
+  vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, bufopts)
   vim.keymap.set("n", "<Leader>gr",
     function() telescope.lsp_references(telescope_opts) end,
     bufopts
   )
-  vim.keymap.set('n', '<Leader>fo',
+  vim.keymap.set("n", "<Leader>fo",
     function() vim.lsp.buf.format({ async = true }) end,
     bufopts
   )
@@ -111,13 +111,13 @@ local on_attach = function(client, bufnr)
     })
   end
 
-  vim.keymap.set('n', '<Leader>dp', function() vim.diagnostic.goto_prev({ float = false }) end, bufopts)
-  vim.keymap.set('n', '<Leader>dn', function() vim.diagnostic.goto_next({ float = false }) end, bufopts)
-  vim.keymap.set('n', '<Leader>dl', vim.diagnostic.setloclist, bufopts)
+  vim.keymap.set("n", "<Leader>dp", function() vim.diagnostic.goto_prev({ float = false }) end, bufopts)
+  vim.keymap.set("n", "<Leader>dn", function() vim.diagnostic.goto_next({ float = false }) end, bufopts)
+  vim.keymap.set("n", "<Leader>dl", vim.diagnostic.setloclist, bufopts)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 local lsp_opts = {
   on_attach = on_attach,
@@ -128,7 +128,7 @@ local lsp_opts = {
 }
 for server_name, user_opts in pairs(servers) do
   lsp_opts = vim.tbl_deep_extend("force", lsp_opts, user_opts)
-  require('lspconfig')[server_name].setup(lsp_opts)
+  require("lspconfig")[server_name].setup(lsp_opts)
 end
 
 -- Attach to a remote Clangd server run by:
@@ -138,7 +138,7 @@ vim.keymap.set("n", "<Leader>cpp",
     lsp_opts = vim.tbl_deep_extend("force", lsp_opts, {
       cmd = { "nc", "127.0.0.1", "4444" },
     })
-    require('lspconfig')['clangd'].setup(lsp_opts)
+    require("lspconfig")["clangd"].setup(lsp_opts)
   end,
   { noremap = true, silent = true }
 )

@@ -24,14 +24,14 @@ telescope.setup({
   },
 })
 
-telescope.load_extension('fzf')
-telescope.load_extension('harpoon')
+telescope.load_extension("fzf")
+telescope.load_extension("harpoon")
 
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
-local builtin = require('telescope.builtin')
-local themes = require('telescope.themes')
-local actions = require('telescope.actions')
+local builtin = require("telescope.builtin")
+local themes = require("telescope.themes")
+local actions = require("telescope.actions")
 
 map("n", "<Leader>ff", function() builtin.find_files() end, opts)
 map("n", "<Leader>fdf", function()

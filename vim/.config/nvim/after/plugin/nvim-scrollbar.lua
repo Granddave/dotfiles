@@ -1,4 +1,4 @@
-if not HAS('scrollbar') then
+if not HAS("scrollbar") then
   return
 end
 

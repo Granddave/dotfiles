@@ -3,7 +3,7 @@ vim.keymap.set("n", "<Leader>go", "<Cmd>Goyo<CR>", { noremap = true, silent = tr
 local cached_opts = {}
 
 local backup_opts = function()
-  cached_opts.limelight = vim.fn.exists('#limelight')
+  cached_opts.limelight = vim.fn.exists("#limelight")
   cached_opts.whitespace = vim.api.nvim_buf_get_var(0, "better_whitespace_enabled")
   cached_opts.cursorline = vim.opt.cursorline:get()
   cached_opts.showmode = vim.opt.showmode:get()
@@ -31,10 +31,10 @@ vim.api.nvim_create_autocmd("User", {
   pattern = "GoyoEnter",
   callback = function()
     backup_opts()
-    if vim.fn.executable('tmux') == 1 and os.getenv('TMUX') then
-      io.popen('tmux set status off')
+    if vim.fn.executable("tmux") == 1 and os.getenv("TMUX") then
+      io.popen("tmux set status off")
     end
-    require('lualine').hide({})
+    require("lualine").hide({})
     vim.cmd("Limelight")
     vim.cmd("DisableWhitespace")
     vim.opt.cursorline = false
@@ -48,11 +48,11 @@ vim.api.nvim_create_autocmd("User", {
 vim.api.nvim_create_autocmd("User", {
   pattern = "GoyoLeave",
   callback = function()
-    if vim.fn.executable('tmux') == 1 and os.getenv('TMUX') then
-      io.popen('tmux set status on')
+    if vim.fn.executable("tmux") == 1 and os.getenv("TMUX") then
+      io.popen("tmux set status on")
     end
     restore_opts()
-    require('lualine').hide({ unhide = true })
+    require("lualine").hide({ unhide = true })
     require("bufferline").setup() -- TODO: save previous state
   end,
   group = goyo_group,
