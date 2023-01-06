@@ -6,7 +6,12 @@ end
 local servers = {
   ansiblels = {},
   bashls = {},
-  clangd = {},
+  clangd = {
+    cmd = {
+      "clangd",
+      "--background-index",
+    }
+  },
   cmake = {},
   dockerls = {},
   groovyls = {},
