@@ -7,7 +7,7 @@ M.show = function(show)
   require("scrollbar").setup({
     show = show,
     handlers = {
-      cursor = true,
+      cursor = false,
       diagnostic = true,
       gitsigns = true, -- Requires gitsigns
       handle = true,
