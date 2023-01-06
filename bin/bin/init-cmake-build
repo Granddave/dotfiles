@@ -20,11 +20,14 @@ elif [ "$1" == "-r" ]; then
     echo "Release build"
 fi
 
-mkdir -p $BUILD_DIR && cd $BUILD_DIR
+mkdir -p $BUILD_DIR
+pushd $BUILD_DIR
 cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON $EXTRA_FLAGS
 cmake --build . -- -j $(($(nproc) - 1))
-if [ -f compile_commands.json ]; then
-    mv compile_commands.json .. && echo "Copied compile_commands.json to base directory"
+popd
+if [ -f $BUILD_DIR/compile_commands.json ]; then
+    ln -sf $BUILD_DIR/compile_commands.json .
+    echo "Linked compile_commands.json to base directory"
 else
-    echo "Could not generate compile_commands.json file."
+    echo "compile_commands.json generation failed"
 fi
