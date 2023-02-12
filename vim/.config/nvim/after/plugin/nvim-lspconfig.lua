@@ -17,8 +17,7 @@ local servers = {
   gopls = {},
   groovyls = {},
   jsonls = {},
-  pyright = {},
-  sumneko_lua = {
+  lua_ls = {
     settings = {
       Lua = {
         runtime = {
@@ -42,6 +41,7 @@ local servers = {
       },
     },
   },
+  pyright = {},
   tsserver = {},
   vimls = {},
   yamlls = {},
