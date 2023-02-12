@@ -97,6 +97,15 @@ local on_attach = function(client, bufnr)
   if client.name == "clangd" then
     vim.keymap.set("n", "<M-o>", [[<Cmd>ClangdSwitchSourceHeader<CR>]], bufopts)
   end
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*",
+    group = vim.api.nvim_create_augroup("LSPFormatOnSave", {}),
+    callback = function()
+      if client.name == "gopls" then
+        vim.lsp.buf.format({ async = true })
+      end
+    end,
+  })
 
   if client.server_capabilities["documentHighlightProvider"] then
     vim.cmd [[
