@@ -5,16 +5,22 @@ end
 
 require("dapui").setup()
 
+local dap_go = require("dap-go")
+dap_go.setup()
+
+require("nvim-dap-virtual-text").setup()
+
 local opts = { noremap = true, silent = true }
-vim.keymap.set("n", "<F5>", function() dap.continue() end, opts)
-vim.keymap.set("n", "<F10>", function() dap.step_over() end, opts)
-vim.keymap.set("n", "<F11>", function() dap.step_into() end, opts)
-vim.keymap.set("n", "<F12>", function() dap.step_out() end, opts)
-vim.keymap.set("n", "<Leader>b", function() dap.toggle_breakpoint() end, opts)
+vim.keymap.set("n", "<Leader>bc", function() dap.continue() end, opts)
+vim.keymap.set("n", "<Leader>bn", function() dap.step_over() end, opts)
+vim.keymap.set("n", "<Leader>bi", function() dap.step_into() end, opts)
+vim.keymap.set("n", "<Leader>bo", function() dap.step_out() end, opts)
+vim.keymap.set("n", "<Leader>ba", function() dap.terminate() end, opts)
+vim.keymap.set("n", "<Leader>bb", function() dap.toggle_breakpoint() end, opts)
 vim.keymap.set("n", "<Leader>B", function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, opts)
---vim.keymap.set('n', '<Leader>lp', function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end, opts)
-vim.keymap.set("n", "<Leader>dr", function() dap.repl.open() end, opts)
-vim.keymap.set("n", "<Leader>dl", function() dap.run_last() end, opts)
+vim.keymap.set("n", "<Leader>bl", function() dap.run_last() end, opts)
+vim.keymap.set("n", "<Leader>dap", function() require("dapui").toggle() end, opts)
+--vim.keymap.set("n", "<Leader>bt", function() dap_go.debug_test() end, opts)
 
 dap.adapters.python = {
   type = "executable",

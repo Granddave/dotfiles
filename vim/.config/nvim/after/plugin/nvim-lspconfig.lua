@@ -14,6 +14,7 @@ local servers = {
   },
   cmake = {},
   dockerls = {},
+  gopls = {},
   groovyls = {},
   jsonls = {},
   pyright = {},

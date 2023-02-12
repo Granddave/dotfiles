@@ -47,6 +47,7 @@ return require("packer").startup(function()
   use "hrsh7th/cmp-buffer"
   use "hrsh7th/cmp-path"
   use "hrsh7th/cmp-cmdline"
+  use "rcarriga/cmp-dap"
   use "onsails/lspkind.nvim"
   use {
     "folke/trouble.nvim",
@@ -55,8 +56,10 @@ return require("packer").startup(function()
   use "L3MON4D3/LuaSnip"
   use "saadparwaiz1/cmp_luasnip"
   use "mfussenegger/nvim-dap"
+  use "theHamsta/nvim-dap-virtual-text"
   use "rcarriga/nvim-dap-ui"
   use "mfussenegger/nvim-dap-python"
+  use "leoluz/nvim-dap-go"
   use "numToStr/Comment.nvim"
   use "ntpeters/vim-better-whitespace"
   use "windwp/nvim-autopairs"
