@@ -97,6 +97,30 @@ local on_attach = function(client, bufnr)
   if client.name == "clangd" then
     vim.keymap.set("n", "<M-o>", [[<Cmd>ClangdSwitchSourceHeader<CR>]], bufopts)
   end
+  if client.name == "gopls" then
+    vim.keymap.set("n", "<M-o>", function()
+      local current_file = vim.fn.expand('%:p')
+      local base_name = vim.fn.expand('%:t:r')
+      local extension = vim.fn.expand('%:e')
+      local impl_file, test_file
+
+      if base_name:match("_test$") then
+        test_file = current_file
+        impl_file = string.format("%s/%s.%s", vim.fn.expand('%:p:h'), base_name:gsub("_test$", ""), extension)
+      else
+        impl_file = current_file
+        test_file = string.format("%s/%s_test.%s", vim.fn.expand('%:p:h'), base_name, extension)
+      end
+
+      if current_file ~= test_file and vim.fn.filereadable(test_file) == 1 then
+        vim.cmd('edit ' .. test_file)
+      elseif current_file ~= impl_file and vim.fn.filereadable(impl_file) == 1 then
+        vim.cmd('edit ' .. impl_file)
+      else
+        print("No matching test/impl found.")
+      end
+    end, bufopts)
+  end
   vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
     group = vim.api.nvim_create_augroup("LSPFormatOnSave", {}),
