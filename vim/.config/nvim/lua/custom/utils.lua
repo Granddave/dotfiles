@@ -87,7 +87,7 @@ M.get_branch_name = function()
 end
 
 M.find_jira_key = function(str)
-  return string.match(str, [[%a+-%d+]]) or ""
+  return string.match(str, [[%a[%a%d]+-%d+]]) or ""
 end
 
 M.bytes_in_buffer = function(bufnr)
@@ -127,7 +127,7 @@ M.match_regex_under_cursor = function(pattern)
 end
 
 M.open_jira_issue_under_cursor = function()
-  local jira_key_pattern = "%a+-%d"
+  local jira_key_pattern = "%a[%a%d]+-%d"
   -- wrap with word boundary matching as well
   local full_pattern = "%f[%w_]" .. jira_key_pattern .. "+%f[^%w_]"
   local jira_key = M.match_regex_under_cursor(full_pattern)
