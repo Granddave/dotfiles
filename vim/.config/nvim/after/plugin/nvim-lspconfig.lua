@@ -42,6 +42,7 @@ local servers = {
     },
   },
   pyright = {},
+  rust_analyzer = {},
   tsserver = {},
   vimls = {},
   yamlls = {
@@ -131,8 +132,11 @@ local on_attach = function(client, bufnr)
     pattern = "*",
     group = vim.api.nvim_create_augroup("LSPFormatOnSave", {}),
     callback = function()
-      if client.name == "gopls" then
-        vim.lsp.buf.format({ async = true })
+      for _, value in ipairs({ "gopls", "rust_analyzer" }) do
+        if value == client.name then
+          vim.lsp.buf.format({ async = true })
+          break
+        end
       end
     end,
   })
