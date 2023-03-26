@@ -21,6 +21,8 @@ null_ls.setup({
     null_ls.builtins.diagnostics.cmake_lint,
 
     -- Yaml
-    null_ls.builtins.diagnostics.yamllint,
+    null_ls.builtins.diagnostics.yamllint.with({
+      extra_args = { "-d", "{extends: relaxed, rules: {line-length: {max: 120}}}" }
+    }),
   },
 })

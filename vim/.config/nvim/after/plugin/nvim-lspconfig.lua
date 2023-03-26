@@ -44,7 +44,13 @@ local servers = {
   pyright = {},
   tsserver = {},
   vimls = {},
-  yamlls = {},
+  yamlls = {
+    settings = {
+      yaml = {
+        keyOrdering = false
+      }
+    }
+  },
 }
 
 require("mason").setup()
