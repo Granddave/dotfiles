@@ -25,23 +25,37 @@ nvim_tree.setup({
     enable = true,
   },
   on_attach = function(bufnr)
-    local api = require('nvim-tree.api')
+    local api = require("nvim-tree.api")
     api.config.mappings.default_on_attach(bufnr)
 
     local opts = function(desc)
-      return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+      return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
     end
     local remove = function(mode, binding)
       -- The dummy set before del is done for safety, in case a default mapping does not exist.
-      vim.keymap.set(mode, binding, '', { buffer = bufnr })
+      vim.keymap.set(mode, binding, "", { buffer = bufnr })
       vim.keymap.del(mode, binding, { buffer = bufnr })
     end
     remove("n", "<C-e>") -- Scroll
 
-    vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts('Close Directory'))
-    vim.keymap.set('n', 'l', api.node.open.edit, opts('Open'))
+    vim.keymap.set("n", "h", api.node.navigate.parent_close, opts("Close Directory"))
+    vim.keymap.set("n", "l", api.node.open.edit, opts("Open"))
     remove("n", "C")
-    vim.keymap.set('n', 'C', api.tree.change_root_to_node, opts('CD'))
+    vim.keymap.set("n", "C", api.tree.change_root_to_node, opts("CD"))
+  end
+})
+
+-- On open directory
+vim.api.nvim_create_autocmd({ "VimEnter" }, {
+  callback = function(data)
+    local is_directory = vim.fn.isdirectory(data.file) == 1
+    if not is_directory then
+      return
+    end
+
+    vim.cmd.cd(data.file)
+
+    require("nvim-tree.api").tree.open()
   end
 })
 
