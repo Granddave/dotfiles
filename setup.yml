@@ -280,10 +280,13 @@
           ignore_errors: yes
           changed_when: false
 
-        - name: Install nvim's deb package
+        - name: Download and install nvim's appimage
           become: yes
-          apt:
-            deb: "https://github.com/neovim/neovim/releases/download/v{{ nvim_version }}/nvim-linux64.deb"
+          ansible.builtin.get_url:
+            url: "https://github.com/neovim/neovim/releases/download/v{{ nvim_version }}/nvim.appimage"
+            dest: /usr/local/bin/nvim
+            mode: "0755"
+            checksum: "sha256:https://github.com/neovim/neovim/releases/download/v{{ nvim_version }}/nvim.appimage.sha256sum"
           when: nvim_version_call is defined and nvim_version_call.stdout != nvim_expected_version_output
 
         - name: Install Packer.nvim
