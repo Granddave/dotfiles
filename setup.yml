@@ -150,6 +150,28 @@
             chdir: "{{ ansible_env.HOME }}"
             executable: /bin/zsh
 
+    - name: Install Rustup and Cargo
+      tags: rust
+      block:
+        - name: Rustup
+          ansible.builtin.shell: "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path -y"
+          register: curl_out
+          changed_when: 'not (curl_out.stdout | regex_search("unchanged|skipped"))'
+          args:
+            executable: /bin/zsh
+
+        - name: Use the stable Rust compiler
+          ansible.builtin.shell: "rustup override set stable"
+          changed_when: false
+          args:
+            executable: /bin/zsh
+
+        - name: Make sure that the Rust compiler is up to date
+          ansible.builtin.shell: "rustup update stable"
+          changed_when: false
+          args:
+            executable: /bin/zsh
+
     - name: Install lf
       # https://github.com/gokcehan/lf/tags
       tags: lf
@@ -423,25 +445,6 @@
       tags: alacritty
       block:
         # Installation instructions: https://github.com/alacritty/alacritty/blob/master/INSTALL.md
-        - name: Install Rustup and Cargo
-          ansible.builtin.shell: "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path -y"
-          register: curl_out
-          changed_when: 'curl_out.stdout is not search("unchanged")'
-          args:
-            executable: /bin/zsh
-
-        - name: Use the stable Rust compiler
-          ansible.builtin.shell: "rustup override set stable"
-          changed_when: false
-          args:
-            executable: /bin/zsh
-
-        - name: Make sure that the Rust compiler is up to date
-          ansible.builtin.shell: "rustup update stable"
-          changed_when: false
-          args:
-            executable: /bin/zsh
-
         - name: Install build dependencies
           become: true
           ansible.builtin.apt:
