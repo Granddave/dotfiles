@@ -172,6 +172,42 @@
           args:
             executable: /bin/zsh
 
+    - name: Install Golang
+      tags: go
+      vars:
+        go_version: "1.20.4"
+        go_checksum: "698ef3243972a51ddb4028e4a1ac63dc6d60821bf18e59a807e051fee0a385bd"
+      become: yes
+      block:
+        - name: Download tarball
+          become: yes
+          ansible.builtin.get_url:
+            url: "https://go.dev/dl/go{{ go_version }}.linux-amd64.tar.gz"
+            dest: /tmp/go.tar.gz
+            mode: "0644"
+            checksum: "sha256:{{ go_checksum }}"
+
+        - name: Uncompress tarball
+          ansible.builtin.unarchive:
+            src: /tmp/go.tar.gz
+            dest: /tmp/
+            remote_src: yes
+
+        - name: Copy binaries
+          copy:
+            src: "/tmp/go/bin/{{ item }}"
+            dest: "/usr/local/bin/{{ item }}"
+            mode: "0755"
+            remote_src: yes
+          with_items:
+            - go
+            - gofmt
+
+        - name: Cleanup tarball
+          ansible.builtin.file:
+            path: /tmp/go.tar.gz
+            state: absent
+
     - name: Install lf
       # https://github.com/gokcehan/lf/tags
       tags: lf
