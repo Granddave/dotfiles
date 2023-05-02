@@ -15,7 +15,6 @@ local servers = {
   cmake = {},
   dockerls = {},
   gopls = {},
-  groovyls = {},
   jsonls = {},
   lua_ls = {
     settings = {
