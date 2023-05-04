@@ -29,6 +29,9 @@
         - uuid
         - jq
         - unzip
+
+        # System packages
+        - fuse
       gui:
         # Utils
         - xdotool
