@@ -10,7 +10,7 @@ gitsigns.setup({
   numhl = true,
   on_attach = function(bufnr)
     -- TODO: Add range based staging and reset
-    map("v", "<Leader>ga", function() gitsigns.stage_hunk() end, opts)
+    map("n", "<Leader>ga", function() gitsigns.stage_hunk() end, opts)
     map("n", "<Leader>gp", function() gitsigns.preview_hunk() end, opts)
     map("n", "<Leader>gu", function() gitsigns.undo_stage_hunk() end, opts)
     map("n", "<Leader>gd", function() gitsigns.diffthis() end, opts)
