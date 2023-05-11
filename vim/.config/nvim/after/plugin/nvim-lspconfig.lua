@@ -201,7 +201,7 @@ vim.diagnostic.config({
         "%s (%s) [%s]",
         diagnostic.message,
         diagnostic.source,
-        diagnostic.code or diagnostic.user_data.lsp.code
+        diagnostic.code or diagnostic.user_data.lsp.code or ""
       )
     end,
   },
