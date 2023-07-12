@@ -39,7 +39,11 @@ return require("packer").startup(function()
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
   }
-  use "j-hui/fidget.nvim"
+  use {
+    "j-hui/fidget.nvim",
+    tag = "legacy",
+    requires = { "neovim/nvim-lspconfig" }
+  }
   use "jose-elias-alvarez/null-ls.nvim"
   use "hrsh7th/nvim-cmp"
   use "hrsh7th/cmp-nvim-lua"
