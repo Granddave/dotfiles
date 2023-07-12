@@ -70,4 +70,5 @@ return require("packer").startup(function()
   use "kylechui/nvim-surround"
   use "nvim-tree/nvim-web-devicons"
   use "ojroques/nvim-osc52"
+  use "epwalsh/obsidian.nvim"
 end)
