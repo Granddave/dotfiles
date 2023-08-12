@@ -74,6 +74,6 @@ map("n", "<Leader>rw", function()
 end, opts)
 
 map("n", "<Leader>fj", "<Cmd>%!jq<CR>", opts)
-map("v", "<Leader>fj", "<Cmd>'<,'>!jq<CR>", opts)
+map("v", "<Leader>fj", ":'<,'>!jq<CR>", opts)
 map("n", "<Leader>fcj", "<Cmd>%!jq --compact-output<CR>", opts)
-map("v", "<Leader>fcj", "<Cmd>'<,'>!jq --compact-output<CR>", opts)
+map("v", "<Leader>fcj", ":'<,'>!jq --compact-output<CR>", opts)
