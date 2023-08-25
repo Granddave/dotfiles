@@ -7,7 +7,7 @@ obsidian.setup({
   dir = "~/sync/Life",
 
   daily_notes = {
-    folder = "daily",
+    folder = "Daily",
     date_format = "%Y-%m-%d"
   },
 
@@ -19,6 +19,21 @@ obsidian.setup({
     --  * "notes_subdir" - put new notes in the default notes subdirectory.
     new_notes_location = "current_dir"
   },
+
+  disable_frontmatter = true,
+
+  note_frontmatter_func = function(note)
+    -- This is equivalent to the default frontmatter function.
+    local out = { id = note.id, aliases = note.aliases, tags = note.tags }
+    -- `note.metadata` contains any manually added fields in the frontmatter.
+    -- So here we just make sure those fields are kept in the frontmatter.
+    if note.metadata ~= nil and require("obsidian").util.table_length(note.metadata) > 0 then
+      for k, v in pairs(note.metadata) do
+        out[k] = v
+      end
+    end
+    return out
+  end,
 
   -- Optional, customize how names/IDs for new notes are created.
   note_id_func = function(title)
@@ -41,7 +56,7 @@ obsidian.setup({
   -- Optional, by default when you use `:ObsidianFollowLink` on a link to an external
   -- URL it will be ignored but you can customize this behavior here.
   follow_url_func = function(url)
-    vim.fn.jobstart({"xdg-open", url})
+    vim.fn.jobstart({ "xdg-open", url })
   end,
 
   -- Optional, set to true if you use the Obsidian Advanced URI plugin.
@@ -67,3 +82,5 @@ vim.keymap.set("n", "gd", function()
     return "gd"
   end
 end, { noremap = false, expr = true })
+
+vim.keymap.set("n", "<Leader>od", "<Cmd>ObsidianToday<CR>", { noremap = true })
