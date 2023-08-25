@@ -3,10 +3,21 @@ if not ok then
   return
 end
 
+local sort_methods = {
+  "case_sensitive",
+  "modification_time",
+}
+local sort_index = 1
+
 nvim_tree.setup({
   view = {
     adaptive_size = false,
     width = 35,
+  },
+  sort = {
+    sorter = function()
+      return sort_methods[sort_index]
+    end
   },
   actions = {
     open_file = {
@@ -42,6 +53,15 @@ nvim_tree.setup({
     vim.keymap.set("n", "l", api.node.open.edit, opts("Open"))
     remove("n", "C")
     vim.keymap.set("n", "C", api.tree.change_root_to_node, opts("CD"))
+
+    vim.keymap.set("n", "s", function()
+      if sort_index >= #sort_methods then
+        sort_index = 1
+      else
+        sort_index = sort_index + 1
+      end
+      api.tree.reload()
+    end, opts("Cycle Sort"))
   end
 })
 
