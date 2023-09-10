@@ -84,3 +84,4 @@ vim.keymap.set("n", "gd", function()
 end, { noremap = false, expr = true })
 
 vim.keymap.set("n", "<Leader>od", "<Cmd>ObsidianToday<CR>", { noremap = true })
+vim.keymap.set("n", "<Leader>ob", "<Cmd>ObsidianBacklinks<CR>", { noremap = true })
