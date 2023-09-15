@@ -26,6 +26,8 @@
     s = submodule
     sf = submodule foreach
     su = submodule update
+    sh = stash
+    shp = stash pop
 [status]
     submoduleSummary = true
 [diff]
