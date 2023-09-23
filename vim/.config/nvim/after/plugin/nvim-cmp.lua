@@ -5,6 +5,18 @@ end
 
 vim.opt.completeopt = "menu,menuone,noinsert"
 
+
+local lspkind = require("lspkind")
+
+-- Copilot setup
+lspkind.init({
+  symbol_map = {
+    Copilot = "",
+  },
+})
+vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
+
+-- Cmp setup
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -47,6 +59,7 @@ cmp.setup({
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
   }),
   sources = cmp.config.sources({
+    { name = "copilot", group_index = 2 },
     { name = "nvim_lsp" },
     { name = "nvim_lua" },
     { name = "luasnip" },
@@ -57,7 +70,7 @@ cmp.setup({
     ghost_text = true
   },
   formatting = {
-    format = require("lspkind").cmp_format({
+    format = lspkind.cmp_format({
       mode = "symbol_text",
       maxwidth = 50,
       ellipsis_char = "...",
@@ -68,6 +81,7 @@ cmp.setup({
         path = "[path]",
         luasnip = "[snip]",
         cmdline = "[cmd]",
+        Copilot = "[cplt]",
       },
     })
   },

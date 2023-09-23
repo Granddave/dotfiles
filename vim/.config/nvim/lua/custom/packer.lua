@@ -71,4 +71,12 @@ return require("packer").startup(function()
   use "nvim-tree/nvim-web-devicons"
   use "ojroques/nvim-osc52"
   use "epwalsh/obsidian.nvim"
+  use "zbirenbaum/copilot.lua"
+  use {
+    "zbirenbaum/copilot-cmp",
+    after = { "copilot.lua" },
+    config = function()
+      require("copilot_cmp").setup()
+    end
+  }
 end)
