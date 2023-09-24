@@ -11,6 +11,7 @@ telescope.setup({
         width = 0.95
       },
     },
+    layout_strategy = "vertical",
   },
   pickers = {
     live_grep = {

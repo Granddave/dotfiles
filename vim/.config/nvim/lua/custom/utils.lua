@@ -137,10 +137,10 @@ M.open_jira_issue_under_cursor = function()
 end
 
 M.parse_config = function()
-  local filepath = "~/.config/nvim.json"
-  local file = io.open(filepath, "r")
-  if file == nil then
-    error("Failed to open file: " .. filepath)
+  local filepath = os.getenv("HOME") .. "/.config/nvim.json"
+  local file, err = io.open(filepath, "r")
+  if not file then
+    error("Failed to open file: " .. err)
     return
   end
   local json_string = file:read("*a") -- Read the entire file
