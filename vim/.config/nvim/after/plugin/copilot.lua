@@ -5,7 +5,7 @@ end
 
 copilot.setup({
   panel = {
-    --enabled = true,
+    -- enabled = true,
     enabled = false,
     auto_refresh = false,
     keymap = {
@@ -21,7 +21,7 @@ copilot.setup({
     },
   },
   suggestion = {
-    --enabled = true,
+    -- enabled = true,
     enabled = false,
     auto_trigger = false,
     debounce = 75,
@@ -38,6 +38,7 @@ copilot.setup({
   filetypes = {
     yaml = false,
     markdown = false,
+    txt = false,
     help = false,
     gitcommit = false,
     gitrebase = false,
