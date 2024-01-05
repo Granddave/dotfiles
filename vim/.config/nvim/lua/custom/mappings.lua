@@ -77,3 +77,6 @@ map("n", "<Leader>fj", "<Cmd>%!jq<CR>", opts)
 map("v", "<Leader>fj", ":'<,'>!jq<CR>", opts)
 map("n", "<Leader>fcj", "<Cmd>%!jq --compact-output<CR>", opts)
 map("v", "<Leader>fcj", ":'<,'>!jq --compact-output<CR>", opts)
+
+map("n", "Q", "@q<CR>", opts)
+map("x", "Q", ":norm @q<CR>", opts)
