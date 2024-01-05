@@ -23,6 +23,7 @@
     hist = log --decorate --oneline --graph --date=short --all
     h = hist
     dump = cat-file -p
+    rb = rebase
     s = submodule
     sf = submodule foreach
     su = submodule update
