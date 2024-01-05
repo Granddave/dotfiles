@@ -50,3 +50,47 @@ dap.configurations.python = {
     end,
   },
 }
+
+-- dap.adapters.gdb = {
+--   type = "executable",
+--   command = "gdb",
+--   args = { "-i", "dap" }
+-- }
+-- dap.configurations.rust = {
+--   {
+--     name = "Launch",
+--     type = "gdb",
+--     request = "launch",
+--     program = function()
+--       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+--     end,
+--     cwd = "${workspaceFolder}",
+--   },
+-- }
+
+
+-- Install codeLLDB with Mason
+
+dap.adapters.codelldb = {
+  -- type = "server",
+  -- host = "127.0.0.1",
+  -- port = 13000,
+  type = "server",
+  port = "${port}",
+  executable = {
+    command = "/home/david/.local/share/nvim/mason/packages/codelldb/codelldb",
+    args = {"--port", "${port}"}
+  }
+}
+dap.configurations.rust = {
+  {
+    name = "hello-world",
+    type = "codelldb",
+    request = "launch",
+    program = function()
+      return vim.fn.getcwd() .. "/target/debug/my-bin"
+    end,
+    cwd = "${workspaceFolder}",
+    stopOnEntry = false,
+  },
+}
