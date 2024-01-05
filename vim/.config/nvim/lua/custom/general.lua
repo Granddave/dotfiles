@@ -24,7 +24,7 @@ vim.opt.smartcase = true
 vim.opt.termguicolors = true
 
 vim.opt.foldmethod = "marker"
-vim.opt.conceallevel = 3
+vim.opt.conceallevel = 2
 
 vim.opt.cursorline = true
 local cursorline_au_group = vim.api.nvim_create_augroup("CursorLine", {})
