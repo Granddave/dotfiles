@@ -41,7 +41,7 @@ return require("packer").startup(function()
   }
   use {
     "j-hui/fidget.nvim",
-    tag = "legacy",
+    tag = "v1.1.0",
     requires = { "neovim/nvim-lspconfig" }
   }
   use "jose-elias-alvarez/null-ls.nvim"
