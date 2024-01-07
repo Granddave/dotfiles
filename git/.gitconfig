@@ -2,6 +2,14 @@
     excludesfile = ~/.gitignore
     editor = nvim
     pager = delta
+
+    # For Windows
+    #preloadindex = true
+    #fscache = true
+    #fsmonitor = true
+[gc]
+    # For Windows
+    #auto = 256
 [include]
     path = ~/.gitconfig_local
 [push]
