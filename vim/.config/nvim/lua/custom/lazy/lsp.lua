@@ -1,8 +1,3 @@
-if not HAS({ "mason", "mason-lspconfig", "lspconfig" }) then
-  return
-end
-
--- LSP servers to configure and optional override opts
 local servers = {
   ansiblels = {},
   bashls = {},
@@ -53,11 +48,6 @@ local servers = {
   },
 }
 
-require("mason").setup()
-require("mason-lspconfig").setup({
-  ensure_installed = require("custom.utils").table_keys(servers)
-})
-
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
@@ -105,23 +95,23 @@ local on_attach = function(client, bufnr)
   end
   if client.name == "gopls" then
     vim.keymap.set("n", "<M-o>", function()
-      local current_file = vim.fn.expand('%:p')
-      local base_name = vim.fn.expand('%:t:r')
-      local extension = vim.fn.expand('%:e')
+      local current_file = vim.fn.expand("%:p")
+      local base_name = vim.fn.expand("%:t:r")
+      local extension = vim.fn.expand("%:e")
       local impl_file, test_file
 
       if base_name:match("_test$") then
         test_file = current_file
-        impl_file = string.format("%s/%s.%s", vim.fn.expand('%:p:h'), base_name:gsub("_test$", ""), extension)
+        impl_file = string.format("%s/%s.%s", vim.fn.expand("%:p:h"), base_name:gsub("_test$", ""), extension)
       else
         impl_file = current_file
-        test_file = string.format("%s/%s_test.%s", vim.fn.expand('%:p:h'), base_name, extension)
+        test_file = string.format("%s/%s_test.%s", vim.fn.expand("%:p:h"), base_name, extension)
       end
 
       if current_file ~= test_file and vim.fn.filereadable(test_file) == 1 then
-        vim.cmd('edit ' .. test_file)
+        vim.cmd("edit " .. test_file)
       elseif current_file ~= impl_file and vim.fn.filereadable(impl_file) == 1 then
-        vim.cmd('edit ' .. impl_file)
+        vim.cmd("edit " .. impl_file)
       else
         print("No matching test/impl found.")
       end
@@ -164,59 +154,91 @@ local on_attach = function(client, bufnr)
   -- vim.keymap.set("n", "<Leader>dl", vim.diagnostic.setloclist, bufopts)
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
-local lsp_opts = {
-  on_attach = on_attach,
-  flags = {
-    debounce_text_changes = 150,
-  },
-  capabilities = capabilities
-}
-for server_name, user_opts in pairs(servers) do
-  local opts = vim.tbl_deep_extend("force", lsp_opts, user_opts)
-  require("lspconfig")[server_name].setup(opts)
-end
+return {
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      { "williamboman/mason.nvim", config = true },
+      "williamboman/mason-lspconfig.nvim",
+      "hrsh7th/cmp-nvim-lsp",
+      { "j-hui/fidget.nvim",       opts = {} },
+    },
+    config = function()
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
--- Attach to a remote Clangd server run by:
--- `socat tcp-listen:4444,reuseaddr exec:"$CLANGD_BIN --background-index"`
-vim.keymap.set("n", "<Leader>cpp",
-  function()
-    local opts = vim.tbl_deep_extend("force", lsp_opts, {
-      cmd = { "nc", "127.0.0.1", "4444" },
-    })
-    require("lspconfig")["clangd"].setup(opts)
-  end,
-  { noremap = true, silent = true }
-)
+      local lsp_opts = {
+        on_attach = on_attach,
+        flags = {
+          debounce_text_changes = 150,
+        },
+        capabilities = capabilities
+      }
+      for server_name, user_opts in pairs(servers) do
+        local opts = vim.tbl_deep_extend("force", lsp_opts, user_opts)
+        require("lspconfig")[server_name].setup(opts)
+      end
 
--- Disable inline diagnostics and require hover for pop-up window
-vim.diagnostic.config({
-  virtual_text = false,
-  signs = true,
-  float = {
-    format = function(diagnostic)
-      return string.format(
-        "%s (%s) [%s]",
-        diagnostic.message,
-        diagnostic.source,
-        diagnostic.code or diagnostic.user_data.lsp.code or ""
+      -- Attach to a remote Clangd server run by:
+      -- `socat tcp-listen:4444,reuseaddr exec:"$CLANGD_BIN --background-index"`
+      vim.keymap.set("n", "<Leader>cpp",
+        function()
+          local opts = vim.tbl_deep_extend("force", lsp_opts, {
+            cmd = { "nc", "127.0.0.1", "4444" },
+          })
+          require("lspconfig")["clangd"].setup(opts)
+        end,
+        { noremap = true, silent = true }
       )
-    end,
-  },
-})
-vim.api.nvim_create_autocmd("CursorHold", {
-  pattern = "*",
-  group = vim.api.nvim_create_augroup("LSPDiagnosticsOnHover", {}),
-  callback = function()
-    local current_cursor = vim.api.nvim_win_get_cursor(0)
-    local last_popup_cursor = vim.w.lsp_diagnostics_last_cursor or { nil, nil }
-    -- Show the pop-up diagnostics window,
-    -- but only once for the current cursor location (unless moved afterwards).
-    if not (current_cursor[1] == last_popup_cursor[1] and current_cursor[2] == last_popup_cursor[2]) then
-      vim.w.lsp_diagnostics_last_cursor = current_cursor
-      vim.diagnostic.open_float(0, { scope = "cursor" })
+
+      -- Disable inline diagnostics and require hover for pop-up window
+      vim.diagnostic.config({
+        virtual_text = false,
+        signs = true,
+        float = {
+          format = function(diagnostic)
+            return string.format(
+              "%s (%s) [%s]",
+              diagnostic.message,
+              diagnostic.source,
+              diagnostic.code or diagnostic.user_data.lsp.code or ""
+            )
+          end,
+        },
+      })
+      vim.api.nvim_create_autocmd("CursorHold", {
+        pattern = "*",
+        group = vim.api.nvim_create_augroup("LSPDiagnosticsOnHover", {}),
+        callback = function()
+          local current_cursor = vim.api.nvim_win_get_cursor(0)
+          local last_popup_cursor = vim.w.lsp_diagnostics_last_cursor or { nil, nil }
+          -- Show the pop-up diagnostics window,
+          -- but only once for the current cursor location (unless moved afterwards).
+          if not (current_cursor[1] == last_popup_cursor[1] and current_cursor[2] == last_popup_cursor[2]) then
+            vim.w.lsp_diagnostics_last_cursor = current_cursor
+            vim.diagnostic.open_float(0, { scope = "cursor" })
+          end
+        end
+      })
     end
-  end
-})
+  },
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      local trouble = require("trouble")
+      trouble.setup()
+
+      local map = vim.keymap.set
+      local opts = { noremap = true, silent = true }
+      map("n", "<leader>qt", function() trouble.toggle() end, opts)
+      map("n", "<leader>qw", function() trouble.toggle("workspace_diagnostics") end, opts)
+      map("n", "<leader>qd", function() trouble.toggle("document_diagnostics") end, opts)
+      map("n", "<leader>qq", function() trouble.toggle("quickfix") end, opts)
+      map("n", "<leader>dl", function() trouble.toggle("loclist") end, opts)
+      -- map("n", "<leader>dn", function() trouble.next({ skip_groups = true, jump = true }); end, opts)
+      -- map("n", "<leader>dp", function() trouble.previous({ skip_groups = true, jump = true }); end, opts)
+    end
+  }
+}
