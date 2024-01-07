@@ -1,0 +1,284 @@
+// eamodio.gitlens
+// jdinhlife.gruvbox
+// bierner.markdown-mermaid
+// shardulm94.trailing-spaces
+// vscodevim.vim
+
+{
+  "vim.vimrc.enable": true,
+  "vim.vimrc.path": "C:/Users/david/.vimrc",
+  "vim.hlsearch": true,
+  "vim.leader": "<space>",
+  "vim.visualModeKeyBindingsNonRecursive": [
+    // Editing
+    {
+      "before": [
+        "<leader>",
+        "s",
+        "r"
+      ],
+      "commands": [
+        "editor.action.startFindReplaceAction"
+      ],
+      "silent": true
+    },
+  ],
+  "vim.normalModeKeyBindingsNonRecursive": [
+    // Navigation
+    {
+      "before": [
+        "<leader>",
+        "e"
+      ],
+      "commands": [
+        "workbench.action.toggleSidebarVisibility"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "n"
+      ],
+      "commands": [
+        "workbench.action.nextEditorInGroup"
+      ],
+      "silent": true
+    },
+    {
+      "before": [
+        "<leader>",
+        "p"
+      ],
+      "commands": [
+        "workbench.action.previousEditorInGroup"
+      ],
+      "silent": true
+    },
+    {
+      "before": [
+        "<leader>",
+        "b",
+        "q"
+      ],
+      "commands": [
+        "workbench.action.closeActiveEditor"
+      ],
+      "silent": true
+    },
+    {
+      "before": [
+        "<leader>",
+        "f",
+        "f"
+      ],
+      "commands": [
+        "workbench.action.quickOpen"
+      ],
+      "silent": true
+    },
+    {
+      "before": [
+        "<leader>",
+        "f",
+        "b"
+      ],
+      "commands": [
+        "workbench.action.showAllEditors"
+      ],
+      "silent": true
+    },
+    {
+      "before": [
+        "<leader>",
+        "w"
+      ],
+      "commands": [
+        "workbench.action.files.save"
+      ],
+      "silent": true
+    },
+    // { "before": [ "<c-e>" ], "commands": [ "scrollLineDown", "scrollLineDown" ], "silent": true },
+    // { "before": [ "<c-y>" ], "commands": [ "scrollLineUp", "scrollLineUp" ], "silent": true },
+    // Editing
+    {
+      "before": [
+        "<leader>",
+        "s",
+        "r"
+      ],
+      "commands": [
+        "editor.action.startFindReplaceAction"
+      ],
+      "silent": true
+    },
+    {
+      "before": [
+        "<leader>",
+        "d",
+        "w"
+      ],
+      "commands": [
+        "editor.action.trimTrailingWhitespace"
+      ],
+      "silent": true
+    },
+    {
+      "before": [
+        "<leader>",
+        "r",
+        "n"
+      ],
+      "commands": [
+        "editor.action.rename"
+      ],
+      "silent": true
+    },
+    {
+      "before": [
+        "<leader>",
+        "g",
+        "r"
+      ],
+      "commands": [
+        "editor.action.goToReferences"
+      ],
+      "silent": true
+    },
+    {
+      "before": [
+        "<leader>",
+        "g",
+        "i"
+      ],
+      "commands": [
+        "editor.action.goToDeclaration"
+      ],
+      "silent": true
+    },
+    {
+      "before": [
+        "<leader>",
+        "f",
+        "r"
+      ],
+      "commands": [
+        "workbench.action.findInFiles"
+      ],
+      "silent": true
+    },
+    // Harpoon
+    {
+      "before": [
+        "<leader>",
+        "a",
+        "a",
+      ],
+      "commands": [
+        "vscode-harpoon.addEditor"
+      ],
+      "silent": true
+    },
+    {
+      "before": [
+        "<leader>",
+        "a",
+        "t",
+      ],
+      "commands": [
+        "vscode-harpoon.editEditors"
+      ],
+      "silent": true
+    },
+    {
+      "before": [
+        "<leader>",
+        "a",
+        "p"
+      ],
+      "commands": [
+        "vscode-harpoon.editorQuickPick"
+      ],
+      "silent": true
+    },
+    {
+      "before": [
+        "<leader>",
+        "h"
+      ],
+      "commands": [
+        "vscode-harpoon.gotoEditor1"
+      ],
+      "silent": true
+    },
+    {
+      "before": [
+        "<leader>",
+        "j"
+      ],
+      "commands": [
+        "vscode-harpoon.gotoEditor2"
+      ],
+      "silent": true
+    },
+    {
+      "before": [
+        "<leader>",
+        "k"
+      ],
+      "commands": [
+        "vscode-harpoon.gotoEditor3"
+      ],
+      "silent": true
+    },
+    {
+      "before": [
+        "<leader>",
+        "l"
+      ],
+      "commands": [
+        "vscode-harpoon.gotoEditor4"
+      ],
+      "silent": true
+    },
+  ],
+  "editor.mouseWheelZoom": true,
+  "editor.guides.bracketPairs": true,
+  "editor.minimap.autohide": true,
+  "editor.cursorSurroundingLines": 3,
+  "editor.fontFamily": "JetBrains Mono",
+  "editor.fontLigatures": true,
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "gitlens.graph.minimap.enabled": false,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "search.exclude": {
+    ".git": true,
+    "debug": true,
+    "Release": true,
+    "build.log": true,
+    "*.dep": true,
+    "*.ewp": true,
+    "*.ewt": true,
+    "*.map": true,
+  },
+  "editor.stickyScroll.enabled": true,
+  "editor.stickyScroll.defaultModel": "foldingProviderModel",
+  "workbench.tree.enableStickyScroll": true,
+  "workbench.colorTheme": "Gruvbox Dark Hard",
+  "[git-commit]": {
+    "editor.rulers": [
+      50
+    ]
+  },
+  "[c]": {
+    "editor.rulers": [
+      130
+    ]
+  },
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": true,
+    "markdown": false,
+    "scminput": false
+  },
+  "explorer.confirmDelete": false
+}
