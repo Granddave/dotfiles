@@ -9,10 +9,10 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    event = { "BufReadPost", "BufNewFile" },
     build = ":TSUpdate",
     config = function()
-      local configs = require("nvim-treesitter.configs")
-      configs.setup({
+      require("nvim-treesitter.configs").setup({
         auto_install = true,
         ignore_install = { "yaml" }, -- https://stackoverflow.com/a/76688955/4774715
         ensure_installed = {
