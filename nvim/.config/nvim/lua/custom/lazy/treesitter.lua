@@ -4,12 +4,17 @@ return {
     dependencies = { "nvim-treesitter/nvim-treesitter", },
   },
   {
+    "ikatyang/tree-sitter-yaml",
+    dependencies = { "nvim-treesitter/nvim-treesitter", },
+  },
+  {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     config = function()
       local configs = require("nvim-treesitter.configs")
       configs.setup({
         auto_install = true,
+        ignore_install = { "yaml" }, -- https://stackoverflow.com/a/76688955/4774715
         ensure_installed = {
           "bash",
           "c",
