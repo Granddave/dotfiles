@@ -175,83 +175,87 @@
           args:
             executable: /bin/zsh
 
-    - name: Install Golang
-      tags: go
-      vars:
-        go_version: "1.20.4"
-        go_checksum: "698ef3243972a51ddb4028e4a1ac63dc6d60821bf18e59a807e051fee0a385bd"
-      become: yes
-      block:
-        - name: Download tarball
-          become: yes
-          ansible.builtin.get_url:
-            url: "https://go.dev/dl/go{{ go_version }}.linux-amd64.tar.gz"
-            dest: /tmp/go.tar.gz
-            mode: "0644"
-            checksum: "sha256:{{ go_checksum }}"
+    # Install with `nix-env -iA nixpkgs.go`
+    #
+    # - name: Install Golang
+    #   tags: go
+    #   vars:
+    #     go_version: "1.20.4"
+    #     go_checksum: "698ef3243972a51ddb4028e4a1ac63dc6d60821bf18e59a807e051fee0a385bd"
+    #   become: yes
+    #   block:
+    #     - name: Download tarball
+    #       become: yes
+    #       ansible.builtin.get_url:
+    #         url: "https://go.dev/dl/go{{ go_version }}.linux-amd64.tar.gz"
+    #         dest: /tmp/go.tar.gz
+    #         mode: "0644"
+    #         checksum: "sha256:{{ go_checksum }}"
+    #
+    #     - name: Uncompress tarball
+    #       ansible.builtin.unarchive:
+    #         src: /tmp/go.tar.gz
+    #         dest: /tmp/
+    #         remote_src: yes
+    #
+    #     - name: Copy binaries
+    #       copy:
+    #         src: "/tmp/go/bin/{{ item }}"
+    #         dest: "/usr/local/bin/{{ item }}"
+    #         mode: "0755"
+    #         remote_src: yes
+    #       with_items:
+    #         - go
+    #         - gofmt
+    #
+    #     - name: Cleanup tarball
+    #       ansible.builtin.file:
+    #         path: /tmp/go.tar.gz
+    #         state: absent
 
-        - name: Uncompress tarball
-          ansible.builtin.unarchive:
-            src: /tmp/go.tar.gz
-            dest: /tmp/
-            remote_src: yes
-
-        - name: Copy binaries
-          copy:
-            src: "/tmp/go/bin/{{ item }}"
-            dest: "/usr/local/bin/{{ item }}"
-            mode: "0755"
-            remote_src: yes
-          with_items:
-            - go
-            - gofmt
-
-        - name: Cleanup tarball
-          ansible.builtin.file:
-            path: /tmp/go.tar.gz
-            state: absent
-
-    - name: Install lf
-      # https://github.com/gokcehan/lf/tags
-      tags: lf
-      vars:
-        lf_version: "r27"
-        lf_install_dir: "{{ lookup('env','HOME') }}/.local/bin/"
-      block:
-        - name: Register current lf version
-          ansible.builtin.shell: "{{ lf_install_dir }}/lf --version"
-          register: lf_version_call
-          ignore_errors: yes
-          changed_when: false
-
-        - name: Decide if installation of lf should continue
-          set_fact:
-            install_lf: "{{ lf_version_call is defined and lf_version_call.stdout != lf_version }}"
-
-        - name: Create temporary build directory
-          ansible.builtin.tempfile:
-            state: directory
-            suffix: build
-          register: lf_tmp
-          when: install_lf
-
-        - name: Download lf
-          ansible.builtin.get_url:
-            url: "https://github.com/gokcehan/lf/releases/download/{{ lf_version }}/lf-linux-amd64.tar.gz"
-            dest: "{{ lf_tmp.path }}/lf.tar.gz"
-          when: install_lf
-
-        - name: Unpack lf
-          ansible.builtin.unarchive:
-            src: "{{ lf_tmp.path }}/lf.tar.gz"
-            dest: "{{ lf_install_dir }}"
-          when: install_lf
-
-        - name: Cleanup tarball
-          ansible.builtin.file:
-            path: "{{ lf_tmp.path }}"
-            state: absent
-          when: install_lf
+    # Install with `nix-env -iA nixpkgs.lf`
+    #
+    # - name: Install lf
+    #   # https://github.com/gokcehan/lf/tags
+    #   tags: lf
+    #   vars:
+    #     lf_version: "r31"
+    #     lf_install_dir: "{{ lookup('env','HOME') }}/.local/bin/"
+    #   block:
+    #     - name: Register current lf version
+    #       ansible.builtin.shell: "{{ lf_install_dir }}/lf --version"
+    #       register: lf_version_call
+    #       ignore_errors: yes
+    #       changed_when: false
+    #
+    #     - name: Decide if installation of lf should continue
+    #       set_fact:
+    #         install_lf: "{{ lf_version_call is defined and lf_version_call.stdout != lf_version }}"
+    #
+    #     - name: Create temporary build directory
+    #       ansible.builtin.tempfile:
+    #         state: directory
+    #         suffix: build
+    #       register: lf_tmp
+    #       when: install_lf
+    #
+    #     - name: Download lf
+    #       ansible.builtin.get_url:
+    #         url: "https://github.com/gokcehan/lf/releases/download/{{ lf_version }}/lf-linux-amd64.tar.gz"
+    #         dest: "{{ lf_tmp.path }}/lf.tar.gz"
+    #       when: install_lf
+    #
+    #     - name: Unpack lf
+    #       ansible.builtin.unarchive:
+    #         src: "{{ lf_tmp.path }}/lf.tar.gz"
+    #         dest: "{{ lf_install_dir }}"
+    #       when: install_lf
+    #
+    #     - name: Cleanup tarball
+    #       ansible.builtin.file:
+    #         path: "{{ lf_tmp.path }}"
+    #         state: absent
+    #       when: install_lf
 
     - name: Install oh-my-zsh
       tags: zsh
@@ -309,56 +313,60 @@
             name: "{{ ansible_user_id }}"
             shell: /bin/zsh
 
-    - name: Install delta
-      # https://github.com/dandavison/delta/tags
-      tags: delta
-      vars:
-        delta_version: "0.14.0"
-        delta_expected_version_output: "\u001b[0mdelta {{ delta_version }}\n\u001b[0m" # Stupid escape codes...
-      block:
-        - name: Register current delta version
-          ansible.builtin.shell: "delta --version"
-          register: delta_version_call
-          ignore_errors: yes
-          changed_when: false
+    # Install with `nix-env -iA nixpkgs.delta`
+    #
+    # - name: Install delta
+    #   # https://github.com/dandavison/delta/tags
+    #   tags: delta
+    #   vars:
+    #     delta_version: "0.16.5"
+    #     delta_expected_version_output: "\u001b[0mdelta {{ delta_version }}\n\u001b[0m" # Stupid escape codes...
+    #   block:
+    #     - name: Register current delta version
+    #       ansible.builtin.shell: "delta --version"
+    #       register: delta_version_call
+    #       ignore_errors: yes
+    #       changed_when: false
+    #
+    #     - name: Install delta's deb package
+    #       become: yes
+    #       apt:
+    #         deb: "https://github.com/dandavison/delta/releases/download/{{ delta_version }}/git-delta_{{ delta_version }}_amd64.deb"
+    #       when: delta_version_call is defined and delta_version_call.stdout != delta_expected_version_output
 
-        - name: Install delta's deb package
-          become: yes
-          apt:
-            deb: "https://github.com/dandavison/delta/releases/download/{{ delta_version }}/git-delta_{{ delta_version }}_amd64.deb"
-          when: delta_version_call is defined and delta_version_call.stdout != delta_expected_version_output
-
-    - name: Install Neovim
-      # https://github.com/neovim/neovim/tags
-      tags: nvim
-      vars:
-        nvim_version: "0.9.0"
-        nvim_expected_version_output: "NVIM v{{ nvim_version }}"
-      block:
-        - name: Register current nvim version
-          ansible.builtin.shell: "nvim --version | grep -P -o 'NVIM v\\d+\\.\\d+\\.\\d+'"
-          register: nvim_version_call
-          ignore_errors: yes
-          changed_when: false
-
-        - name: Download and install nvim's appimage
-          become: yes
-          ansible.builtin.get_url:
-            url: "https://github.com/neovim/neovim/releases/download/v{{ nvim_version }}/nvim.appimage"
-            dest: /usr/local/bin/nvim
-            mode: "0755"
-            checksum: "sha256:https://github.com/neovim/neovim/releases/download/v{{ nvim_version }}/nvim.appimage.sha256sum"
-          when: nvim_version_call is defined and nvim_version_call.stdout != nvim_expected_version_output
-
-        - name: Install Packer.nvim
-          ansible.builtin.git:
-            repo: https://github.com/wbthomason/packer.nvim
-            dest: "{{ lookup('env','HOME') }}/.local/share/nvim/site/pack/packer/start/packer.nvim"
-            depth: 1
-
-        - name: Install nvim plugins
-          ansible.builtin.shell: "nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'"
-          changed_when: false
+    # Install with `nix-env -iA nixpkgs.neovimgo`
+    #
+    # - name: Install Neovim
+    #   # https://github.com/neovim/neovim/tags
+    #   tags: nvim
+    #   vars:
+    #     nvim_version: "0.9.0"
+    #     nvim_expected_version_output: "NVIM v{{ nvim_version }}"
+    #   block:
+    #     - name: Register current nvim version
+    #       ansible.builtin.shell: "nvim --version | grep -P -o 'NVIM v\\d+\\.\\d+\\.\\d+'"
+    #       register: nvim_version_call
+    #       ignore_errors: yes
+    #       changed_when: false
+    #
+    #     - name: Download and install nvim's appimage
+    #       become: yes
+    #       ansible.builtin.get_url:
+    #         url: "https://github.com/neovim/neovim/releases/download/v{{ nvim_version }}/nvim.appimage"
+    #         dest: /usr/local/bin/nvim
+    #         mode: "0755"
+    #         checksum: "sha256:https://github.com/neovim/neovim/releases/download/v{{ nvim_version }}/nvim.appimage.sha256sum"
+    #       when: nvim_version_call is defined and nvim_version_call.stdout != nvim_expected_version_output
+    #
+    #     - name: Install Packer.nvim
+    #       ansible.builtin.git:
+    #         repo: https://github.com/wbthomason/packer.nvim
+    #         dest: "{{ lookup('env','HOME') }}/.local/share/nvim/site/pack/packer/start/packer.nvim"
+    #         depth: 1
+    #
+    #     - name: Install nvim plugins
+    #       ansible.builtin.shell: "nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'"
+    #       changed_when: false
 
     - name: Enable weather systemd units
       tags: weather
