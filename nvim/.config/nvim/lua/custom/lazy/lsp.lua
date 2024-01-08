@@ -130,25 +130,6 @@ local on_attach = function(client, bufnr)
     end,
   })
 
-  if client.server_capabilities["documentHighlightProvider"] then
-    vim.cmd [[
-      hi! LspReferenceRead cterm=bold ctermbg=Gray guibg=#504945
-      hi! LspReferenceText cterm=bold ctermbg=Gray guibg=#504945
-      hi! LspReferenceWrite cterm=bold ctermbg=Gray guibg=#504945
-    ]]
-    local lsp_document_highlight = vim.api.nvim_create_augroup("lsp_document_highlight", {})
-    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-      group = lsp_document_highlight,
-      buffer = bufnr,
-      callback = vim.lsp.buf.document_highlight,
-    })
-    vim.api.nvim_create_autocmd("CursorMoved", {
-      group = lsp_document_highlight,
-      buffer = bufnr,
-      callback = vim.lsp.buf.clear_references,
-    })
-  end
-
   vim.keymap.set("n", "<Leader>dp", function() vim.diagnostic.goto_prev({ float = false }) end, bufopts)
   vim.keymap.set("n", "<Leader>dn", function() vim.diagnostic.goto_next({ float = false }) end, bufopts)
   -- vim.keymap.set("n", "<Leader>dl", vim.diagnostic.setloclist, bufopts)
