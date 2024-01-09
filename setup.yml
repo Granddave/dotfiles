@@ -334,7 +334,7 @@
     #         deb: "https://github.com/dandavison/delta/releases/download/{{ delta_version }}/git-delta_{{ delta_version }}_amd64.deb"
     #       when: delta_version_call is defined and delta_version_call.stdout != delta_expected_version_output
 
-    # Install with `nix-env -iA nixpkgs.neovimgo`
+    # Install with `nix-env -iA nixpkgs.neovim`
     #
     # - name: Install Neovim
     #   # https://github.com/neovim/neovim/tags
@@ -386,91 +386,91 @@
             state: started
             enabled: yes
 
-    - name: Set dconf settings
-      tags: gnome
-      dconf:
-        key: "{{ item.key }}"
-        value: "{{ item.value }}"
-      with_items:
-        - name: Set windows action key
-          key: "/org/gnome/desktop/wm/preferences/mouse-button-modifier"
-          value: "'<Alt>'"
-        - name: Set a flat mouse acceleration profile
-          key: "/org/gnome/desktop/peripherals/mouse/accel-profile"
-          value: "'flat'"
-        - name: Disable notifications when screen is locked
-          key: "/org/gnome/desktop/notifications/show-in-lock-screen"
-          value: "false"
-        - name: Don't attach modal windows to its parent
-          key: "/org/gnome/mutter/attach-modal-dialogs"
-          value: "true"
-        - name: Show week numbers
-          key: "/org/gnome/desktop/calendar/show-weekdate"
-          value: "true"
-        - name: Set blank screen timeout (seconds)
-          key: "/org/gnome/desktop/session/idle-delay"
-          value: "uint32 {{ 10 * 60 }}"
-        - name: Disable default terminal shortcut
-          key: "/org/gnome/settings-daemon/plugins/media-keys/terminal"
-          value: "@as []"
-      when: has_gtk
-
-    - name: Set keyboard shortcuts
-      tags: shortcuts
-      vars:
-        keyboard_shortcuts:
-          - index: 0
-            name: "'Launch Alacritty'"
-            command: "'alacritty'"
-            binding: "'<Primary><Alt>t'"
-          - index: 1
-            name: "'Flameshot'"
-            command: "'flameshot gui'"
-            binding: "'Print'"
-          - index: 2
-            name: "'Set dual display'"
-            command: "'{{ lookup('env', 'HOME') }}/.screenlayout/default.sh'"
-            binding: "'<Primary><Alt>1'"
-          - index: 3
-            name: "'Set main display only'"
-            command: "'{{ lookup('env', 'HOME') }}/.screenlayout/main-only.sh'"
-            binding: "'<Primary><Alt>0'"
-          - index: 4
-            name: "'Activate snippets'"
-            command: "'{{ lookup('env', 'HOME') }}/bin/snippets.sh'"
-            binding: "'<Primary><Alt>s'"
-      when: has_gtk
-      block:
-        - name: Set shortcut names
-          dconf:
-            key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom{{ item.index }}/name"
-            value: "{{ item.name }}"
-          with_items: "{{ keyboard_shortcuts }}"
-
-        - name: Set shortcut commands
-          dconf:
-            key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom{{ item.index }}/command"
-            value: "{{ item.command }}"
-          with_items: "{{ keyboard_shortcuts }}"
-
-        - name: Set shortcut binding
-          dconf:
-            key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom{{ item.index }}/binding"
-            value: "{{ item.binding }}"
-          with_items: "{{ keyboard_shortcuts }}"
-
-        - name: Generate shortcut list
-          set_fact:
-            shortcut_list: "{{ [prefix] | product(indices) | map('join') | list | product([suffix]) | map('join') | list }}"
-          vars:
-            prefix: "'/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom"
-            suffix: "/'"
-            indices: "{{ keyboard_shortcuts | map(attribute='index') }}"
-
-        - name: Set shortcut list
-          dconf:
-            key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
-            value: "[{{ ','.join(shortcut_list) }}]"
+    # - name: Set dconf settings
+    #   tags: gnome
+    #   dconf:
+    #     key: "{{ item.key }}"
+    #     value: "{{ item.value }}"
+    #   with_items:
+    #     - name: Set windows action key
+    #       key: "/org/gnome/desktop/wm/preferences/mouse-button-modifier"
+    #       value: "'<Alt>'"
+    #     - name: Set a flat mouse acceleration profile
+    #       key: "/org/gnome/desktop/peripherals/mouse/accel-profile"
+    #       value: "'flat'"
+    #     - name: Disable notifications when screen is locked
+    #       key: "/org/gnome/desktop/notifications/show-in-lock-screen"
+    #       value: "false"
+    #     - name: Don't attach modal windows to its parent
+    #       key: "/org/gnome/mutter/attach-modal-dialogs"
+    #       value: "true"
+    #     - name: Show week numbers
+    #       key: "/org/gnome/desktop/calendar/show-weekdate"
+    #       value: "true"
+    #     - name: Set blank screen timeout (seconds)
+    #       key: "/org/gnome/desktop/session/idle-delay"
+    #       value: "uint32 {{ 10 * 60 }}"
+    #     - name: Disable default terminal shortcut
+    #       key: "/org/gnome/settings-daemon/plugins/media-keys/terminal"
+    #       value: "@as []"
+    #   when: has_gtk
+    #
+    # - name: Set keyboard shortcuts
+    #   tags: shortcuts
+    #   vars:
+    #     keyboard_shortcuts:
+    #       - index: 0
+    #         name: "'Launch Alacritty'"
+    #         command: "'alacritty'"
+    #         binding: "'<Primary><Alt>t'"
+    #       - index: 1
+    #         name: "'Flameshot'"
+    #         command: "'flameshot gui'"
+    #         binding: "'Print'"
+    #       - index: 2
+    #         name: "'Set dual display'"
+    #         command: "'{{ lookup('env', 'HOME') }}/.screenlayout/default.sh'"
+    #         binding: "'<Primary><Alt>1'"
+    #       - index: 3
+    #         name: "'Set main display only'"
+    #         command: "'{{ lookup('env', 'HOME') }}/.screenlayout/main-only.sh'"
+    #         binding: "'<Primary><Alt>0'"
+    #       - index: 4
+    #         name: "'Activate snippets'"
+    #         command: "'{{ lookup('env', 'HOME') }}/bin/snippets.sh'"
+    #         binding: "'<Primary><Alt>s'"
+    #   when: has_gtk
+    #   block:
+    #     - name: Set shortcut names
+    #       dconf:
+    #         key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom{{ item.index }}/name"
+    #         value: "{{ item.name }}"
+    #       with_items: "{{ keyboard_shortcuts }}"
+    #
+    #     - name: Set shortcut commands
+    #       dconf:
+    #         key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom{{ item.index }}/command"
+    #         value: "{{ item.command }}"
+    #       with_items: "{{ keyboard_shortcuts }}"
+    #
+    #     - name: Set shortcut binding
+    #       dconf:
+    #         key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom{{ item.index }}/binding"
+    #         value: "{{ item.binding }}"
+    #       with_items: "{{ keyboard_shortcuts }}"
+    #
+    #     - name: Generate shortcut list
+    #       set_fact:
+    #         shortcut_list: "{{ [prefix] | product(indices) | map('join') | list | product([suffix]) | map('join') | list }}"
+    #       vars:
+    #         prefix: "'/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom"
+    #         suffix: "/'"
+    #         indices: "{{ keyboard_shortcuts | map(attribute='index') }}"
+    #
+    #     - name: Set shortcut list
+    #       dconf:
+    #         key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
+    #         value: "[{{ ','.join(shortcut_list) }}]"
 
     - name: Register current Alacritty version
       ansible.builtin.shell: "{{ alacritty_binary_path }} --version | grep -P -o '\\d+\\.\\d+\\.\\d+'"
