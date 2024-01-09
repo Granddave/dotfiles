@@ -56,7 +56,13 @@ return {
       api.config.mappings.default_on_attach(bufnr)
 
       local opts = function(desc)
-        return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+        return {
+          desc = "nvim-tree: " .. desc,
+          buffer = bufnr,
+          noremap = true,
+          silent = true,
+          nowait = true,
+        }
       end
       local remove = function(mode, binding)
         -- The dummy set before del is done for safety, in case a default mapping does not exist.
@@ -70,6 +76,7 @@ return {
       remove("n", "C")
       vim.keymap.set("n", "C", api.tree.change_root_to_node, opts("CD"))
 
+      -- Loop through sort methods specified above
       vim.keymap.set("n", "s", function()
         if sort_index >= #sort_methods then
           sort_index = 1
