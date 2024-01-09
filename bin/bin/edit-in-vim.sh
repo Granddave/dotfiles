@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Edit text fields in Neovim by selecting and copy the text followed by
 # triggering a shortcut to run this script.

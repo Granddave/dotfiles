@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 CLANGD="$HOME/.local/share/nvim/lsp_servers/clangd/clangd/bin/clangd"
 PORT=4444

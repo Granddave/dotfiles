@@ -29,7 +29,7 @@ return {
 
     dap.adapters.python = {
       type = "executable",
-      command = "/usr/bin/python3", --'path/to/virtualenvs/debugpy/bin/python'
+      command = "/usr/bin/env python3", --'path/to/virtualenvs/debugpy/bin/python'
       args = { "-m", "debugpy.adapter" },
     }
     dap.configurations.python = {
@@ -50,7 +50,7 @@ return {
           elseif vim.fn.executable(cwd .. "/.venv/bin/python3") == 1 then
             return cwd .. "/.venv/bin/python3"
           else
-            return "/usr/bin/python3"
+            return "/usr/bin/env python3"
           end
         end,
       },

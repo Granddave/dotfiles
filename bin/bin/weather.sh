@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 {
     response=$(/usr/bin/curl --silent --fail --connect-timeout 3 "wttr.in/Jonkoping?format=%C+%t")

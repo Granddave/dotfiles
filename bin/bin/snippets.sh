@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Snippet tool that adds text from either script output or plain files to the
 # clipboard and pastes it with Shift+Insert.
@@ -8,7 +8,7 @@
 #
 # Example of a executable snippet:
 #
-#   #!/bin/sh
+#   #!/usr/bin/env sh
 #   printf '%s' "$(date '+%F')"
 
 set -e
