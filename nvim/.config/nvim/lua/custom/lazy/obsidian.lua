@@ -1,19 +1,24 @@
 return {
   "epwalsh/obsidian.nvim",
-  config = function()
-    vim.keymap.set("n", "gd", function()
-      if require("obsidian").util.cursor_on_markdown_link() then
-        return "<cmd>ObsidianFollowLink<CR>"
-      else
-        return "gd"
-      end
-    end, { noremap = false, expr = true })
-
-    vim.keymap.set("n", "<Leader>od", "<Cmd>ObsidianToday<CR>", { noremap = true })
-    vim.keymap.set("n", "<Leader>ob", "<Cmd>ObsidianBacklinks<CR>", { noremap = true })
-  end,
+  -- version = "*",
+  version = "v2.5.0",
+  lazy = true,
+  ft = "markdown",
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+  },
+  keys = {
+    {"gd", "<Cmd>ObsidianFollowLink<CR>", desc = "Follow link"},
+    {"<Leader>ob", "<Cmd>ObsidianBacklinks<CR>", desc = "Show backlinks"},
+    {"<Leader>od", "<Cmd>ObsidianToday<CR>", desc = "Go to today's file"},
+  },
   opts = {
-    dir = "~/sync/Life",
+    workspaces = {
+      {
+        name = "life",
+        path = "~/sync/Life",
+      },
+    },
 
     daily_notes = {
       folder = "Daily",
@@ -29,17 +34,20 @@ return {
       new_notes_location = "current_dir"
     },
 
-    disable_frontmatter = true,
-
+    -- Disable the default mappings
+    mappings = {},
     ui = {
+      enable = true,
       checkboxes = {
         [" "] = { char = "☐", hl_group = "ObsidianTodo" },
         ["x"] = { char = "✔", hl_group = "ObsidianDone" },
         [">"] = { char = "", hl_group = "ObsidianRightArrow" },
         ["~"] = { char = "~", hl_group = "ObsidianTilde" },
       },
+      external_link_icon = { char = "", hl_group = "ObsidianExtLinkIcon" },
     },
 
+    disable_frontmatter = true,
     note_frontmatter_func = function(note)
       -- This is equivalent to the default frontmatter function.
       local out = { id = note.id, aliases = note.aliases, tags = note.tags }
@@ -91,6 +99,5 @@ return {
     -- is not installed, or if it the command does not support it, the
     -- remaining finders will be attempted in the original order.
     finder = "telescope.nvim",
-
   },
 }
