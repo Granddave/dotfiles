@@ -11,7 +11,7 @@ return {
           diagnostic = true,
           gitsigns = true, -- Requires gitsigns
           handle = true,
-          search = false, -- Requires hlslens
+          search = false,  -- Requires hlslens
         },
       })
     end
@@ -42,6 +42,13 @@ return {
         disabled_filetypes = {},
         always_divide_middle = true,
         globalstatus = true,
+      },
+      extensions = {
+        "trouble",
+        "nvim-tree",
+        "mason",
+        "lazy",
+        "nvim-dap-ui",
       },
       sections = {
         lualine_a = { "mode" },
