@@ -1,7 +1,20 @@
 return {
   {
     "petertriho/nvim-scrollbar",
-    config = function() require("custom.scrollbar").show(true) end
+    dependencies = {
+      "lewis6991/gitsigns.nvim"
+    },
+    config = function()
+      require("scrollbar").setup({
+        handlers = {
+          cursor = false,
+          diagnostic = true,
+          gitsigns = true, -- Requires gitsigns
+          handle = true,
+          search = false, -- Requires hlslens
+        },
+      })
+    end
   },
   {
     "akinsho/bufferline.nvim",

@@ -7,7 +7,7 @@ local backup_opts = function()
   cached_opts.showmode = vim.opt.showmode:get()
   cached_opts.showtabline = vim.opt.showtabline:get()
   cached_opts.scrolloff = vim.opt.scrolloff:get()
-  cached_opts.scrollbar = require("custom.scrollbar").is_shown()
+  cached_opts.scrollbar = require("scrollbar.config").get().show
 end
 
 local restore_opts = function()
@@ -21,7 +21,7 @@ local restore_opts = function()
   vim.opt.showmode = cached_opts.showmode
   vim.opt.showtabline = cached_opts.showtabline
   vim.opt.scrolloff = cached_opts.scrolloff
-  require("custom.scrollbar").show(cached_opts.scrollbar)
+  require("scrollbar.config").get().show = cached_opts.scrollbar
 end
 
 return {
@@ -46,7 +46,7 @@ return {
           vim.opt.showmode = false
           vim.opt.showtabline = 0
           vim.opt.scrolloff = 0
-          require("custom.scrollbar").show(false)
+          require("scrollbar.utils").hide()
         end,
         group = goyo_group,
       })
