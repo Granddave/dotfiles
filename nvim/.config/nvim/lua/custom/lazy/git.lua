@@ -3,6 +3,7 @@ return {
   opts = {
     numhl = true,
     on_attach = function(bufnr)
+      _ = bufnr
       -- TODO: Add range based staging and reset
       local map = vim.keymap.set
       local opts = { noremap = false, silent = true }
