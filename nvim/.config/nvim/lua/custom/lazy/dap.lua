@@ -58,27 +58,27 @@ return {
 
     -- Install codeLLDB with Mason
     dap.adapters.codelldb = {
-      -- type = "server",
-      -- host = "127.0.0.1",
-      -- port = 13000,
       type = "server",
       port = "${port}",
       executable = {
-        command = "/home/david/.local/share/nvim/mason/packages/codelldb/codelldb",
+        command = os.getenv("HOME") .. "/.local/share/nvim/mason/packages/codelldb/codelldb",
         args = { "--port", "${port}" }
       }
     }
-    dap.configurations.rust = {
-      {
-        name = "hello-world",
-        type = "codelldb",
-        request = "launch",
-        program = function()
-          return vim.fn.getcwd() .. "/target/debug/my-bin"
-        end,
-        cwd = "${workspaceFolder}",
-        stopOnEntry = false,
-      },
-    }
+    -- dap.configurations.rust = {
+    --   {
+    --     name = "hello-world",
+    --     type = "codelldb",
+    --     request = "launch",
+    --     program = function()
+    --       return vim.fn.getcwd() .. "/target/debug/my-bin"
+    --     end,
+    --     cwd = "${workspaceFolder}",
+    --     stopOnEntry = false,
+    --   },
+    -- }
+    --
+    -- Use this to load the launch.json:
+    -- require('dap.ext.vscode').load_launchjs(nil, { codelldb = {"rust"} })
   end
 }
