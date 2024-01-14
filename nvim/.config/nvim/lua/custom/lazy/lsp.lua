@@ -37,6 +37,7 @@ local servers = {
   },
   pyright = {},
   rust_analyzer = {},
+  taplo = {},
   tsserver = {},
   vimls = {},
   yamlls = {
