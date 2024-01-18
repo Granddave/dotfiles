@@ -5,8 +5,9 @@ map("n", "<Space>", "", {})
 vim.g.mapleader = " "
 
 map("n", "<Leader>T", ":enew<CR>", opts)
-map("n", "<Leader>n", ":bnext<CR>", opts)
-map("n", "<Leader>p", ":bprev<CR>", opts)
+-- Disable due to BufferLine mappings
+--map("n", "<Leader>n", ":bnext<CR>", opts)
+--map("n", "<Leader>p", ":bprev<CR>", opts)
 map("n", "<Leader>bq", ":bp <Bar> bd #<CR>", opts)
 map("n", "<Leader>bd", ":<C-u>up <Bar> %bd <Bar> e#<CR>", opts)
 
