@@ -81,3 +81,8 @@ map("v", "<Leader>fcj", ":'<,'>!jq --compact-output<CR>", opts)
 
 map("n", "Q", "@q<CR>", opts)
 map("x", "Q", ":norm @q<CR>", opts)
+
+-- Create Markdown link
+-- Wrap the selected text with []() and paste the text from the system clipboard
+-- inside the parentheses
+map("x", "<S-k>", [[<Right>:s/\%V\(.\+\)\%V/[&]()<CR>f("+p]], opts)
