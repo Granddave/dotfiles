@@ -118,18 +118,14 @@ local on_attach = function(client, bufnr)
       end
     end, bufopts)
   end
-  vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = "*",
-    group = vim.api.nvim_create_augroup("LSPFormatOnSave", {}),
-    callback = function()
-      for _, value in ipairs({ "gopls", "rust_analyzer" }) do
-        if value == client.name then
-          vim.lsp.buf.format({ async = true })
-          break
-        end
-      end
-    end,
-  })
+  if vim.tbl_contains({ "gopls", "rust_analyzer" }, client.name) then
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = bufnr,
+      callback = function()
+        vim.lsp.buf.format({ async = false })
+      end,
+    })
+  end
 
   vim.keymap.set("n", "<Leader>dp", function() vim.diagnostic.goto_prev({ float = false }) end, bufopts)
   vim.keymap.set("n", "<Leader>dn", function() vim.diagnostic.goto_next({ float = false }) end, bufopts)
