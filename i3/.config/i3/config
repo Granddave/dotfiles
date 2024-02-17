@@ -42,7 +42,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id zsh ~/.zprofile
 exec --no-startup-id ~/.screenlayout/default.sh
 
-exec --no-startup-id alacritty -e "tmux"
+exec --no-startup-id alacritty -e "zsh"
 
 #exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=secrets
 
