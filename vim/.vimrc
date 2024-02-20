@@ -1,6 +1,3 @@
-noremap <C-e> <C-e><C-e>
-noremap <C-y> <C-y><C-y>
-
 " https://gist.githubusercontent.com/simonista/8703722/raw/d08f2b4dc10452b97d3ca15386e9eed457a53c61/.vimrc
 set nocompatible
 syntax on
@@ -11,9 +8,6 @@ set number
 
 " Show file stats
 set ruler
-
-" Blink cursor on error instead of beeping (grr)
-set visualbell
 
 " Encoding
 set encoding=utf-8
@@ -60,6 +54,9 @@ set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:↲,precedes:«,extends:
 noremap <leader>sl :set list!<CR>
 
 nnoremap <leader>w :update<CR>
+
+noremap <C-e> <C-e><C-e>
+noremap <C-y> <C-y><C-y>
 
 set t_Co=256
 set background=dark
