@@ -84,7 +84,7 @@ local on_attach = function(client, bufnr)
     bufopts
   )
   vim.keymap.set("n", "<Leader>fo",
-    function() vim.lsp.buf.format({ async = true }) end,
+    function() vim.lsp.buf.format({ async = false }) end,
     bufopts
   )
   vim.keymap.set("n", "<Leader>fs",
