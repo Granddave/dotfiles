@@ -1,13 +1,13 @@
-vim.opt.tabstop = 4 -- The width of a tab character
-vim.opt.shiftwidth = 4 -- Size of an 'indent', e.g. when pressing tab key
+vim.opt.tabstop = 4      -- The width of a tab character
+vim.opt.shiftwidth = 4   -- Size of an 'indent', e.g. when pressing tab key
 vim.opt.expandtab = true -- Make tabs expand to spaces
 vim.opt.smartindent = true
 
-vim.opt.wrap = true -- Wrap words visually
+vim.opt.wrap = true      -- Wrap words visually
 vim.opt.linebreak = true -- Don't split words in a word wrap
 
 vim.opt.relativenumber = true
-vim.opt.number = true -- Show line numbers
+vim.opt.number = true   -- Show line numbers
 vim.opt.numberwidth = 5 -- Width of numberline
 vim.opt.signcolumn = "yes"
 
