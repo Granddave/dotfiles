@@ -63,7 +63,7 @@ end, opts)
 map("n", "<Leader>w", ":update<CR>", opts)
 map("n", "<Leader>dw", require("custom.utils").clean_trailing_spaces, opts)
 map("v", "<Leader>tc",
-  [[y:! timecalc.py <C-r>" <Bar> tr -d "\n" <Bar> xclip -in -selection clipboard<CR>A = <Esc>"+p]],
+  [[y:! timecalc <C-r>" <Bar> tr -d "\n" <Bar> xclip -in -selection clipboard<CR>A = <Esc>"+p]],
   opts)
 map("v", "<Leader>j", [[mj/\a\+-\d\+<CR><Cmd>noh<CR>y3e`jPa<Space>]], opts)
 map("n", "<Leader>vj", require("custom.utils").open_jira_issue_under_cursor, opts)
