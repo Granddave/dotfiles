@@ -83,6 +83,7 @@ alias ip="ip -c"
 alias r="lf"
 alias t="tig --all"
 alias c="cargo"
+alias j="just"
 alias fd=fdfind
 alias lsupg="sudo apt update && apt list --upgradable"
 alias pubip="curl ipinfo.io/ip"
