@@ -1,6 +1,6 @@
 return {
   "ellisonleao/gruvbox.nvim",
-  priority = 1000,
+  priority = false,
   init = function()
     require("gruvbox").setup({
       contrast = "hard",
