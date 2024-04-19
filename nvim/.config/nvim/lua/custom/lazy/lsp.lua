@@ -30,6 +30,7 @@ local servers = {
   pyright = {},
   rust_analyzer = {},
   taplo = {},
+  ruff_lsp = {},
   tsserver = {},
   vimls = {},
   yamlls = {
@@ -123,7 +124,6 @@ local on_attach = function(client, bufnr)
   vim.keymap.set("n", "<Leader>dn", function() vim.diagnostic.goto_next({ float = false }) end, bufopts)
   -- vim.keymap.set("n", "<Leader>dl", vim.diagnostic.setloclist, bufopts)
 end
-
 
 return {
   {
