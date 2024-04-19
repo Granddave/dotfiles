@@ -24,6 +24,17 @@ vim.opt.smartcase = true
 vim.opt.termguicolors = true
 
 vim.opt.foldmethod = "marker"
+
+-- Experimentation with treesitter folding
+-- vim.opt.foldmethod = "expr"
+-- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+-- -- vim.api.nvim_create_autocmd({ "BufReadPost", "FileReadPost" }, {
+-- -- vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+-- --   group = vim.api.nvim_create_augroup("Unfold", {}),
+-- --   callback = function() vim.cmd("%foldopen") end,
+-- -- })
+-- vim.opt.foldenable = false
+
 vim.opt.conceallevel = 2
 
 vim.opt.cursorline = true
