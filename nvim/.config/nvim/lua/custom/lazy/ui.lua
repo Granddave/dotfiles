@@ -1,19 +1,11 @@
 return {
   {
-    "petertriho/nvim-scrollbar",
+    "dstein64/nvim-scrollview",
     dependencies = {
       "lewis6991/gitsigns.nvim"
     },
     config = function()
-      require("scrollbar").setup({
-        handlers = {
-          cursor = false,
-          diagnostic = true,
-          gitsigns = true, -- Requires gitsigns
-          handle = true,
-          search = false,  -- Requires hlslens
-        },
-      })
+      require('scrollview.contrib.gitsigns').setup({})
     end
   },
   {
