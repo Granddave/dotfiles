@@ -27,9 +27,16 @@ return {
 
     templates = {
       subdir = "Templates",
-      date_format = "%Y-%m-%d-%a",
+      date_format = "%Y-%m-%d",
       time_format = "%H:%M",
+      -- A map for custom variables, the key should be the variable and the value a function
+      substitutions = {},
     },
+
+    -- Where to put new notes created from completion. Valid options are
+    --  * "current_dir" - put new notes in same directory as the current buffer.
+    --  * "notes_subdir" - put new notes in the default notes subdirectory.
+    new_notes_location = "current_dir",
 
     completion = {
       nvim_cmp = true,
