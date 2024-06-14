@@ -39,7 +39,7 @@ return {
         },
       },
       filetypes = {
-        yaml = false,
+        yaml = true,
         markdown = false,
         txt = false,
         help = false,

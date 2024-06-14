@@ -86,3 +86,6 @@ map("x", "Q", ":norm @q<CR>", opts)
 -- Wrap the selected text with []() and paste the text from the system clipboard
 -- inside the parentheses
 map("x", "<S-k>", [[<Right>:s/\%V\(.\+\)\%V/[&]()<CR>f("+p]], opts)
+
+-- Toggle treesitter context
+map("n", "<Leader>ct", "<Cmd>TSContextToggle<CR>", opts)
