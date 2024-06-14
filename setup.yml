@@ -70,7 +70,7 @@
       become: true
       apt:
         pkg: "{{ apt_packages.gui }}"
-      when: has_gtk
+      when: has_gtk or not wsl
 
     - name: Install CLI packages
       tags: apt
@@ -99,6 +99,7 @@
         cmd: "stow --verbose {{ item }}"
       register: stow_out
       changed_when: 'stow_out.stderr is search("LINK: ")'
+      when: not in_wsl
       with_items:
         - alacritty
         - bin

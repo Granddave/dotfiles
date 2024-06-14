@@ -7,6 +7,7 @@ setopt HIST_IGNORE_SPACE
 
 plugins=(
     command-not-found
+    direnv
     git
     zsh-autosuggestions
     zsh-syntax-highlighting
@@ -60,6 +61,7 @@ open()
 note()
 {
     mkdir -p "$NOTE_DIR"
+    cd "$NOTE_DIR"
     local note_file="$NOTE_DIR/$(date '+%F').md"
     if ! [ -f "$note_file" ]; then
         echo "# $(date '+%F')\n" > "$note_file"

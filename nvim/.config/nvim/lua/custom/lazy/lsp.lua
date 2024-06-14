@@ -87,7 +87,8 @@ local on_attach = function(client, bufnr)
   if client.name == "clangd" then
     vim.keymap.set("n", "<M-o>", [[<Cmd>ClangdSwitchSourceHeader<CR>]], bufopts)
   end
-  if client.name == "gopls" then
+
+  local impl_test_file_toggle = function()
     vim.keymap.set("n", "<M-o>", function()
       local current_file = vim.fn.expand("%:p")
       local base_name = vim.fn.expand("%:t:r")
@@ -110,6 +111,10 @@ local on_attach = function(client, bufnr)
         print("No matching test/impl found.")
       end
     end, bufopts)
+  end
+  -- Enable for clients including "gopls", "jedi_language_server" and "pyright"
+  if vim.tbl_contains({ "gopls", "jedi_language_server", "pyright" }, client.name) then
+    impl_test_file_toggle()
   end
   if vim.tbl_contains({ "gopls", "rust_analyzer" }, client.name) then
     vim.api.nvim_create_autocmd("BufWritePre", {

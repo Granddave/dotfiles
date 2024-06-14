@@ -1,38 +1,46 @@
 return {
   "epwalsh/obsidian.nvim",
-  -- version = "*",
-  version = "v2.5.0",
+  version = "*",
+  -- version = "v2.5.0",
   lazy = true,
   ft = "markdown",
   dependencies = {
     "nvim-lua/plenary.nvim",
   },
   keys = {
-    {"gd", "<Cmd>ObsidianFollowLink<CR>", desc = "Follow link"},
-    {"<Leader>ob", "<Cmd>ObsidianBacklinks<CR>", desc = "Show backlinks"},
-    {"<Leader>od", "<Cmd>ObsidianToday<CR>", desc = "Go to today's file"},
+    { "gd",         "<Cmd>ObsidianFollowLink<CR>", desc = "Follow link" },
+    { "<Leader>ob", "<Cmd>ObsidianBacklinks<CR>",  desc = "Show backlinks" },
+    { "<Leader>od", "<Cmd>ObsidianToday<CR>",      desc = "Go to today's file" },
+    { "<Leader>ot", "<Cmd>ObsidianTemplate<CR>",   desc = "Insert template" },
   },
   opts = {
     workspaces = {
       {
-        name = "life",
-        path = "~/sync/Life",
+        name = "Notes",
+        path = "/mnt/c/Users/H973963/OneDrive - Husqvarna Group/Documents/Notes",
       },
     },
 
     daily_notes = {
-      folder = "Daily",
+      -- folder = "Daily",
       date_format = "%Y-%m-%d"
+    },
+
+    templates = {
+      subdir = "Templates",
+      date_format = "%Y-%m-%d-%a",
+      time_format = "%H:%M",
     },
 
     completion = {
       nvim_cmp = true,
       min_chars = 2,
-      -- Where to put new notes created from completion. Valid options are
-      --  * "current_dir" - put new notes in same directory as the current buffer.
-      --  * "notes_subdir" - put new notes in the default notes subdirectory.
-      new_notes_location = "current_dir"
     },
+
+    -- Where to put new notes created from completion. Valid options are
+    --  * "current_dir" - put new notes in same directory as the current buffer.
+    --  * "notes_subdir" - put new notes in the default notes subdirectory.
+    new_notes_location = "current_dir",
 
     -- Disable the default mappings
     mappings = {},
