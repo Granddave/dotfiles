@@ -15,8 +15,8 @@ return {
   opts = {
     workspaces = {
       {
-        name = "Notes",
-        path = "/mnt/c/Users/H973963/OneDrive - Husqvarna Group/Documents/Notes",
+        name = "life",
+        path = "~/sync/Life",
       },
     },
 
