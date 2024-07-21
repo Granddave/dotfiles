@@ -27,7 +27,7 @@ def set_mouse_mode(enabled: bool, verbose=False):
     if verbose:
         print("Setting mouse mode:", enabled)
 
-    if type(enabled) is not bool:
+    if not isinstance(enabled, bool):
         raise ValueError(f"'enabled' (type {type(enabled)}) is not of type bool")
 
     set_alt_drag(enabled, verbose)
