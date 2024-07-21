@@ -80,8 +80,12 @@ local on_attach = function(client, bufnr)
     function() vim.lsp.buf.format({ async = false }) end,
     bufopts
   )
-  vim.keymap.set("n", "<Leader>fs",
+  vim.keymap.set("n", "<Leader>ws",
     function() telescope.lsp_dynamic_workspace_symbols(telescope_opts) end,
+    bufopts
+  )
+  vim.keymap.set("n", "<Leader>ds",
+    function() telescope.lsp_document_symbols(telescope_opts) end,
     bufopts
   )
   if client.name == "clangd" then
