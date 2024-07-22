@@ -80,7 +80,7 @@ local on_attach = function(client, bufnr)
     function() vim.lsp.buf.format({ async = false }) end,
     bufopts
   )
-  vim.keymap.set("n", "<Leader>ws",
+  vim.keymap.set("n", "<Leader>fs", -- 'ws' would have been better, but conflicts with 'w' for write
     function() telescope.lsp_dynamic_workspace_symbols(telescope_opts) end,
     bufopts
   )
