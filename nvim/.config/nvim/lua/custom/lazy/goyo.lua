@@ -7,6 +7,7 @@ local backup_opts = function()
   cached_opts.showmode = vim.opt.showmode:get()
   cached_opts.showtabline = vim.opt.showtabline:get()
   cached_opts.scrolloff = vim.opt.scrolloff:get()
+  cached_opts.scrollview = vim.g.scrollview_enabled
 end
 
 local restore_opts = function()
@@ -20,7 +21,9 @@ local restore_opts = function()
   vim.opt.showmode = cached_opts.showmode
   vim.opt.showtabline = cached_opts.showtabline
   vim.opt.scrolloff = cached_opts.scrolloff
-  vim.cmd("ScrollViewToggle")
+  if cached_opts.scrollview == true then
+    vim.cmd("ScrollViewEnable")
+  end
 end
 
 return {
@@ -45,7 +48,7 @@ return {
           vim.opt.showmode = false
           vim.opt.showtabline = 0
           vim.opt.scrolloff = 0
-          vim.cmd("ScrollViewToggle") -- No way of getting the previous state unfortunately...
+          vim.cmd("ScrollViewDisable")
         end,
         group = goyo_group,
       })
