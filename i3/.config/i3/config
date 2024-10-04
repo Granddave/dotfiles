@@ -15,6 +15,9 @@ set $mod Mod4
 # Alt
 set $mod1 Mod1
 
+# Background color
+set $bg-color 1d2021
+
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 #font pango:monospace 6
@@ -33,7 +36,13 @@ exec --no-startup-id dex --autostart --environment i3
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork \
+    --ignore-empty-password \
+    --show-failed-attempts \
+    --color="$bg-color"
+
+# Set background color
+exec --no-startup-id xsetroot -solid "#$bg-color"
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -58,10 +67,10 @@ floating_modifier $mod1
 
 bindsym $mod+b exec google-chrome --password-store=gnome
 bindsym $mod+Return exec alacritty
-bindsym $mod+$mod1+l exec i3lock \
+bindsym $mod+$mod1+l exec i3lock --nofork \
     --ignore-empty-password \
     --show-failed-attempts \
-    --color="1d2021"
+    --color="$bg-color"
 bindsym $mod+i exec gnome-control-center
 bindsym $mod+Shift+s exec --no-startup-id snippets.sh
 bindsym Print exec flameshot gui
