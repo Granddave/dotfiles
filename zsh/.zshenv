@@ -13,8 +13,8 @@ export EDITOR="nvim"
 export VISUAL="$EDITOR"
 export PAGER="less"
 
-if [ -d "$HOME/sync/Life/daily" ]; then
-    export NOTE_DIR="$HOME/sync/Life/daily"
+if [ -d "$HOME/sync/Life" ]; then
+    export NOTE_DIR="$HOME/sync/Life"
 else
     export NOTE_DIR="$HOME/Documents/notes"
 fi
