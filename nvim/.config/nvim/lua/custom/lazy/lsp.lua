@@ -27,6 +27,11 @@ local servers = {
       },
     },
   },
+  nil_ls = {
+    formatting = {
+      command = { "nixpkgs-fmt" },
+    },
+  },
   pyright = {},
   rust_analyzer = {},
   taplo = {},
