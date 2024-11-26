@@ -29,11 +29,11 @@ local servers = {
   },
   nil_ls = {
     settings = {
-        ['nil'] = {
-      formatting = {
-        command = { "nixpkgs-fmt" },
+      ['nil'] = {
+        formatting = {
+          command = { "nixpkgs-fmt" },
+        },
       },
-    },
     },
   },
   pyright = {},
