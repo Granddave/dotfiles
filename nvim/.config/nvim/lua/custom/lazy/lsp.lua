@@ -28,8 +28,12 @@ local servers = {
     },
   },
   nil_ls = {
-    formatting = {
-      command = { "nixpkgs-fmt" },
+    settings = {
+        ['nil'] = {
+      formatting = {
+        command = { "nixpkgs-fmt" },
+      },
+    },
     },
   },
   pyright = {},
