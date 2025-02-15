@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
+from pathlib import Path
 
 
 def status_string(props):
@@ -29,12 +30,13 @@ def remaining_battery_percentage(props):
 
 
 def main():
-    lines = None
-    try:
-        with open("/sys/class/power_supply/BAT0/uevent", "r") as f:
+    lines = []
+    for d in Path("/sys/class/power_supply/").glob("BAT*"):
+        if not (d / "uevent").exists():
+            sys.exit(0)
+        with open(d / "uevent", "r") as f:
             lines = [l.strip() for l in f.readlines()]
-    except:
-        sys.exit(0)
+        break
     props = dict(l.split("=") for l in lines)
     status = status_string(props)
     percentage = remaining_battery_percentage(props)
