@@ -4,7 +4,7 @@ local opts = { noremap = false, silent = true }
 map("n", "<Space>", "", {})
 vim.g.mapleader = " "
 
-map("n", "<Leader>T", ":enew<CR>", opts)
+map("n", "<Leader>N", ":enew<CR>", opts)
 -- Disable due to BufferLine mappings
 --map("n", "<Leader>n", ":bnext<CR>", opts)
 --map("n", "<Leader>p", ":bprev<CR>", opts)
