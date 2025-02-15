@@ -14,7 +14,7 @@ return {
 
     dap_ui.setup()
     dap_go.setup()
-    require("nvim-dap-virtual-text").setup()
+    require("nvim-dap-virtual-text").setup({})
 
     local opts = { noremap = true, silent = true }
     vim.keymap.set("n", "<Leader>bc", function() dap.continue() end, opts)

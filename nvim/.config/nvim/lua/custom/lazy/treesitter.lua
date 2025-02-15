@@ -9,7 +9,9 @@ return {
   config = function()
     require("nvim-treesitter.configs").setup({
       auto_install = true,
-      ignore_install = { "yaml" },  -- https://stackoverflow.com/a/76688955/4774715
+      sync_install = false,
+      modules = {},
+      ignore_install = { "yaml" }, -- https://stackoverflow.com/a/76688955/4774715
       ensure_installed = {
         "bash",
         "c",
@@ -32,6 +34,7 @@ return {
       highlight = {
         enable = true,
         disable = function(lang, bufnr)
+          _ = lang
           local megabytes_in_buffer = require("custom.utils").bytes_in_buffer(bufnr) / (10 ^ 6)
           return megabytes_in_buffer >= 1
         end,
