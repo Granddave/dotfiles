@@ -2,7 +2,7 @@ return {
   {
     "nvim-telescope/telescope-fzf-native.nvim",
     dependencies = { "nvim-telescope/telescope.nvim" },
-    build = "make"
+    build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
   },
   {
     "nvim-telescope/telescope.nvim",
@@ -39,17 +39,21 @@ return {
       local themes = require("telescope.themes")
       local actions = require("telescope.actions")
 
-      map("n", "<Leader>ff", function() builtin.find_files() end, opts)
+      ivy = themes.get_ivy({
+        layout_config = { height = 0.90 },
+      })
+
+      map("n", "<Leader>ff", function() builtin.find_files(ivy) end, opts)
       map("n", "<Leader>fdf", function()
         vim.cmd([[cd ~/.dotfiles]])
-        builtin.find_files()
+        builtin.find_files(ivy)
       end, opts)
       map("n", "<Leader>fnv", function()
         vim.cmd([[cd ~/.config/nvim]])
-        builtin.find_files()
+        builtin.find_files(ivy)
       end, opts)
-      map("n", "<Leader>fg", function() builtin.git_files() end, opts)
-      map("n", "<Leader>fr", function() builtin.live_grep() end, opts)
+      map("n", "<Leader>fg", function() builtin.git_files(ivy) end, opts)
+      map("n", "<Leader>fr", function() builtin.live_grep(ivy) end, opts)
       map("n", "<Leader>fb", function()
         builtin.buffers({
           attach_mappings = function(_, attach_map)
@@ -60,7 +64,7 @@ return {
           end
         })
       end, opts)
-      map("n", "<Leader>fh", function() builtin.help_tags() end, opts)
+      map("n", "<Leader>fh", function() builtin.help_tags(ivy) end, opts)
       map("n", "<Leader>ss", function()
         builtin.spell_suggest(themes.get_cursor({
           layout_config = {
