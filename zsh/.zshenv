@@ -3,6 +3,7 @@ _try_add_path() {
 }
 
 _try_add_path "$HOME/bin"
+_try_add_path "$HOME/.cargo/bin"
 _try_add_path "$HOME/.local/bin"
 _try_add_path "$HOME/go/bin"
 _try_add_path "$HOME/.nvm/versions/node/v18.17.1/bin"
