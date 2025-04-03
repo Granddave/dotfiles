@@ -1,0 +1,8 @@
+mouse-hide-while-typing = true
+theme = GruvboxDarkHard
+window-decoration = false
+window-padding-x = 0
+window-padding-y = 0
+
+keybind = alt+enter=toggle_fullscreen
+keybind = ctrl+alt+r=reload_config

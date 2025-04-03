@@ -12,8 +12,6 @@ fi
 
 bindkey '^ ' autosuggest-accept
 
-[ -n $TMUX ] && export TERM="xterm-256color"
-
 # Rust
 [ -e "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 
