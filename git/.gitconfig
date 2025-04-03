@@ -50,3 +50,6 @@
     side-by-side = false
 [merge]
     conflictstyle = diff3
+[user]
+	email = davidisaksson93@gmail.com
+	name = David Isaksson
