@@ -1,22 +1,39 @@
-eval "$(starship init zsh)"
+export ZSH="$HOME/.oh-my-zsh"
 
 COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="yyyy-mm-dd"
 
 setopt HIST_IGNORE_SPACE
 
-if [ -n "${commands[fzf-share]}" ]; then
-  source "$(fzf-share)/key-bindings.zsh"
-  source "$(fzf-share)/completion.zsh"
-fi
+plugins=(
+    command-not-found
+    direnv
+    git
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+)
+
+source $ZSH/oh-my-zsh.sh
 
 bindkey '^ ' autosuggest-accept
 
+# Theme inspired from 'simple'
+local prompt_prefix
+[ -n "$SSH_CONNECTION" ] && prompt_prefix="${prompt_prefix}$(hostname) "
+[ -n "$dockerenv" ] && prompt_prefix="${prompt_prefix}docker "
+local last_rc="%(?..%{$fg[red]%}%? %{$reset_color%})"
+PROMPT='${last_rc}${prompt_prefix}%(!.%{$fg[red]%}.%{$fg[green]%})%~%{$fg_bold[blue]%}$(git_prompt_info)%{$reset_color%} '
+ZSH_THEME_GIT_PROMPT_PREFIX="("
+ZSH_THEME_GIT_PROMPT_SUFFIX=")"
+ZSH_THEME_GIT_PROMPT_DIRTY=" ✗"
+ZSH_THEME_GIT_PROMPT_CLEAN=" ✔"
+
+[ -n $TMUX ] && export TERM="xterm-256color"
+
+[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+
 # Rust
 [ -e "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
-
-# Direnv
-eval "$(direnv hook zsh)"
 
 # Python virtual environments
 if [ -f "$HOME/.local/bin/virtualenvwrapper.sh" ]; then
