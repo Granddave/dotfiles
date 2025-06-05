@@ -51,7 +51,8 @@ exec --no-startup-id nm-applet
 exec --no-startup-id zsh ~/.zprofile
 exec --no-startup-id ~/.screenlayout/default.sh
 
-exec --no-startup-id alacritty -e "zsh"
+set $terminal ghostty
+exec --no-startup-id $terminal -e "zsh"
 
 #exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=secrets
 
@@ -66,7 +67,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod1
 
 bindsym $mod+b exec firefox
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec $terminal
 bindsym $mod+$mod1+l exec i3lock --nofork \
     --ignore-empty-password \
     --show-failed-attempts \
