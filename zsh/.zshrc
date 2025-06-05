@@ -101,7 +101,6 @@ alias t="tig"
 alias ta="tig --all"
 alias c="cargo"
 alias j="just"
-alias fd=fdfind
 alias lsupg="sudo apt update && apt list --upgradable"
 alias pubip="curl ipinfo.io/ip"
 alias notes="(cd $NOTE_DIR; $EDITOR $NOTE_DIR)"
