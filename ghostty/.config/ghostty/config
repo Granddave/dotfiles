@@ -6,3 +6,5 @@ window-padding-y = 0
 
 keybind = alt+enter=toggle_fullscreen
 keybind = ctrl+alt+r=reload_config
+
+mouse-scroll-multiplier = 0.25
