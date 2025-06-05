@@ -84,7 +84,7 @@ alias ls="ls --color=auto"
 alias ip="ip -c"
 alias g="git"
 alias r="lf"
-alias t="tig --all"
+alias ta="tig --all"
 alias c="cargo"
 alias j="just"
 alias fd=fdfind
