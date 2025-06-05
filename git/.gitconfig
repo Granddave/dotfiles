@@ -54,3 +54,5 @@
 [user]
 	email = davidisaksson93@gmail.com
 	name = David Isaksson
+[rerere]
+	enabled = true
