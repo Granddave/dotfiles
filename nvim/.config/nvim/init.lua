@@ -25,3 +25,9 @@ require("lazy").setup(
 require("custom.mappings")
 require("custom.general")
 require("custom.utils")
+
+vim.lsp.enable({
+  "luals",
+})
+
+vim.diagnostic.config({ virtual_text = true })
