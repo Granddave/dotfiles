@@ -30,8 +30,40 @@ ZSH_THEME_GIT_PROMPT_CLEAN=" ✔"
 
 [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
 
+export EDITOR="nvim"
+export VISUAL="$EDITOR"
+export PAGER="less"
+
+export LNAV_EXP=mouse  # Enable mouse support for lnav
+
 # Rust
 [ -e "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
+
+# Path
+_try_add_path() {
+    case ":${PATH}:" in
+        *:"$1":*)
+            # Already in PATH
+            ;;
+        *)
+            [ -d "$1" ] && export PATH="$1:$PATH"
+            ;;
+    esac
+}
+_try_add_path "$HOME/bin"
+_try_add_path "$HOME/.cargo/bin"
+_try_add_path "$HOME/.local/bin"
+_try_add_path "$HOME/go/bin"
+_try_add_path "$HOME/.nvm/versions/node/v22.16.0/bin"
+_try_add_path "/usr/local/go/bin"
+
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
+if [ -d "$HOME/sync/Life" ]; then
+    export NOTE_DIR="$HOME/sync/Life"
+else
+    export NOTE_DIR="$HOME/Documents/notes"
+fi
 
 # Python virtual environments
 if [ -f "$HOME/.local/bin/virtualenvwrapper.sh" ]; then
