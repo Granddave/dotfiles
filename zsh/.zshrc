@@ -108,12 +108,12 @@ mkdate()
 
 alias vi="$EDITOR"
 alias vim="$EDITOR"
-
 alias here="open ."
 alias ls="ls --color=auto"
 alias ip="ip -c"
 alias g="git"
 alias r="lf"
+alias t="tig"
 alias ta="tig --all"
 alias c="cargo"
 alias j="just"
