@@ -33,13 +33,12 @@ return {
       -- Staging
       map('n', '<leader>ga', gitsigns.stage_hunk)
       map('v', '<leader>ga', function() gitsigns.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end)
-      map('n', '<leader>gu', gitsigns.undo_stage_hunk)
       map('n', '<leader>gA', gitsigns.reset_hunk)
       map('v', '<leader>gA', function() gitsigns.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end)
 
       map('n', '<leader>gdp', gitsigns.preview_hunk)
       map("n", "<Leader>gd", gitsigns.diffthis, opts)
-      map("n", "<Leader>do", vim.cmd("windo diffoff"), opts)
+      map("n", "<Leader>do", function() vim.cmd("windo diffoff") end, opts)
       map("n", "<Leader>gD", function() gitsigns.diffthis('~') end, opts)
       map("n", "<Leader>gs", function() gitsigns.show() end, opts)
       map("n", "<Leader>gb", function() gitsigns.blame_line() end, opts)
