@@ -18,14 +18,7 @@ SNIPPET_DIR_PATH="$HOME/sync/Snippets"
 
 # TODO: Remove this legacy path moving logic
 SEARCH_HISTORY_FILEPATH="$HOME/.local/state/snippet-history"
-if [ ! -f "$SEARCH_HISTORY_FILEPATH" ]; then
-    LEGACY_PATH="$HOME/.cache/snippet-history"
-    if [ -f "$LEGACY_PATH" ]; then
-        mv "$LEGACY_PATH" "$SEARCH_HISTORY_FILEPATH"
-    else
-        touch "$SEARCH_HISTORY_FILEPATH"
-    fi
-fi
+[ ! -e "$SEARCH_HISTORY_FILEPATH" ] && touch "$SEARCH_HISTORY_FILEPATH"
 
 AVAILABLE_SNIPPETS=$(find "$SNIPPET_DIR_PATH" -type f -printf "%f\n")
 SEARCH_HISTORY=$(cat "$SEARCH_HISTORY_FILEPATH")
