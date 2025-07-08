@@ -29,7 +29,7 @@ local servers = {
   },
   nil_ls = {
     settings = {
-      ['nil'] = {
+      ["nil"] = {
         formatting = {
           command = { "nixpkgs-fmt" },
         },
@@ -55,22 +55,13 @@ local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-  local telescope = require("telescope.builtin")
-  local telescope_opts = {
-    sorting_strategy = "ascending",
-    fname_width = 60,
-    path_display = { "smart" },
-    layout_strategy = "vertical",
-    layout_config = {
-      width = 0.95
-    },
-  }
+  local fzf = require("fzf-lua")
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
   vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set("n", "gd", function() telescope.lsp_definitions(telescope_opts) end, bufopts)
+  vim.keymap.set("n", "gd", function() fzf.lsp_definitions() end, bufopts)
   vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-  vim.keymap.set("n", "gi", function() telescope.lsp_implementations(telescope_opts) end, bufopts)
+  vim.keymap.set("n", "gi", function() fzf.lsp_implementations() end, bufopts)
   --vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
   --vim.keymap.set('n', '<Leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
   --vim.keymap.set('n', '<Leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
@@ -82,7 +73,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename, bufopts)
   vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, bufopts)
   vim.keymap.set("n", "<Leader>gr",
-    function() telescope.lsp_references(telescope_opts) end,
+    function() fzf.lsp_references() end,
     bufopts
   )
   vim.keymap.set({ "n", "v" }, "<Leader>fo",
@@ -90,11 +81,11 @@ local on_attach = function(client, bufnr)
     bufopts
   )
   vim.keymap.set("n", "<Leader>fs", -- 'ws' would have been better, but conflicts with 'w' for write
-    function() telescope.lsp_dynamic_workspace_symbols(telescope_opts) end,
+    function() fzf.lsp_workspace_symbols() end,
     bufopts
   )
   vim.keymap.set("n", "<Leader>ds",
-    function() telescope.lsp_document_symbols(telescope_opts) end,
+    function() fzf.lsp_document_symbols() end,
     bufopts
   )
   if client.name == "clangd" then
@@ -152,6 +143,7 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       { "j-hui/fidget.nvim",       opts = {} },
       { "folke/neodev.nvim",       opts = {} },
+      "ibhagwan/fzf-lua",
     },
     config = function()
       local capabilities = vim.lsp.protocol.make_client_capabilities()
