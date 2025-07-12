@@ -1,12 +1,7 @@
 return {
   {
-    "dstein64/nvim-scrollview",
-    dependencies = {
-      "lewis6991/gitsigns.nvim"
-    },
-    config = function()
-      require('scrollview.contrib.gitsigns').setup({})
-    end
+    "lewis6991/satellite.nvim",
+    opts = {}
   },
   {
     "akinsho/bufferline.nvim",
