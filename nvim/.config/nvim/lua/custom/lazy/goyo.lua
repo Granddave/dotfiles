@@ -27,44 +27,43 @@ local restore_opts = function()
 end
 
 return {
-  {
-    "junegunn/goyo.vim",
-    dependencies = { "junegunn/limelight.vim", },
-    init = function()
-      vim.keymap.set("n", "<Leader>go", "<Cmd>Goyo<CR>", { noremap = true, silent = true })
-
-      local goyo_group = vim.api.nvim_create_augroup("GoyoEvents", {})
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "GoyoEnter",
-        callback = function()
-          backup_opts()
-          if vim.fn.executable("tmux") == 1 and os.getenv("TMUX") then
-            io.popen("tmux set status off")
-          end
-          require("lualine").hide({})
-          vim.cmd("Limelight")
-          vim.cmd("DisableWhitespace")
-          vim.opt.cursorline = false
-          vim.opt.showmode = false
-          vim.opt.showtabline = 0
-          vim.opt.scrolloff = 0
-          vim.cmd("ScrollViewDisable")
-        end,
-        group = goyo_group,
-      })
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "GoyoLeave",
-        callback = function()
-          if vim.fn.executable("tmux") == 1 and os.getenv("TMUX") then
-            io.popen("tmux set status on")
-          end
-          restore_opts()
-          require("lualine").hide({ unhide = true })
-          require("bufferline").setup() -- TODO: save previous state
-        end,
-        group = goyo_group,
-      })
-    end,
-  }
-
+  -- {
+  --   "junegunn/goyo.vim",
+  --   dependencies = { "junegunn/limelight.vim", },
+  --   init = function()
+  --     -- vim.keymap.set("n", "<Leader>go", "<Cmd>Goyo<CR>", { noremap = true, silent = true })
+  --
+  --     local goyo_group = vim.api.nvim_create_augroup("GoyoEvents", {})
+  --     vim.api.nvim_create_autocmd("User", {
+  --       pattern = "GoyoEnter",
+  --       callback = function()
+  --         backup_opts()
+  --         if vim.fn.executable("tmux") == 1 and os.getenv("TMUX") then
+  --           io.popen("tmux set status off")
+  --         end
+  --         require("lualine").hide({})
+  --         vim.cmd("Limelight")
+  --         vim.cmd("DisableWhitespace")
+  --         vim.opt.cursorline = false
+  --         vim.opt.showmode = false
+  --         vim.opt.showtabline = 0
+  --         vim.opt.scrolloff = 0
+  --         vim.cmd("ScrollViewDisable")
+  --       end,
+  --       group = goyo_group,
+  --     })
+  --     vim.api.nvim_create_autocmd("User", {
+  --       pattern = "GoyoLeave",
+  --       callback = function()
+  --         if vim.fn.executable("tmux") == 1 and os.getenv("TMUX") then
+  --           io.popen("tmux set status on")
+  --         end
+  --         restore_opts()
+  --         require("lualine").hide({ unhide = true })
+  --         require("bufferline").setup() -- TODO: save previous state
+  --       end,
+  --       group = goyo_group,
+  --     })
+  --   end,
+  -- }
 }

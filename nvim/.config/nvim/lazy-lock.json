@@ -46,12 +46,11 @@
   "obsidian.nvim": { "branch": "main", "commit": "ae1f76a75c7ce36866e1d9342a8f6f5b9c2caf9b" },
   "outline.nvim": { "branch": "main", "commit": "321f89ef79f168a78685f70d70c52d0e7b563abb" },
   "plenary.nvim": { "branch": "master", "commit": "857c5ac632080dba10aae49dba902ce3abf91b35" },
-  "telescope-fzf-native.nvim": { "branch": "main", "commit": "1f08ed60cafc8f6168b72b80be2b2ea149813e55" },
-  "telescope.nvim": { "branch": "0.1.x", "commit": "a0bbec21143c7bc5f8bb02e0005fa0b982edc026" },
   "tree-sitter-yaml": { "branch": "master", "commit": "0e36bed171768908f331ff7dff9d956bae016efb" },
   "trouble.nvim": { "branch": "main", "commit": "85bedb7eb7fa331a2ccbecb9202d8abba64d37b3" },
   "undotree": { "branch": "master", "commit": "b951b87b46c34356d44aa71886aecf9dd7f5788a" },
   "vim-better-whitespace": { "branch": "master", "commit": "de99b55a6fe8c96a69f9376f16b1d5d627a56e81" },
   "vim-checkbox": { "branch": "master", "commit": "1000afeda19c989c13ebdc2640c4d49f77cd0143" },
-  "vim-illuminate": { "branch": "master", "commit": "0d1e93684da00ab7c057410fecfc24f434698898" }
+  "vim-illuminate": { "branch": "master", "commit": "0d1e93684da00ab7c057410fecfc24f434698898" },
+  "zen-mode.nvim": { "branch": "main", "commit": "863f150ca321b3dd8aa1a2b69b5f411a220e144f" }
 }
