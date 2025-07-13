@@ -142,7 +142,6 @@ return {
       "williamboman/mason-lspconfig.nvim",
       "hrsh7th/cmp-nvim-lsp",
       { "j-hui/fidget.nvim",       opts = {} },
-      { "folke/neodev.nvim",       opts = {} },
       "ibhagwan/fzf-lua",
     },
     config = function()
@@ -221,5 +220,14 @@ return {
       -- map("n", "<leader>dn", function() trouble.next({ skip_groups = true, jump = true }); end, opts)
       -- map("n", "<leader>dp", function() trouble.previous({ skip_groups = true, jump = true }); end, opts)
     end
-  }
+  },
+  {
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      },
+    },
+  },
 }
