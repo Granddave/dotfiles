@@ -5,9 +5,17 @@ return {
   {
     "jkramer/vim-checkbox",
     config = function()
-      vim.keymap.set("", "<Leader>x", ":call checkbox#ToggleCB()<CR>", { noremap = true, silent = true })
       vim.g.insert_checkbox_prefix = "- "
-    end
+    end,
+    keys = {
+      {
+        "<Leader>x",
+        ":call checkbox#ToggleCB()<CR>",
+        desc = "Toggle checkbox",
+        ft = "markdown",
+        mode = { "n", "v" },
+      }
+    }
   },
   {
     "ntpeters/vim-better-whitespace",
