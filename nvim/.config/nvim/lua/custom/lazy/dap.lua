@@ -14,19 +14,20 @@ return {
 
     dap_ui.setup()
     dap_go.setup()
+    ---@diagnostic disable-next-line: missing-fields
     require("nvim-dap-virtual-text").setup({})
 
-    local opts = { noremap = true, silent = true }
-    vim.keymap.set("n", "<Leader>bc", function() dap.continue() end, opts)
-    vim.keymap.set("n", "<Leader>bn", function() dap.step_over() end, opts)
-    vim.keymap.set("n", "<Leader>bi", function() dap.step_into() end, opts)
-    vim.keymap.set("n", "<Leader>bo", function() dap.step_out() end, opts)
-    vim.keymap.set("n", "<Leader>ba", function() dap.terminate() end, opts)
-    vim.keymap.set("n", "<Leader>bb", function() dap.toggle_breakpoint() end, opts)
-    vim.keymap.set("n", "<Leader>B", function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, opts)
-    vim.keymap.set("n", "<Leader>bl", function() dap.run_last() end, opts)
-    vim.keymap.set("n", "<Leader>dap", function() dap_ui.toggle() end, opts)
-    --vim.keymap.set("n", "<Leader>bt", function() dap_go.debug_test() end, opts)
+    require("which-key").add({
+      { "<Leader>bc",  function() dap.continue() end,                                             desc = "Debug: Continue" },
+      { "<Leader>bn",  function() dap.step_over() end,                                            desc = "Debug: Step Over" },
+      { "<Leader>bi",  function() dap.step_into() end,                                            desc = "Debug: Step Into" },
+      { "<Leader>bo",  function() dap.step_out() end,                                             desc = "Debug: Step Out" },
+      { "<Leader>ba",  function() dap.terminate() end,                                            desc = "Debug: Terminate" },
+      { "<Leader>bb",  function() dap.toggle_breakpoint() end,                                    desc = "Debug: Toggle Breakpoint" },
+      { "<Leader>B",   function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, desc = "Debug: Set Conditional Breakpoint" },
+      { "<Leader>bl",  function() dap.run_last() end,                                             desc = "Debug: Run Last" },
+      { "<Leader>dap", function() dap_ui.toggle() end,                                            desc = "Debug: Toggle UI" },
+    })
 
     dap.adapters.python = {
       type = "executable",
