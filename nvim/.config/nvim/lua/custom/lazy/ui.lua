@@ -1,46 +1,37 @@
 return {
   {
-    "dstein64/nvim-scrollview",
-    dependencies = {
-      "lewis6991/gitsigns.nvim"
-    },
-    config = function()
-      require('scrollview.contrib.gitsigns').setup({})
-    end
+    "lewis6991/satellite.nvim", -- Scroll bar
+    opts = {}
   },
   {
     "akinsho/bufferline.nvim",
-    config = function()
-      vim.opt.termguicolors = true
-      require("bufferline").setup()
-      local map = vim.keymap.set
-      local opts = { noremap = true, silent = true }
-      map("n", "<Leader>n", "<Cmd>:BufferLineCycleNext<CR>", opts)
-      map("n", "<Leader>p", "<Cmd>:BufferLineCyclePrev<CR>", opts)
-      map("n", "<c-n>", "<Cmd>:BufferLineMoveNext<CR>", opts)
-      map("n", "<c-p>", "<Cmd>:BufferLineMovePrev<CR>", opts)
-      map("n", "<Leader>bp", "<Cmd>:BufferLineTogglePin<CR>", opts)
-    end
+    lazy = false,
+    opts = {},
+    keys = {
+      { "<Leader>n",  function() require("bufferline").cycle(1) end,     desc = "Next buffer" },
+      { "<Leader>p",  function() require("bufferline").cycle(-1) end,    desc = "Previous buffer" },
+      { "<c-n>",      function() require("bufferline").move(1) end,      desc = "Move buffer next" },
+      { "<c-p>",      function() require("bufferline").move(-1) end,     desc = "Move buffer previous" },
+      { "<Leader>bp", function() require("bufferline").toggle_pin() end, desc = "Toggle pin buffer" },
+    }
   },
   {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
       options = {
-        icons_enabled = true,
-        theme = "auto",
         component_separators = { left = "|", right = "|" },
         section_separators = { left = "", right = "" },
-        disabled_filetypes = {},
-        always_divide_middle = true,
         globalstatus = true,
       },
       extensions = {
-        "trouble",
-        "nvim-tree",
-        "mason",
         "lazy",
+        "man",
+        "mason",
         "nvim-dap-ui",
+        "nvim-tree",
+        "quickfix",
+        "trouble",
       },
       sections = {
         lualine_a = { "mode" },

@@ -3,7 +3,7 @@ return {
   lazy = true,
   cmd = { "Outline", "OutlineOpen" },
   keys = {
-    { "<leader>ol", "<cmd>Outline<CR>", desc = "Toggle outline" },
+    { "<Leader>ol", function() require("outline").toggle() end, desc = "Toggle outline" },
   },
   opts = {},
 }
