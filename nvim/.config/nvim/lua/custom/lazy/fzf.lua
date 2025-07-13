@@ -11,9 +11,21 @@ return {
       { "<Leader>tr", function() require("fzf-lua").resume() end,    desc = "Resume FZF" },
       { "<Leader>ff", function() require("fzf-lua").files() end,     desc = "Find Files" },
       { "<Leader>fg", function() require("fzf-lua").git_files() end, desc = "Find Git Files" },
-      { "<Leader>fr", function() require("fzf-lua").live_grep() end, desc = "Live Grep" },
-      { "<Leader>fb", function() require("fzf-lua").buffers() end,   desc = "Buffers" },
-      { "<Leader>fh", function() require("fzf-lua").helptags() end,  desc = "helptags" },
+      {
+        "<Leader>fr",
+        function()
+          require("fzf-lua").live_grep(
+            {
+              actions = {
+                ["ctrl-h"] = require("fzf-lua.actions").toggle_hidden,
+              },
+            }
+          )
+        end,
+        desc = "Live Grep"
+      },
+      { "<Leader>fb", function() require("fzf-lua").buffers() end,  desc = "Buffers" },
+      { "<Leader>fh", function() require("fzf-lua").helptags() end, desc = "helptags" },
       {
         "<Leader>ss",
         function()
