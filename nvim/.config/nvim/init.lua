@@ -30,3 +30,4 @@ require("lazy").setup(
 require("custom.mappings")
 require("custom.general")
 require("custom.utils")
+require("custom.lsp")
