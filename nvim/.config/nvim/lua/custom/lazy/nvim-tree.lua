@@ -7,10 +7,18 @@ local sort_index = 1
 return {
   "nvim-tree/nvim-tree.lua",
   dependencies = { "nvim-tree/nvim-web-devicons" },
+  keys = {
+    { "<Leader>e", function() require("nvim-tree.api").tree.toggle() end, desc = "Toggle NvimTree" },
+    {
+      "<Leader>fe",
+      function()
+        require("nvim-tree.api").tree.find_file(
+          { open = true, focus = true })
+      end,
+      desc = "Find File in NvimTree"
+    },
+  },
   init = function()
-    vim.keymap.set("n", "<Leader>e", "<Cmd>NvimTreeToggle<CR>", { noremap = true, silent = true })
-    vim.keymap.set("n", "<Leader>fe", "<Cmd>NvimTreeFindFile<CR>", { noremap = true, silent = true })
-
     -- On open directory
     vim.api.nvim_create_autocmd({ "VimEnter" }, {
       callback = function(data)
