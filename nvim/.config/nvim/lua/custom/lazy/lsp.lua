@@ -97,8 +97,8 @@ local on_attach = function(client, bufnr)
   )
 
   -- float = false due to diagnostic hover config
-  vim.keymap.set("n", "<Leader>dp", function() vim.diagnostic.jump({ count = 1, float = false }) end, bufopts)
-  vim.keymap.set("n", "<Leader>dn", function() vim.diagnostic.jump({ count = -1, float = false }) end, bufopts)
+  vim.keymap.set("n", "<Leader>dp", function() vim.diagnostic.jump({ count = -1, float = false }) end, bufopts)
+  vim.keymap.set("n", "<Leader>dn", function() vim.diagnostic.jump({ count = 1, float = false }) end, bufopts)
 
   if client.name == "clangd" then
     vim.keymap.set("n", "<M-o>", [[<Cmd>ClangdSwitchSourceHeader<CR>]], bufopts)
