@@ -11,6 +11,11 @@ map("n", "<Leader>N", ":enew<CR>", opts)
 map("n", "<Leader>bq", ":bp <Bar> bd #<CR>", opts)
 map("n", "<Leader>bd", ":<C-u>up <Bar> %bd <Bar> e#<CR>", opts)
 
+map("n", "<Leader>tN", "<Cmd>:tabnew<CR>", opts)
+map("n", "<Leader>tq", "<Cmd>:tabclose<CR>", opts)
+map("n", "<Leader>tn", "<Cmd>:tabnext<CR>", opts)
+map("n", "<Leader>tp", "<Cmd>:tabprevious<CR>", opts)
+
 map("n", "<C-h>", ":wincmd h<CR>", opts)
 map("n", "<C-j>", ":wincmd j<CR>", opts)
 map("n", "<C-k>", ":wincmd k<CR>", opts)
