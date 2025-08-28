@@ -22,6 +22,7 @@
     f = fetch -p # Fetch and prune previously tracked branches
     fa = fetch -p --all --tags # Fetch and prune previously tracked branches
     co = checkout
+    cp = cherry-pick
     cm = commit
     st = status
     br = branch
@@ -38,6 +39,7 @@
     su = submodule update
     sh = stash
     shp = stash pop
+    wt = worktree
 [status]
     submoduleSummary = true
 [diff]
