@@ -40,6 +40,13 @@ local servers = {
   rust_analyzer = {},
   taplo = {},
   ruff = {},
+  tinymist = {
+    settings = {
+      -- https://myriad-dreamin.github.io/tinymist/config/neovim.html
+      formatterMode = "typstyle",
+      semanticTokens = "disable"
+    },
+  },
   ts_ls = {},
   vimls = {},
   yamlls = {
