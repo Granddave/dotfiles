@@ -40,6 +40,13 @@ local servers = {
   rust_analyzer = {},
   taplo = {},
   ruff = {},
+  tinymist = {
+    settings = {
+      -- https://myriad-dreamin.github.io/tinymist/config/neovim.html
+      formatterMode = "typstyle",
+      semanticTokens = "disable"
+    },
+  },
   ts_ls = {},
   vimls = {},
   yamlls = {
@@ -51,17 +58,24 @@ local servers = {
   },
 }
 
+-- Enable LSP for all servers defined above
+for server_name, _ in pairs(servers) do
+  vim.lsp.enable(server_name)
+end
+
+-- Set up on_attach callback function for LSP clients
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+  vim.api.nvim_set_option_value("omnifunc", "v:lua.vim.lsp.omnifunc", { buf = bufnr })
 
-  local fzf = require("fzf-lua")
+  -- Set up keymaps for LSP functions
   -- See `:help vim.lsp.*` for documentation on any of the below functions
+  local fzf = require("fzf-lua")
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
   vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set("n", "gd", function() fzf.lsp_definitions() end, bufopts)
+  vim.keymap.set("n", "gd", fzf.lsp_definitions, bufopts)
   vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-  vim.keymap.set("n", "gi", function() fzf.lsp_implementations() end, bufopts)
+  vim.keymap.set("n", "gi", fzf.lsp_implementations, bufopts)
   --vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
   --vim.keymap.set('n', '<Leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
   --vim.keymap.set('n', '<Leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
@@ -88,17 +102,22 @@ local on_attach = function(client, bufnr)
     function() fzf.lsp_document_symbols() end,
     bufopts
   )
+
+  -- float = false due to diagnostic hover config
+  vim.keymap.set("n", "<Leader>dp", function() vim.diagnostic.jump({ count = -1, float = false }) end, bufopts)
+  vim.keymap.set("n", "<Leader>dn", function() vim.diagnostic.jump({ count = 1, float = false }) end, bufopts)
+
   if client.name == "clangd" then
     vim.keymap.set("n", "<M-o>", [[<Cmd>ClangdSwitchSourceHeader<CR>]], bufopts)
   end
 
-  local impl_test_file_toggle = function()
+  -- Toggle between implementation and test files
+  if vim.tbl_contains({ "gopls", "jedi_language_server", "pyright" }, client.name) then
     vim.keymap.set("n", "<M-o>", function()
       local current_file = vim.fn.expand("%:p")
       local base_name = vim.fn.expand("%:t:r")
       local extension = vim.fn.expand("%:e")
       local impl_file, test_file
-
       if base_name:match("_test$") then
         test_file = current_file
         impl_file = string.format("%s/%s.%s", vim.fn.expand("%:p:h"), base_name:gsub("_test$", ""), extension)
@@ -106,7 +125,6 @@ local on_attach = function(client, bufnr)
         impl_file = current_file
         test_file = string.format("%s/%s_test.%s", vim.fn.expand("%:p:h"), base_name, extension)
       end
-
       if current_file ~= test_file and vim.fn.filereadable(test_file) == 1 then
         vim.cmd("edit " .. test_file)
       elseif current_file ~= impl_file and vim.fn.filereadable(impl_file) == 1 then
@@ -116,10 +134,8 @@ local on_attach = function(client, bufnr)
       end
     end, bufopts)
   end
-  -- Enable for clients including "gopls", "jedi_language_server" and "pyright"
-  if vim.tbl_contains({ "gopls", "jedi_language_server", "pyright" }, client.name) then
-    impl_test_file_toggle()
-  end
+
+  -- Auto format on save
   if vim.tbl_contains({ "gopls", "rust_analyzer" }, client.name) then
     vim.api.nvim_create_autocmd("BufWritePre", {
       buffer = bufnr,
@@ -128,10 +144,6 @@ local on_attach = function(client, bufnr)
       end,
     })
   end
-
-  vim.keymap.set("n", "<Leader>dp", function() vim.diagnostic.goto_prev({ float = false }) end, bufopts)
-  vim.keymap.set("n", "<Leader>dn", function() vim.diagnostic.goto_next({ float = false }) end, bufopts)
-  -- vim.keymap.set("n", "<Leader>dl", vim.diagnostic.setloclist, bufopts)
 end
 
 return {
@@ -145,8 +157,9 @@ return {
       "ibhagwan/fzf-lua",
     },
     config = function()
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+      local capabilities = require("cmp_nvim_lsp").default_capabilities(
+        vim.lsp.protocol.make_client_capabilities()
+      )
 
       local lsp_opts = {
         on_attach = on_attach,
@@ -157,20 +170,8 @@ return {
       }
       for server_name, user_opts in pairs(servers) do
         local opts = vim.tbl_deep_extend("force", lsp_opts, user_opts)
-        require("lspconfig")[server_name].setup(opts)
+        vim.lsp.config(server_name, opts)
       end
-
-      -- Attach to a remote Clangd server run by:
-      -- `socat tcp-listen:4444,reuseaddr exec:"$CLANGD_BIN --background-index"`
-      vim.keymap.set("n", "<Leader>cpp",
-        function()
-          local opts = vim.tbl_deep_extend("force", lsp_opts, {
-            cmd = { "nc", "127.0.0.1", "4444" },
-          })
-          require("lspconfig")["clangd"].setup(opts)
-        end,
-        { noremap = true, silent = true }
-      )
 
       -- Disable inline diagnostics and require hover for pop-up window
       vim.diagnostic.config({
@@ -178,11 +179,12 @@ return {
         signs = true,
         float = {
           format = function(diagnostic)
+            local user_data_code = diagnostic.user_data and diagnostic.user_data.lsp and diagnostic.user_data.lsp.code
             return string.format(
               "%s (%s) [%s]",
               diagnostic.message,
               diagnostic.source,
-              diagnostic.code or diagnostic.user_data.lsp.code or ""
+              diagnostic.code or user_data_code or ""
             )
           end,
         },
@@ -197,7 +199,7 @@ return {
           -- but only once for the current cursor location (unless moved afterwards).
           if not (current_cursor[1] == last_popup_cursor[1] and current_cursor[2] == last_popup_cursor[2]) then
             vim.w.lsp_diagnostics_last_cursor = current_cursor
-            vim.diagnostic.open_float(0, { scope = "cursor" })
+            vim.diagnostic.open_float({ bufnr = 0, scope = "cursor" })
           end
         end
       })

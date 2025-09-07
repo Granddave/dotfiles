@@ -8,6 +8,7 @@ return {
       virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
       delay = 100,
     },
+    sign_priority = 50,
     on_attach = function(bufnr)
       _ = bufnr
       local gitsigns = require("gitsigns")
