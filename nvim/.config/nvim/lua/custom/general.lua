@@ -22,7 +22,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 vim.opt.termguicolors = true
-vim.opt.winborder = "double"
+-- vim.opt.winborder = "double"
 
 vim.opt.foldmethod = "marker"
 
