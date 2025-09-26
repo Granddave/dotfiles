@@ -1,9 +1,5 @@
 return {
   {
-    "lewis6991/satellite.nvim", -- Scroll bar
-    opts = {}
-  },
-  {
     "akinsho/bufferline.nvim",
     lazy = false,
     opts = {},
