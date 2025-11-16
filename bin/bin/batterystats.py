@@ -40,7 +40,7 @@ def main():
     props = dict(l.split("=") for l in lines)
     status = status_string(props)
     percentage = remaining_battery_percentage(props)
-    print(f"{status} {percentage}%")
+    print(f"{status} {percentage}% ")
 
 
 if __name__ == "__main__":
