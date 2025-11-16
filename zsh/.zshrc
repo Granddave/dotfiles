@@ -90,10 +90,15 @@ mkdate()
     mkdir $(date '+%F')
 }
 
+lls()
+{
+    $(whereis ls | cut -d' ' -f2) "$@"
+}
+
 alias vi="$EDITOR"
 alias vim="$EDITOR"
 alias here="open ."
-alias ls="ls --color=auto"
+alias ls="eza"
 alias ip="ip -c"
 alias g="git"
 alias r="lf"
