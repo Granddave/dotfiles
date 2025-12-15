@@ -3,17 +3,21 @@ return {
   dependencies = {
     "theHamsta/nvim-dap-virtual-text",
     "rcarriga/nvim-dap-ui",
+    "igorlfs/nvim-dap-view",
     "nvim-neotest/nvim-nio",
     "mfussenegger/nvim-dap-python",
     "leoluz/nvim-dap-go",
   },
   config = function()
     local dap = require("dap")
-    local dap_ui = require("dapui")
-    local dap_go = require("dap-go")
 
+    local dap_ui = require("dapui")
     dap_ui.setup()
+    local dap_go = require("dap-go")
     dap_go.setup()
+    local dap_view = require("dap-view")
+    dap_view.setup()
+
     ---@diagnostic disable-next-line: missing-fields
     require("nvim-dap-virtual-text").setup({})
 
@@ -22,16 +26,18 @@ return {
       { "<Leader>bn",  function() dap.step_over() end,                                            desc = "Debug: Step Over" },
       { "<Leader>bi",  function() dap.step_into() end,                                            desc = "Debug: Step Into" },
       { "<Leader>bo",  function() dap.step_out() end,                                             desc = "Debug: Step Out" },
-      { "<Leader>ba",  function() dap.terminate() end,                                            desc = "Debug: Terminate" },
+      { "<Leader>ba",  function() dap.terminate() end,                                            desc = "Debug: Abort session" },
       { "<Leader>bb",  function() dap.toggle_breakpoint() end,                                    desc = "Debug: Toggle Breakpoint" },
       { "<Leader>B",   function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, desc = "Debug: Set Conditional Breakpoint" },
       { "<Leader>bl",  function() dap.run_last() end,                                             desc = "Debug: Run Last" },
-      { "<Leader>dap", function() dap_ui.toggle() end,                                            desc = "Debug: Toggle UI" },
+      { "<Leader>bui", function() dap_ui.toggle() end,                                            desc = "Debug: Toggle Workspace" },
+      { "<Leader>bv",  function() dap_view.toggle() end,                                          desc = "Debug: Toggle Pane" },
     })
 
+    require("dap-python").setup("debugpy-adapter")
     dap.adapters.python = {
       type = "executable",
-      command = "/usr/bin/env python3", --'path/to/virtualenvs/debugpy/bin/python'
+      command = "/usr/bin/env python3",   --'path/to/virtualenvs/debugpy/bin/python'
       args = { "-m", "debugpy.adapter" },
     }
     dap.configurations.python = {
