@@ -1,10 +1,10 @@
 mouse-hide-while-typing = true
-theme = GruvboxDarkHard
+mouse-scroll-multiplier = 1
+selection-foreground = cell-foreground
+theme = Gruvbox Dark Hard
 window-decoration = false
 window-padding-x = 0
 window-padding-y = 0
 
 keybind = alt+enter=toggle_fullscreen
 keybind = ctrl+alt+r=reload_config
-
-mouse-scroll-multiplier = 0.25
