@@ -8,25 +8,28 @@ if [ ! -f CMakeLists.txt ]; then
 fi
 
 BUILD_DIR=build
-EXTRA_FLAGS=
+CMAKE_ARGS=(
+    -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+    -GNinja
+)
 
 if [ "$1" == "-d" ]; then
-    EXTRA_FLAGS="-DCMAKE_BUILD_TYPE=Debug"
+    CMAKE_ARGS+=(-DCMAKE_BUILD_TYPE=Debug)
     BUILD_DIR=build_debug
     echo "Debug build"
 elif [ "$1" == "-r" ]; then
-    EXTRA_FLAGS="-DCMAKE_BUILD_TYPE=Release"
+    CMAKE_ARGS+=(-DCMAKE_BUILD_TYPE=Release)
     BUILD_DIR=build_release
     echo "Release build"
 fi
 
-mkdir -p $BUILD_DIR
-pushd $BUILD_DIR
-cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON $EXTRA_FLAGS
-cmake --build . -- -j $(($(nproc) - 1))
-popd
-if [ -f $BUILD_DIR/compile_commands.json ]; then
-    ln -sf $BUILD_DIR/compile_commands.json .
+set -x
+cmake -B "./${BUILD_DIR}" -S . "${CMAKE_ARGS[@]}"
+cmake --build "./${BUILD_DIR}"
+set +x
+
+if [ -f "${BUILD_DIR}/compile_commands.json" ]; then
+    ln -sf "${BUILD_DIR}/compile_commands.json" .
     echo "Linked compile_commands.json to base directory"
 else
     echo "compile_commands.json generation failed"
