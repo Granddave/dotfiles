@@ -96,7 +96,7 @@ M.bytes_in_buffer = function(bufnr)
 end
 
 M.open_url = function(url)
-  vim.loop.spawn("xdg-open", { args = { url } })
+  vim.uv.spawn("xdg-open", { args = { url } })
 end
 
 M.browse_jira_issue = function(jira_key)
