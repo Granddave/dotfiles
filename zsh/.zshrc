@@ -115,6 +115,7 @@ alias g="git"
 alias r="lf"
 alias t="tig"
 alias ta="tig --all"
+alias lg=lazygit
 alias c="cargo"
 alias j="just"
 alias fd=fdfind
