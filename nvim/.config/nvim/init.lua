@@ -30,3 +30,26 @@ require("lazy").setup(
 require("custom.mappings")
 require("custom.general")
 require("custom.utils")
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {
+    "bash",
+    "c",
+    "cmake",
+    "cpp",
+    "java",
+    "json",
+    "latex",
+    "lua",
+    "make",
+    "markdown",
+    "markdown_inline",
+    "ninja",
+    "python",
+    "sql",
+    "toml",
+    "vim",
+    "yaml",
+  },
+  callback = function() vim.treesitter.start() end,
+})
