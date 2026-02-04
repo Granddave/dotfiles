@@ -54,7 +54,6 @@ _try_add_path "$HOME/bin"
 _try_add_path "$HOME/.cargo/bin"
 _try_add_path "$HOME/.local/bin"
 _try_add_path "$HOME/go/bin"
-_try_add_path "$HOME/.nvm/versions/node/v22.16.0/bin"
 _try_add_path "/usr/local/go/bin"
 
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
@@ -64,21 +63,6 @@ if [ -d "$HOME/sync/Life" ]; then
 else
     export NOTE_DIR="$HOME/Documents/notes"
 fi
-
-# Python virtual environments
-if [ -f "$HOME/.local/bin/virtualenvwrapper.sh" ]; then
-    export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-    export WORKON_HOME=$HOME/.virtualenvs
-    export PROJECT_HOME=$HOME/Dev
-    source $HOME/.local/bin/virtualenvwrapper.sh
-fi
-
-# Node version manager
-nvm_load_environment() {
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
-    [ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"
-}
 
 open()
 {
