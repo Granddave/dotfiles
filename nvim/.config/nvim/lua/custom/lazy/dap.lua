@@ -37,10 +37,16 @@ return {
     require("dap-python").setup("debugpy-adapter")
     dap.adapters.python = {
       type = "executable",
-      command = "/usr/bin/env python3",   --'path/to/virtualenvs/debugpy/bin/python'
+      command = vim.fn.exepath("python3"),
       args = { "-m", "debugpy.adapter" },
     }
     dap.configurations.python = {
+      {
+        name = "Attach (debugpy)",
+        type = "debugpy",
+        request = "attach",
+        connect = { host = "127.0.0.1", port = 5678 },
+      },
       {
         type = "python",
         request = "launch",
