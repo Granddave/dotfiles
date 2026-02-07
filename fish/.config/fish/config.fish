@@ -29,7 +29,13 @@ end
 
 
 if status is-interactive
-    bind -k nul accept-autosuggestion  # '-k nul': Ctrl+Space
+    set -l major (string split . $FISH_VERSION)[1]
+    if test $major -ge 4
+        bind ctrl-space accept-autosuggestion
+    else
+        bind -k nul accept-autosuggestion
+    end
+
     if type -q starship
         starship init fish | source
     end
