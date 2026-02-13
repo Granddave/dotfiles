@@ -2,6 +2,7 @@ set -U fish_greeting  # Disable welcome message
 
 type -q mise && mise activate fish | source
 source "$HOME/.cargo/env.fish" 2>/dev/null
+fish_add_path "$HOME/.local/bin"
 
 set -x EDITOR "nvim"
 set -x VISUAL "$EDITOR"
