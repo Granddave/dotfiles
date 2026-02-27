@@ -13,7 +13,8 @@ return {
       "<Leader>fe",
       function()
         require("nvim-tree.api").tree.find_file(
-          { open = true, focus = true })
+          { open = true, focus = true }
+        )
       end,
       desc = "Find File in NvimTree"
     },
