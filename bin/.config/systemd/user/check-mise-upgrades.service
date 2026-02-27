@@ -1,0 +1,6 @@
+[Unit]
+Description=Check mise upgrades and send notification
+
+[Service]
+Type=oneshot
+ExecStart=%h/bin/check-mise-upgrades

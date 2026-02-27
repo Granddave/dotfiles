@@ -1,0 +1,109 @@
+#!/usr/bin/env python3
+"""Check if mise has upgrades available."""
+
+import subprocess
+import sys
+import re
+
+from dataclasses import dataclass
+
+
+@dataclass
+class Upgrade:
+    app: str
+    verstion_from: str
+    version_to: str
+
+
+def _send_notification(summary: str, body: str, timeout_ms: int) -> None:
+    """
+    Send a notification to the user. This is a placeholder function and can be implemented
+
+    spawns notify-send process
+    """
+    subprocess.run(
+        [
+            "notify-send",
+            summary,
+            body,
+            "--expire-time",
+            str(timeout_ms),
+        ],
+        check=True,
+    )
+
+
+def _run_cmd() -> str:
+    """
+    Run Mise.
+
+    Example output:
+    ```
+    Would uninstall uv@0.9.29
+    Would install uv@0.10.0
+    ```
+    """
+    result = subprocess.run(
+        "mise up --dry-run", shell=True, capture_output=True, text=True
+    )
+    if result.returncode != 0:
+        print(f"Error running command: {result.stdout}{result.stderr}")
+        sys.exit(1)
+    return result.stdout
+
+
+def _parse_output(output: str) -> list[Upgrade]:
+    lines = output.strip().splitlines()
+    # Example output:
+    #
+    # Would uninstall lazygit@0.58.1
+    # Would uninstall prek@0.3.1
+    # Would install lazygit@0.59.0
+    # Would install prek@0.3.2
+    uninstalls = {}
+    installs = {}
+    uninstall_pattern = re.compile(r"Would uninstall (\w+)@([\d\.]+)")
+    install_pattern = re.compile(r"Would install (\w+)@([\d\.]+)")
+    for line in lines:
+        uninstall_match = uninstall_pattern.match(line)
+        if uninstall_match:
+            app, version = uninstall_match.groups()
+            uninstalls[app] = version
+            continue
+        install_match = install_pattern.match(line)
+        if install_match:
+            app, version = install_match.groups()
+            installs[app] = version
+    upgrades = []
+
+    for app, version_from in uninstalls.items():
+        version_to = installs.get(app)
+        if version_to:
+            upgrades.append(Upgrade(app, version_from, version_to))
+
+    return upgrades
+
+
+def _main() -> int:
+    try:
+        mise_output = _run_cmd()
+        upgrades = _parse_output(mise_output)
+        if not upgrades:
+            print("No upgrades available.")
+            return 0
+        message = ""
+        for upgrade in upgrades:
+            print(f"{upgrade.app}: {upgrade.verstion_from} -> {upgrade.version_to}")
+            message += (
+                f"{upgrade.app}: {upgrade.verstion_from} -> {upgrade.version_to}\n"
+            )
+        _send_notification("Mise Upgrades Available", message, 5000)
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(_main())
