@@ -1,4 +1,6 @@
 set -U fish_greeting  # Disable welcome message
+fish_add_path "$HOME/.local/bin"
+fish_add_path "$HOME/bin"
 
 type -q mise && mise activate fish | source
 source "$HOME/.cargo/env.fish" 2>/dev/null
