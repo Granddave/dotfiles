@@ -45,6 +45,7 @@ if status is-interactive
     alias lg="lazygit"
     alias c="cargo"
     alias j="just"
+    alias oc="opencode"
     alias here="open ."
     alias ip="ip -c"
     alias pubip="curl ipinfo.io/ip"
