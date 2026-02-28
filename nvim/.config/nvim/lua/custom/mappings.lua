@@ -42,6 +42,9 @@ map("x", "<Leader>sc", 'y:%s%<C-r>"%%gc<Left><Left><Left>', { noremap = true })
 map("n", "<Esc>", ":nohlsearch<CR>", opts)
 --map("n", "<Esc>^[", "<Esc>^[", opts)
 
+-- Mapping for exiting terminal mode
+map("t", "<Esc><Esc>", "<C-\\><C-n>", opts)
+
 local scroll_step = 2
 map("", "<C-e>", scroll_step .. "<C-e>", opts)
 map("", "<C-y>", scroll_step .. "<C-y>", opts)
