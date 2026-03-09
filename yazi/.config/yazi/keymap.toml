@@ -1,0 +1,5 @@
+[[mgr.prepend_keymap]]
+on   = "W"
+for  = "unix"
+run  = 'shell "$SHELL" --block'
+desc = "Open $SHELL here"
