@@ -10,6 +10,9 @@ local servers = {
   cmake = {},
   dockerls = {},
   gopls = {},
+  groovyls = {
+    cmd = { "groovy-language-server" },
+  },
   jsonls = {},
   lua_ls = {
     settings = {

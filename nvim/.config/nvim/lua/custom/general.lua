@@ -68,6 +68,12 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
   callback = function() vim.opt.filetype = "sshconfig" end,
 })
 
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+  pattern = "*.Jenkinsfile*",
+  group = filetypes_au_group,
+  callback = function() vim.opt.filetype = "groovy" end,
+})
+
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufReadPre" }, {
   pattern = "*.jrnl",
   group = filetypes_au_group,
