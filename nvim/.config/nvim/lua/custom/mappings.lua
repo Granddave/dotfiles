@@ -9,6 +9,7 @@ map("n", "<Leader>N", ":enew<CR>", opts)
 --map("n", "<Leader>n", ":bnext<CR>", opts)
 --map("n", "<Leader>p", ":bprev<CR>", opts)
 map("n", "<Leader>bq", ":bp <Bar> bd #<CR>", opts)
+map("n", "<Leader>bQ", ":bp <Bar> bd! #<CR>", opts)
 map("n", "<Leader>bd", ":<C-u>up <Bar> %bd <Bar> e#<CR>", opts)
 
 map("n", "<Leader>tN", "<Cmd>:tabnew<CR>", opts)
