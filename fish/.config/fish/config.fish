@@ -25,7 +25,8 @@ if status is-interactive
     type -q just && just --completions fish | source
     if type -q fzf
         # Set up fzf key bindings and fuzzy completion
-        set -gx FZF_DEFAULT_COMMAND "fdfind --type f --strip-cwd-prefix --hidden --follow --exclude .git"
+        # FIXME: Handle both fd and fdfind
+        set -gx FZF_DEFAULT_COMMAND "fd --type f --strip-cwd-prefix --hidden --follow --exclude .git"
         set -gx FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
         set -gx FZF_CTRL_T_OPTS "--preview 'bat --style=numbers --color=always --line-range :500 {}'"
         fzf --fish | source
@@ -52,5 +53,8 @@ if status is-interactive
     alias pubip="curl ipinfo.io/ip"
     if type -q fdfind; and not type -q fd
         alias fd="fdfind"
+    end
+    if not type -q fdfind; and type -q fd
+        alias fdfind="fd"
     end
 end
