@@ -22,6 +22,7 @@ if status is-interactive
 
     type -q starship && starship init fish | source
     type -q zoxide && zoxide init fish | source
+    type -q just && just --completions fish | source
     if type -q fzf
         # Set up fzf key bindings and fuzzy completion
         set -gx FZF_DEFAULT_COMMAND "fdfind --type f --strip-cwd-prefix --hidden --follow --exclude .git"
