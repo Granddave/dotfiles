@@ -30,6 +30,7 @@ if status is-interactive
         set -gx FZF_CTRL_T_OPTS "--preview 'bat --style=numbers --color=always --line-range :500 {}'"
         fzf --fish | source
     end
+    type -q direnv && direnv hook fish | source
 
     if type -q eza
         alias _ls="command ls --color=auto"
