@@ -14,7 +14,9 @@ return {
       "nvim-treesitter/nvim-treesitter",
     },
     event = "BufReadPost",
-    opts = {},
+    opts = {
+      enable = false,
+    },
     keys = {
       { "<Leader>ct", "<Cmd>TSContext toggle<CR>", desc = "Toggle Treesitter Context" },
     },
