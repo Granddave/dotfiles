@@ -3,8 +3,7 @@ fish_add_path "$HOME/.local/bin"
 fish_add_path "$HOME/bin"
 
 type -q mise && mise activate fish | source
-source "$HOME/.cargo/env.fish" 2>/dev/null
-fish_add_path "$HOME/.local/bin"
+test -f "$HOME/.cargo/env.fish" && source "$HOME/.cargo/env.fish"
 
 set -x EDITOR "nvim"
 set -x VISUAL "$EDITOR"
