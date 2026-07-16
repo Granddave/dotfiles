@@ -10,6 +10,13 @@ set -x VISUAL "$EDITOR"
 set -x PAGER "less"
 set -x LNAV_EXP mouse  # Enable mouse support for lnav
 
+# Ensure that the correct fd command is used (fd or fdfind)
+if type -q fd
+    alias fdfind "fd"
+else if type -q fdfind
+    alias fd "fdfind"
+end
+
 if status is-interactive
     # Accept autosuggestions with Ctrl-Space
     set -l major (string split . $FISH_VERSION)[1]
@@ -23,8 +30,6 @@ if status is-interactive
     type -q zoxide && zoxide init fish | source
     type -q just && just --completions fish | source
     if type -q fzf
-        # Set up fzf key bindings and fuzzy completion
-        # FIXME: Handle both fd and fdfind
         set -gx FZF_DEFAULT_COMMAND "fd --type f --strip-cwd-prefix --hidden --follow --exclude .git"
         set -gx FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
         set -gx FZF_CTRL_T_OPTS "--preview 'bat --style=numbers --color=always --line-range :500 {}'"
@@ -51,10 +56,4 @@ if status is-interactive
     alias here="open ."
     alias ip="ip -c"
     alias pubip="curl ipinfo.io/ip"
-    if type -q fdfind; and not type -q fd
-        alias fd="fdfind"
-    end
-    if not type -q fdfind; and type -q fd
-        alias fdfind="fd"
-    end
 end
