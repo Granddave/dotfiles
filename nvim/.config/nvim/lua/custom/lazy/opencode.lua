@@ -1,17 +1,28 @@
 return {
   "nickjvandyke/opencode.nvim",
-  version = "*", -- Latest stable release
+  version = "*",
   dependencies = {
     {
-      -- `snacks.nvim` integration is recommended, but optional
-      ---@module "snacks" <- Loads `snacks.nvim` types for configuration intellisense
+      ---@module "snacks"
       "folke/snacks.nvim",
-      -- optional = true,
+      lazy = false,
+      priority = 1000,
       opts = {
-        input = {}, -- Enhances `ask()`
-        picker = {  -- Enhances `select()`
+        input = {
+          enabled = true, -- Enhances `ask()`
+        },
+        picker = {
+          enabled = true, -- Enhances `select()`
           actions = {
-            opencode_send = function(...) return require("opencode").snacks_picker_send(...) end,
+            opencode_send = function(picker) ---@param picker snacks.Picker
+              local items = vim.tbl_map(function(item) ---@param item snacks.picker.Item
+                return item.file
+                    and require("opencode").format({ path = item.file, from = item.pos, to = item.end_pos })
+                    or item.text
+              end, picker:selected({ fallback = true }))
+
+              require("opencode").prompt(table.concat(items, ", ") .. " ")
+            end,
           },
           win = {
             input = {
@@ -21,60 +32,73 @@ return {
             },
           },
         },
-        terminal = {}, -- Enables the `snacks` provider
       },
     },
   },
   config = function()
     ---@diagnostic disable-next-line: undefined-doc-name
-    ---@type opencode.Opts
-    vim.g.opencode_opts = {
-      -- Your configuration, if any; goto definition on the type or field for details
+
+    local opencode_cmd = "opencode --port"
+    ---@type snacks.terminal.Opts
+    local snacks_terminal_opts = {
+      win = {
+        position = "right",
+        enter = false,
+      },
     }
 
+    ---@type opencode.Opts
+    vim.g.opencode_opts = {
+      server = {
+        start = function()
+          require("snacks.terminal").open(opencode_cmd, snacks_terminal_opts)
+        end,
+      },
+    }
     vim.o.autoread = true -- Required for `opts.events.reload`
-
-    -- Recommended/example keymaps
-    vim.keymap.set(
-      { "n", "x" }, "<C-a>",
+    vim.keymap.set({ "n", "t" }, "<C-.>",
+      function() require("snacks.terminal").toggle(opencode_cmd, snacks_terminal_opts) end,
+      { desc = "Toggle OpenCode" }
+    )
+    vim.keymap.set({ "n", "x" }, "<leader>oa",
       function() require("opencode").ask("@this: ", { submit = true }) end,
-      { desc = "Ask opencode…" }
+      { desc = "Ask OpenCode…" }
     )
-    vim.keymap.set(
-      { "n", "x" }, "<C-x>",
+    vim.keymap.set({ "n", "x" }, "<leader>os",
       function() require("opencode").select() end,
-      { desc = "Execute opencode action…" }
+      { desc = "Select OpenCode…" }
     )
-    vim.keymap.set(
-      { "n", "t" }, "<C-.>",
-      function() require("opencode").toggle() end,
-      { desc = "Toggle opencode" }
-    )
-
-    vim.keymap.set(
-      { "n", "x" }, "go",
+    vim.keymap.set({ "n", "x" }, "go",
       function() return require("opencode").operator("@this ") end,
-      { desc = "Add range to opencode", expr = true }
+      { desc = "Append range to OpenCode", expr = true }
     )
-    vim.keymap.set(
-      "n", "goo",
+    vim.keymap.set("n", "goo",
       function() return require("opencode").operator("@this ") .. "_" end,
-      { desc = "Add line to opencode", expr = true }
+      { desc = "Append line to OpenCode", expr = true }
     )
 
-    vim.keymap.set(
-      "n", "<S-C-u>",
+    vim.keymap.set("n", "<S-C-u>",
       function() require("opencode").command("session.half.page.up") end,
-      { desc = "Scroll opencode up" }
+      { desc = "Scroll OpenCode up" }
     )
-    vim.keymap.set(
-      "n", "<S-C-d>",
+    vim.keymap.set("n", "<S-C-d>",
       function() require("opencode").command("session.half.page.down") end,
-      { desc = "Scroll opencode down" }
+      { desc = "Scroll OpenCode down" }
     )
 
-    -- You may want these if you use the opinionated `<C-a>` and `<C-x>` keymaps above — otherwise consider `<leader>o…` (and remove terminal mode from the `toggle` keymap)
-    vim.keymap.set("n", "+", "<C-a>", { desc = "Increment under cursor", noremap = true })
-    vim.keymap.set("n", "-", "<C-x>", { desc = "Decrement under cursor", noremap = true })
+    -- Optionally show upon submitting prompt
+    vim.api.nvim_create_autocmd("User", {
+      pattern = { "OpencodeEvent:tui.command.execute" },
+      callback = function(args)
+        ---@type opencode.server.Event
+        local event = args.data.event
+        if event.properties.command == "prompt.submit" then
+          local win = require("snacks.terminal").get(opencode_cmd, { create = false })
+          if win then
+            win:show()
+          end
+        end
+      end,
+    })
   end,
 }

@@ -57,9 +57,3 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = langs,
   callback = function() vim.treesitter.start() end,
 })
-
-vim.g.opencode_opts = {
-  provider = {
-    enabled = "terminal",
-  }
-}
