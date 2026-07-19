@@ -4,9 +4,6 @@ return {
     branch = "main",
     lazy = false,
     build = ":TSUpdate",
-    dependencies = {
-      "ikatyang/tree-sitter-yaml",
-    },
   },
   {
     "nvim-treesitter/nvim-treesitter-context",
