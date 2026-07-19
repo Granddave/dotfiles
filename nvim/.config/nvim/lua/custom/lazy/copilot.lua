@@ -8,7 +8,6 @@ return {
     "zbirenbaum/copilot.lua",
     opts = {
       -- https://docs.github.com/en/copilot/reference/ai-models/supported-models
-      copilot_model = "gpt-41-copilot",
       panel = {
         -- enabled = true,
         enabled = false,
