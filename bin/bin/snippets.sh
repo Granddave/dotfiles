@@ -31,7 +31,7 @@ COMBINED_WITH_SCORE=$(echo -e "${AVAILABLE_SNIPPETS}\n${SEARCH_HISTORY}" | sed '
 AVAILABLE_SNIPPETS_WITH_SCORE=$(awk -F' ' 'NR==FNR{++a[$1];next} ($2 in a)' <(echo "$AVAILABLE_SNIPPETS") <(echo "$COMBINED_WITH_SCORE"))
 
 if [ "$IS_WAYLAND" = true ]; then
-    SNIPPET_FILENAME=$(echo "$AVAILABLE_SNIPPETS_WITH_SCORE" | awk '{ print $2 }' | wofi --show dmenu --prompt Snippet)
+    SNIPPET_FILENAME=$(echo "$AVAILABLE_SNIPPETS_WITH_SCORE" | awk '{ print $2 }' | wofi --normal-window --show dmenu --prompt Snippet)
 else
     SNIPPET_FILENAME=$(echo "$AVAILABLE_SNIPPETS_WITH_SCORE" | awk '{ print $2 }' | rofi -dmenu -matching fuzzy)
 fi
