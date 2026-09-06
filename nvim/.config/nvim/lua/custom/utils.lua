@@ -165,4 +165,11 @@ M.set_private_mode = function()
   vim.o.secure = true
 end
 
+vim.api.nvim_create_user_command("PrivateMode",
+  function()
+    M.set_private_mode()
+    print("private mode activated")
+  end, {}
+)
+
 return M
