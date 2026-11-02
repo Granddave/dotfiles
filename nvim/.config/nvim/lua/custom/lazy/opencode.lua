@@ -38,7 +38,7 @@ return {
   config = function()
     ---@diagnostic disable-next-line: undefined-doc-name
 
-    local opencode_cmd = "opencode --port"
+    local opencode_cmd = "opencode"
     ---@type snacks.terminal.Opts
     local snacks_terminal_opts = {
       win = {

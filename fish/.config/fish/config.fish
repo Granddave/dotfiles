@@ -4,6 +4,7 @@ fish_add_path "$HOME/bin"
 
 type -q mise && mise activate fish | source
 test -f "$HOME/.cargo/env.fish" && source "$HOME/.cargo/env.fish"
+fish_add_path /home/david/.opencode/bin
 
 set -x EDITOR "nvim"
 set -x VISUAL "$EDITOR"
