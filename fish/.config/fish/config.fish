@@ -27,7 +27,11 @@ if status is-interactive
         bind -k nul accept-autosuggestion
     end
 
-    type -q starship && starship init fish | source
+    if type -q starship 
+        starship init fish | source
+        set -gx STARSHIP_CONFIG "$HOME/.config/starship.toml"
+    end
+
     type -q zoxide && zoxide init fish | source
     type -q just && just --completions fish | source
     if type -q fzf

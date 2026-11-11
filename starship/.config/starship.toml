@@ -1,0 +1,6 @@
+[shlvl]
+disabled = false
+format = '[$symbol]($style) '
+symbol = '❯'
+repeat = true
+repeat_offset = 2
